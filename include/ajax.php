@@ -19,13 +19,8 @@ if(!isset($_POST['ajax'])){
 	define('AUTHPATH',$_SERVER['SERVER_NAME']);
 	require 'config/hostname.php';
 
-	// Include File Component
-	require dirname(__FILE__).'/config/defined.php';
-	require dirname(__FILE__).'/config/option.php';
-	require dirname(__FILE__).'/../function.php';
-
 	// Get Define
-	new _config_define();
+	new hostname();
 
 	// get file component
 	new _component();
