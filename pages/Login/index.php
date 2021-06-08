@@ -122,7 +122,7 @@ class login_kmi{
 				);
 			}
 		}else{
-			$q = kmi_user::check_login($user,$pass);
+			//$q = kmi_user::check_login($user,$pass);
 		}
 
 		$check = array_filter($q);
@@ -133,14 +133,7 @@ class login_kmi{
 
 			$r=$q[0];
 
-			if(strtolower($user)!='admin'){
-				$_user = kmi_user::get_id($r['ID'],array('picture'));
-				$link = '/asset/img/user/';
-
-				$link .= $_user[0]['notes_pict'];
-			}else{
-				$link = '';
-			}
+			$link = '';
 
 			$_SESSION[$prefix.'page'] = $r['dept'];
 			$_SESSION[$prefix.'user'] = $user;
