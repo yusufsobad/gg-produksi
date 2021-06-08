@@ -49,7 +49,6 @@ var Login = function () {
 					ajx = "check_login";
 					data = $(form).serializeArray();
 					data = conv_array_submit(data);
-					data = JSON.stringify(data);
 
 					var html = $('#btn_login_submit').html();
 					$('#btn_login_submit').html('<i class="fa fa-spinner fa-spin"></i>');
