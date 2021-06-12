@@ -1,4 +1,6 @@
+/include/class_db/list_table.php
 /include/config/defined.php
 /asset/img/user/*.png
 /asset/img/user/*.jpg
 /asset/img/upload/*.*
+

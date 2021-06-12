@@ -14,8 +14,8 @@ function sidemenu_admin(){
 		'status'	=> '',
 		'icon'		=> 'fa fa-gear',
 		'label'		=> 'Setting',
-		'func'		=> 'setting_admin',
-		'child'		=> null
+		'func'		=> '#',
+		'child'		=> setting_admin()
 	);
 
 	$args['report'] = array(
@@ -26,5 +26,26 @@ function sidemenu_admin(){
 		'child'		=> null
 	);
 	
+	return $args;
+}
+
+function setting_admin(){
+	$args = array();
+	$args['process'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Proses',
+		'func'		=> 'process_admin',
+		'child'		=> null
+	);
+
+	$args['smart-container'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Smart Container',
+		'func'		=> 'sContainer_admin',
+		'child'		=> null
+	);
+
 	return $args;
 }

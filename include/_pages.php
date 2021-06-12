@@ -50,8 +50,11 @@ abstract class _page{
 			}
 
 			$object = static::$table;
-			$tbl_meta = $object::$tbl_meta;
-			$meta = $object::list_meta($post);
+			
+			if(property_exists(new $object, 'tbl_meta')){
+				$tbl_meta = $object::$tbl_meta;
+				$meta = $object::list_meta($post);
+			}
 
 			$blueprint = $object::blueprint($post);
 			if(isset($blueprint['detail'])){

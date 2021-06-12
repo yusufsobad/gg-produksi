@@ -1,4 +1,5 @@
 <?php
+define('AUTHPATH',$_SERVER['SERVER_NAME']);
 
 require "include/config/hostname.php";
 
@@ -16,4 +17,6 @@ if($status==false){
 
 if($status){
 	header('Location: '.SITE.'://'.HOSTNAME.'/'.URL.'/');
+}else{
+	echo 'Gagal Update !!!';
 }

@@ -57,6 +57,8 @@ abstract class _class{
 	}
 
 	public static function count($limit='1=1 ',$args=array(),$type=''){
+		self::$_type = $type;
+		
 		$inner = '';$meta = false;
 		$limit = empty($limit)?"1=1 ":$limit;
 
@@ -66,8 +68,30 @@ abstract class _class{
 			$check = array_filter($blueprint['detail']);
 			if(!empty($check)){
 				self::_detail($args,$table,$blueprint['detail']);
-				$inner = self::$_inner;
+				$inner .= self::$_inner;
 				self::$_inner = '';
+			}
+		}
+
+		// Check Join
+		if(isset($blueprint['joined'])){
+			$check = array_filter($blueprint['joined']);
+			if(!empty($check)){
+				$list_join = self::list_join();
+
+				$check = false;
+				foreach ($args as $key => $val) {
+					if(in_array($val,$list_join)){
+						$check = true;
+						break;
+					}
+				}
+
+				if($check){
+					self::_joined($args,$table,$blueprint['joined']);
+					$inner .= self::$_inner;
+					self::$_inner = '';
+				}
 			}
 		}
 
