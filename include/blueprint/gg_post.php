@@ -81,11 +81,11 @@ class gg_post extends _class{
 		if(!empty($check)){
 			// Check scan user id sama atau tidak 
 			if(!isset($data['user_id']) && empty($data['user_id'])){
-				return _error::_alert_db("Scan User terlebih dahulu !!!");
+				die(_error::_alert_db("Scan User terlebih dahulu !!!"));
 			}
 
 			if($scan==$data['user_id']){
-				return _error::_alert_db("User sudah Scan !!!");
+				die(_error::_alert_db("User sudah Scan !!!"));
 			}
 
 			$user_id = $data['user_id'];
@@ -93,7 +93,7 @@ class gg_post extends _class{
 		}else{
 			// Check user id sudah scan atau belum
 			if(!preg_match("/[0-9]{8}/", $scan)){
-				return _error::_alert_db("Scan User terlebih dahulu !!!");
+				die(_error::_alert_db("Scan User terlebih dahulu !!!"));
 			}
 		}
 
@@ -117,7 +117,7 @@ class gg_post extends _class{
 
 				$_check = array_filter($_check);
 				if(!empty($_check)){
-					return _error::_alert_db("User sudah Scan !!!");
+					die(_error::_alert_db("User sudah Scan !!!"));
 				}
 
 				$q = sobad_db::_insert_table('ggk-production',array(
