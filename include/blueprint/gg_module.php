@@ -16,6 +16,7 @@ class gg_module extends _class{
 		if(!empty($type)){
 			$args = array(
 				'process',
+				'divisi',
 				'smart_container',
 			);
 
@@ -29,7 +30,7 @@ class gg_module extends _class{
 	
 	public static function _gets($type='',$args=array(),$limit=''){
 		if(self::_check_type($type)){
-			$where = "WHERE meta_key='$type' $limit";
+			$where = "WHERE module_key='$type' $limit";
 			return self::_check_join($where,$args,$type);
 		}
 

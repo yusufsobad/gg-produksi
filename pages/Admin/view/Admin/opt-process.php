@@ -1,9 +1,9 @@
 <?php
 
-class setting_admin extends _page{
-	protected static $object = 'setting_admin';
+class process_admin extends _page{
+	protected static $object = 'process_admin';
 
-	protected static $table = 'sobad_module';
+	protected static $table = 'gg_module';
 
 	// ----------------------------------------------------------
 	// Layout ---------------------------------------------------
@@ -12,88 +12,72 @@ class setting_admin extends _page{
 	protected static function _array(){
 		$args = array(
 			'ID',
-			'name',
-			'meta_name',
-			'detail'
+			'module_value',
+			'module_note',
+			'module_key',
+			'module_reff',
+			'module_unit',
+			'module_nominal'
 		);
 
 		return $args;
 	}
 
 	protected static function table(){
-		global $reg_page;
-
 		$data = array();
 		$args = self::_array();
+		
+		$kata = '';$where = "AND module_key='process'";
+		if(parent::$search){
+			$src = parent::like_search($args,$where);	
+			$cari = $src[0];
+			$where = $src[0];
+			$kata = $src[1];
+		}else{
+			$cari=$where;
+		}
+	
+		$limit = '';
+		$where .= $limit;
 
+		$object = self::$table;
+		$sum_data = $object::count("1=1 ".$cari,$args);
+		$args = $object::get_all($args,$where);
+		
+		$data['data'] = array('data' => $kata);
+		$data['search'] = array('Semua','nama','kode');
 		$data['class'] = '';
 		$data['table'] = array();
 
 		$no = 0;
-		foreach($reg_page as $key => $vl){
-			if(in_array(strtolower($key),array('login','administrator'))){
-				continue;
-			}
-
-			$module = sobad_module::get_all(array('ID','name','meta_name','detail'),"AND meta_name='$key'");
-			$check = array_filter($module);
-			if(empty($check)){
-				$idx = sobad_db::_insert_table('sdn-module',array(
-					'name'		=> ucwords($key),
-					'meta_name'	=> strtolower($key)
-				));
-
-				$module[0] = array(
-					'ID'		=> $idx,
-					'name'		=> ucwords($key),
-					'meta_name'	=> strtolower($key),
-					'user'		=> ''
-				);
-			}
-
-			$val = $module[0];
-
-			$detail = '';
-			if(!empty($val['detail'])){
-				$user = unserialize($val['detail']);
-				$user = $user['access'];
-				$user = implode(',', $user);
-
-				if(!empty($user)){
-					$user = kmi_user::get_all(array('name','status'),"AND ID IN ($user)");
-					$check = array_filter($user);
-					if(!empty($check)){
-						$detail = array();
-						foreach ($user as $_ky => $_vl) {
-							$_status = $_vl['status']==0?'Non Aktif':'Aktif';
-							$detail[] = '<strong>'.$_vl['name'].'</strong> ('. $_status . ') ';
-						}
-
-						$detail = implode(', ', $detail);
-					}
-				}
-			}
-
+		foreach($args as $key => $val){
 			$no += 1;
+			$id = $val['ID'];
+
 			$edit = array(
-				'ID'	=> 'edit_'.$val['ID'],
+				'ID'	=> 'edit_'.$id,
 				'func'	=> '_edit',
 				'color'	=> 'blue',
 				'icon'	=> 'fa fa-edit',
 				'label'	=> 'edit'
 			);
-
+			
 			$hapus = array(
-				'ID'	=> 'del_'.$val['ID'],
+				'ID'	=> 'del_'.$id,
 				'func'	=> '_delete',
 				'color'	=> 'red',
 				'icon'	=> 'fa fa-trash',
-				'label'	=> 'hapus'
+				'label'	=> 'hapus',
 			);
+
+			$reff = gg_module::get_id($val['module_reff'],array('module_value'));
+			$check = array_filter($reff);
+
+			$reff = empty($check)?'':$reff[0]['module_value'];
 			
-			$data['table'][$no-1]['tr'] = array('');
-			$data['table'][$no-1]['td'] = array(
-				'no'		=> array(
+			$data['table'][$key]['tr'] = array('');
+			$data['table'][$key]['td'] = array(
+				'No'		=> array(
 					'center',
 					'5%',
 					$no,
@@ -101,20 +85,20 @@ class setting_admin extends _page{
 				),
 				'Nama'		=> array(
 					'left',
-					'15%',
-					$val['name'],
+					'auto',
+					'Stock '.$val['module_value'],
 					true
 				),
-				'Akses'		=> array(
+				'Regex'		=> array(
 					'left',
 					'15%',
-					$key,
+					$val['module_note'],
 					true
 				),
-				'user'		=> array(
+				'divisi'		=> array(
 					'left',
-					'auto%',
-					$detail,
+					'15%',
+					$reff,
 					true
 				),
 				'Edit'			=> array(
@@ -129,6 +113,7 @@ class setting_admin extends _page{
 					hapus_button($hapus),
 					false
 				)
+				
 			);
 		}
 		
@@ -137,11 +122,11 @@ class setting_admin extends _page{
 
 	private static function head_title(){
 		$args = array(
-			'title'	=> 'Option <small>data akses</small>',
+			'title'	=> 'Process <small>data process</small>',
 			'link'	=> array(
 				0	=> array(
 					'func'	=> self::$object,
-					'label'	=> 'option'
+					'label'	=> 'process'
 				)
 			),
 			'date'	=> false
@@ -154,9 +139,9 @@ class setting_admin extends _page{
 		$data = self::table();
 		
 		$box = array(
-			'label'		=> 'Data Akses',
+			'label'		=> 'Data process',
 			'tool'		=> '',
-			'action'	=> '',
+			'action'	=> parent::action(),
 			'func'		=> 'sobad_table',
 			'data'		=> $data
 		);
@@ -179,24 +164,34 @@ class setting_admin extends _page{
 	// ----------------------------------------------------------
 	// Form data category -----------------------------------
 	// ----------------------------------------------------------
+	public static function add_form($func='',$load='sobad_portlet'){
+		$vals = array(0,'',0,'process',0,'pcs',0);
+		$vals = array_combine(self::_array(),$vals);
+
+		if($func=='add_0'){
+			$func = '_add_db';
+		}
+		
+		$args = array(
+			'title'		=> 'Tambah data stock',
+			'button'	=> '_btn_modal_save',
+			'status'	=> array(
+				'link'		=> $func,
+				'load'		=> $load
+			)
+		);
+		
+		return self::_data_form($args,$vals);
+	}
 
 	protected static function edit_form($vals=array()){
 		$check = array_filter($vals);
 		if(empty($check)){
 			return '';
 		}
-
-		if(!empty($vals['detail'])){
-			$user = unserialize($vals['detail']);
-			$user = $user['access'];
-		}else{
-			$user = array();
-		}
-
-		$vals['user'] = $user;
 		
 		$args = array(
-			'title'		=> 'Edit akses',
+			'title'		=> 'Edit data stock',
 			'button'	=> '_btn_modal_save',
 			'status'	=> array(
 				'link'		=> '_update_db',
@@ -213,8 +208,10 @@ class setting_admin extends _page{
 			return '';
 		}
 
-		$user = kmi_user::get_all(array('ID','name'),"AND status NOT IN ('0','7') ");	
-		$user = convToOption($user,'ID','name');
+		$reff = gg_module::_gets('divisi',array('ID','module_value'));
+		$reff = convToOption($reff,'ID','module_value');
+
+		$reff[0] = 'Tidak Ada';
 
 		$data = array(
 			0 => array(
@@ -224,21 +221,37 @@ class setting_admin extends _page{
 				'value'			=> $vals['ID']
 			),
 			array(
-				'func'			=> 'opt_input',
-				'type'			=> 'text',
-				'key'			=> 'name',
-				'label'			=> 'Nama',
-				'class'			=> 'input-circle',
-				'value'			=> $vals['name'],
-				'data'			=> 'placeholder="Nama"'
+				'func'			=> 'opt_hidden',
+				'type'			=> 'hidden',
+				'key'			=> 'module_key',
+				'value'			=> $vals['module_key']
 			),
 			array(
-				'func'			=> 'opt_select_tags',
-				'data'			=> $user,
-				'key'			=> 'user',
+				'func'			=> 'opt_select',
+				'data'			=> $reff,
+				'key'			=> 'module_reff',
+				'label'			=> 'reff divisi',
+				'class'			=> 'input-circle',
+				'select'		=> $vals['module_reff'],
+				'status'		=> ''
+			),
+			array(
+				'func'			=> 'opt_input',
+				'type'			=> 'text',
+				'key'			=> 'module_value',
 				'label'			=> 'Nama',
 				'class'			=> 'input-circle',
-				'select'		=> $vals['user']
+				'value'			=> $vals['module_value'],
+				'data'			=> 'placeholder="name process"'
+			),
+			array(
+				'func'			=> 'opt_input',
+				'type'			=> 'text',
+				'key'			=> 'module_note',
+				'label'			=> 'Filter Scan',
+				'class'			=> 'input-circle',
+				'value'			=> $vals['module_note'],
+				'data'			=> 'placeholder="regex scan id"'
 			),
 		);
 		
@@ -246,17 +259,5 @@ class setting_admin extends _page{
 		$args['data'] = array($data);
 		
 		return modal_admin($args);
-	}
-
-	// ----------------------------------------------------------
-	// Function to database -------------------------------------
-	// ----------------------------------------------------------
-
-	public static function _callback($args=array()){
-		$user = explode(',',$args['user']);
-		$user = serialize(array('access' => $user));
-		$args['detail'] = $user;
-
-		return $args;
 	}
 }

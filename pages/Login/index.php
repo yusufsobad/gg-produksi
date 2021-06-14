@@ -3,12 +3,12 @@
 
 $args = array();
 $args['Login'] = array(
-	'page'	=> 'login_kmi',
+	'page'	=> 'login_gg',
 	'home'	=> true
 );
 reg_hook('reg_page',$args);
 
-class login_kmi{
+class login_gg{
 
 	public function _reg(){
 		$GLOBALS['body'] = 'login';
@@ -63,16 +63,16 @@ class login_kmi{
 			jQuery(document).ready(function() {     
 			  Metronic.init(); // init metronic core components
 			  Layout.init(); // init current layout
-			  Login.init("login_kmi");
+			  Login.init("login_gg");
 			  Demo.init();
 			       // init background slide images
 			       $.backstretch([
 			        "asset/img/bg/1.jpg",
 			        "asset/img/bg/2.jpg",
 					"asset/img/bg/3.jpg",
-			        "asset/img/bg/4.jpg",
-					"asset/img/bg/5.jpg",
-			        "asset/img/bg/6.jpg",
+			//		"asset/img/bg/4.jpg",
+			//		"asset/img/bg/5.jpg",
+			//		"asset/img/bg/6.jpg",
 			        ], {
 			          fade: 1000,
 			          duration: 8000
@@ -93,7 +93,7 @@ class login_kmi{
 		<!-- BEGIN LOGIN -->
 		<div class="content">
 		<?php
-			print(user_login::login('login_kmi'));
+			print(user_login::login('login_gg'));
 		?>
 		</div>
 		<!-- END LOGIN -->

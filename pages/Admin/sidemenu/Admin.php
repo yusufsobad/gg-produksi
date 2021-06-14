@@ -9,6 +9,14 @@ function sidemenu_admin(){
 		'func'		=> 'dash_admin',
 		'child'		=> null
 	);
+
+	$args['employee'] = array(
+		'status'	=> '',
+		'icon'		=> 'fa fa-users',
+		'label'		=> 'Karyawan',
+		'func'		=> 'employee_admin',
+		'child'		=> null
+	);
 	
 	$args['option'] = array(
 		'status'	=> '',
@@ -31,11 +39,27 @@ function sidemenu_admin(){
 
 function setting_admin(){
 	$args = array();
+	$args['recahan'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Recahan',
+		'func'		=> 'recahan_admin',
+		'child'		=> null
+	);
+
 	$args['process'] = array(
 		'status'	=> '',
 		'icon'		=> '',
-		'label'		=> 'Proses',
+		'label'		=> 'Process',
 		'func'		=> 'process_admin',
+		'child'		=> null
+	);
+
+	$args['divisi'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Divisi',
+		'func'		=> 'divisi_admin',
 		'child'		=> null
 	);
 
