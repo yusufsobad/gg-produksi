@@ -15,7 +15,7 @@ $json = json_decode(file_get_contents('php://input'), true);
 	// Get Define
 	new hostname();
 
-	// get file component 
+	// get file component
 	new _component();
 
 	sobad_asset::_pages("../pages/");
