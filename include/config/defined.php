@@ -18,7 +18,7 @@ define('USERNAME',"root");
 define('PASSWORD','');
 
 // set Database
-define('DB_NAME','absen2020');
+define('DB_NAME','ggkartosura_2021');
 $GLOBALS['DB_NAME'] = DB_NAME;
 
 // set rule database
@@ -39,7 +39,7 @@ define('SITE','http');
 define('HOSTNAME',$_SERVER['SERVER_NAME']);
 
 // set name url
-define('URL','cordova-v3');
+define('URL','gg-produksi');
 
 // set check table
 define('ABOUT','');
@@ -47,7 +47,7 @@ define('ABOUT','');
 // Setting -------------------------------------------
 
 // prefix SESSION
-define('_prefix','cordova_');
+define('_prefix','ggKartosura_');
 		
 // authentic include
 define('AUTH_KEY','qJB0rGtInG03efyCpWs');
@@ -59,10 +59,10 @@ define('DEFPATH',dirname(__FILE__));
 define('language',true);
 
 // set nama Perusahaan
-define('company','Cordova');
+define('company','PT Solo Abadi Indonesia');
 
 // set judul Website
-define('title','Cordova');
+define('title','System Produksi');
 
 // Library ------------------------------------------
 
