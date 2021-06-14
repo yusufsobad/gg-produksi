@@ -18,7 +18,7 @@ $json = json_decode(file_get_contents('php://input'), true);
 	// get file component 
 	new _component();
 
-	sobad_asset::_page("../pages/");
+	sobad_asset::_pages("../pages/");
 
 // End Setting
 
