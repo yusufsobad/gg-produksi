@@ -136,7 +136,7 @@ class gg_post extends _class{
 			'meja'		=> $meja,
 			'proses'	=> $process,
 			'input'		=> $_input
-		);
+		); 
 
 		foreach ($process as $ky => $vl) {
 			if(empty($val)){
