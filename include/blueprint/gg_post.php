@@ -1,7 +1,7 @@
 <?php
 
-class ggk_post extends _class{
-	public static $table = 'ggk-post';
+class gg_post extends _class{
+	public static $table = 'gg-post';
 
 	public static function blueprint($type='order'){
 	// Konsep Blueprint	Schema
@@ -107,7 +107,7 @@ class ggk_post extends _class{
 				$user_id = $user['ID'];
 				$user_name = $user['name'];
 
-				sobad_db::_insert_db('ggk-post',array(
+				sobad_db::_insert_table('ggk-post',array(
 					'user_id'		=> $user_id,
 					'divisi_id'		=> $div
 				));
