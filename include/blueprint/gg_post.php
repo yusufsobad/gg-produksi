@@ -107,7 +107,7 @@ class gg_post extends _class{
 				$user_id = $user['ID'];
 				$user_name = $user['name'];
 
-				sobad_db::_insert_table('ggk-post',array(
+				$q = sobad_db::_insert_table('ggk-production',array(
 					'user_id'		=> $user_id,
 					'divisi_id'		=> $div
 				));
