@@ -73,7 +73,7 @@ class gg_post extends _class{
 
 		$check = array_filter($data);
 		if(!empty($check)){
-			// Check scan user id sama atau tidak
+			// Check scan user id sama atau tidak 
 			if(!isset($data['user_id']) && empty($data['user_id'])){
 				return _error::_alert_db("Scan User terlebih dahulu !!!");
 			}
