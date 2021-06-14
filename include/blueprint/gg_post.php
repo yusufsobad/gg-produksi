@@ -64,12 +64,18 @@ class gg_post extends _class{
 	}
 
 	public static function scan_code($scan='',$data=array()){
+		$scanner = true;
 		$_input = false;
 		$batch = '-';
 		$process = '-';
 		$meja = '-';
 		$user_id = 0;
 		$user_name = '-';
+
+		$date = date('Y-m-d');
+		$year = date('Y');
+		$month = date('m');
+		$day = date('d');
 
 		$check = array_filter($data);
 		if(!empty($check)){
@@ -107,6 +113,13 @@ class gg_post extends _class{
 				$user_id = $user['ID'];
 				$user_name = $user['name'];
 
+				$_check = gg_production::get_all(array('ID'),"AND user_id='$user_id' AND YEAR(scan_date)='$year' AND MONTH(scan_date)='$month' AND DAY(scan_date)='$day'");
+
+				$_check = array_filter($_check);
+				if(!empty($_check)){
+					return _error::_alert_db("User sudah Scan !!!");
+				}
+
 				$q = sobad_db::_insert_table('ggk-production',array(
 					'user_id'		=> $user_id,
 					'divisi_id'		=> $div
@@ -115,6 +128,7 @@ class gg_post extends _class{
 		}
 
 		return array(
+			'scanner'	=> $scanner,
 			'user_id'	=> $user_id,
 			'operator'	=> $user_name,
 			'scan_id'	=> $scan,
