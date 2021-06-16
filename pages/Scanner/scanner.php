@@ -36,6 +36,7 @@ class _production{
 
 	private static function _check_codeScan($scan=''){
 		$process = gg_module::_gets('scanner',array('module_code','module_note'));
+		$code = 0;
 
 		// Check id scan User
 		foreach ($process as $ky => $vl) {
