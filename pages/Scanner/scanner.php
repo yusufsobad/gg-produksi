@@ -213,7 +213,7 @@ class _production{
 			$nik = (int) substr($scan,2,4);
 
 			$module = gg_module::get_id($div,array('module_value','module_code'));
-			$module = $process[0];
+			$module = $module[0];
 
 			$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
 			
