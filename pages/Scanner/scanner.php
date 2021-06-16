@@ -150,7 +150,7 @@ class _production{
 		}
 
 		if(empty(self::$default['user_id'])){
-			die(_error::_alert_db("Scan User terlebih dahulu !!!"));
+			die(_error::_alert_db("Scan User terlebih dahulu !!!")); 
 		}
 
 		$divisi = gg_employee::get_id($default['user_id'],array('divisi'));
