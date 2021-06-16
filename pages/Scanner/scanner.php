@@ -118,6 +118,7 @@ class _production{
 
 		self::_check_scanid($scan);
 
+		self::$default['scan_id'] = $scan;
 		return self::$default;
 	}
 
@@ -136,7 +137,6 @@ class _production{
 				die(_error::_alert_db("Scan User terlebih dahulu !!!"));
 			}
 		}
-
 
 	}
 
@@ -216,9 +216,14 @@ class _production{
 			$module = $process[0];
 
 			$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
+			
+			$check = array_filter($user);
+			if(empty($check)){
+				die(_error::_alert_db("User Tidak di temukan !!!"));
+			}
+
 			$user = $user[0];
 
-			$data['scan_id'] = $scan;
 			$data['user_id'] = $user['ID'];
 			$data['operator'] = $user['name'];
 			$data['proses'] = $module['module_value'];
