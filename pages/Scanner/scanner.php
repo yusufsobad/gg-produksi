@@ -47,7 +47,7 @@ class _production{
 
 			$regx = "/^$regx/i";
 			if(preg_match($regx, $scan)){
-				$code = $val['module_code'];
+				$code = $vl['module_code'];
 				break;
 			}
 		}
@@ -212,15 +212,17 @@ class _production{
 		if(!empty($div)){
 			$nik = (int) substr($scan,2,4);
 
-			$process = gg_module::get_id($div,array('module_value'));
-			$process = $process[0]['module_value'];
+			$module = gg_module::get_id($div,array('module_value','module_code'));
+			$module = $process[0];
 
 			$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
 			$user = $user[0];
 
+			$data['scan_id'] = $scan;
 			$data['user_id'] = $user['ID'];
 			$data['operator'] = $user['name'];
-			$data['proses'] = $process;
+			$data['proses'] = $module['module_value'];
+			$data['input'] = $module['module_code']=='0'?false:true;
 
 		}else{
 			die(_error::_alert_db('Bagian User Undefined !!!'));
