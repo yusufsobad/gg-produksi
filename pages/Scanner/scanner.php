@@ -160,7 +160,7 @@ class _production{
 		$code = self::_check_codeScan($scan);
 
 		// Check id scan Smart Container
-		if($code=='SC' && in_array($divisi,array(1,2,5))){
+		if($code=='SC' && in_array($divisi,array(1,2,6))){
 			$sc_db = self::_check_scPosition($scan);
 
 			self::_add_production($scan);
@@ -176,10 +176,24 @@ class _production{
 		if($code=='SC' && $divisi==3){
 			$sc_db = self::_check_scPosition($scan);
 
-			sobad_db::_update_single($default['work_id'],'ggk-production',array(
-				'scan_date'		=> date('Y-m-d H:i:s'),
-				'scan_id'		=> $scan,
+			//Check Jumlah Scan
+			$qty = gg_production::get_all(array('ID'),"AND _reff='".$default['work_id']."'");
+			$qty = count($qty);
+
+			if($qty>=6){
+				die(_error::_alert_db("Jumlah Smart Container Max !!!"));
+			}
+
+			sobad_db::_update_single($sc_db['position'],'ggk-production',array(
+				'_reff'		=> $default['work_id'],
 			));
+		}
+
+		// Check id scan Smart Container
+		if($code=='IP' && in_array($divisi,array(3,4,6))){
+			$sc_db = self::_check_scPosition($scan);
+
+			self::_add_production($scan);
 
 			if($divisi!=1){
 				sobad_db::_update_single($sc_db['position'],'ggk-production',array(
@@ -198,14 +212,15 @@ class _production{
 		if(!empty($div)){
 			$nik = (int) substr($scan,2,4);
 
-			$process = gg_module::get_id($div,array('meta_value'));
-			$process = $process[0]['meta_value'];
+			$process = gg_module::get_id($div,array('module_value'));
+			$process = $process[0]['module_value'];
 
 			$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
 			$user = $user[0];
 
 			$data['user_id'] = $user['ID'];
 			$data['operator'] = $user['name'];
+			$data['proses'] = $process;
 
 		}else{
 			die(_error::_alert_db('Bagian User Undefined !!!'));
