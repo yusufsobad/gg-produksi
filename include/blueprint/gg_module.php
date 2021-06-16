@@ -15,7 +15,7 @@ class gg_module extends _class{
 	private static function _check_type($type=''){
 		if(!empty($type)){
 			$args = array(
-				'process',
+				'scanner',
 				'divisi',
 				'smart_container',
 			);

@@ -68,14 +68,6 @@ class divisi_admin extends _page{
 				'icon'	=> '',
 				'label'	=> $qty.' Orang'
 			);
-			
-			$hapus = array(
-				'ID'	=> 'del_'.$id,
-				'func'	=> '_delete',
-				'color'	=> 'red',
-				'icon'	=> 'fa fa-trash',
-				'label'	=> 'hapus',
-			);
 
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
@@ -108,14 +100,7 @@ class divisi_admin extends _page{
 					'10%',
 					edit_button($edit),
 					false
-				),
-				'Hapus'			=> array(
-					'center',
-					'10%',
-					hapus_button($hapus),
-					false
-				)
-				
+				),				
 			);
 		}
 		
@@ -166,25 +151,6 @@ class divisi_admin extends _page{
 	// ----------------------------------------------------------
 	// Form data category -----------------------------------
 	// ----------------------------------------------------------
-	public static function add_form($func='',$load='sobad_portlet'){
-		$vals = array(0,'',0,'divisi');
-		$vals = array_combine(self::_array(),$vals);
-
-		if($func=='add_0'){
-			$func = '_add_db';
-		}
-		
-		$args = array(
-			'title'		=> 'Tambah data bagian',
-			'button'	=> '_btn_modal_save',
-			'status'	=> array(
-				'link'		=> $func,
-				'load'		=> $load
-			)
-		);
-		
-		return self::_data_form($args,$vals);
-	}
 
 	protected static function edit_form($vals=array()){
 		$check = array_filter($vals);
@@ -253,7 +219,7 @@ class divisi_admin extends _page{
 		$id = str_replace('detail_', '', $id);
 		intval($id);
 
-		$args = sobad_user::get_all(array('picture','no_induk','name','divisi','no_pasok'),"AND divisi='$id'");
+		$args = gg_employee::get_all(array('picture','no_induk','name','divisi','no_pasok'),"AND divisi='$id'");
 
 		$data['class'] = '';
 		$data['table'] = array();
@@ -280,7 +246,7 @@ class divisi_admin extends _page{
 				),
 				'ID'		=> array(
 					'left',
-					'5%',
+					'10%',
 					employee_admin::_ID_card($val['divisi'],$val['no_induk'],$val['no_pasok']),
 					true
 				),
@@ -288,6 +254,12 @@ class divisi_admin extends _page{
 					'left',
 					'auto',
 					$val['name'],
+					true
+				),
+				'Bagian'		=> array(
+					'left',
+					'15%',
+					$val['module_value_divi'],
 					true
 				)
 			);

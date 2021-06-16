@@ -1,7 +1,7 @@
 <?php
 
-class process_admin extends _page{
-	protected static $object = 'process_admin';
+class scanner_admin extends _page{
+	protected static $object = 'scanner_admin';
 
 	protected static $table = 'gg_module';
 
@@ -15,9 +15,7 @@ class process_admin extends _page{
 			'module_value',
 			'module_note',
 			'module_key',
-			'module_reff',
-			'module_unit',
-			'module_nominal'
+			'module_code'
 		);
 
 		return $args;
@@ -27,7 +25,7 @@ class process_admin extends _page{
 		$data = array();
 		$args = self::_array();
 		
-		$kata = '';$where = "AND module_key='process'";
+		$kata = '';$where = "AND module_key='scanner'";
 		if(parent::$search){
 			$src = parent::like_search($args,$where);	
 			$cari = $src[0];
@@ -62,19 +60,6 @@ class process_admin extends _page{
 				'label'	=> 'edit'
 			);
 			
-			$hapus = array(
-				'ID'	=> 'del_'.$id,
-				'func'	=> '_delete',
-				'color'	=> 'red',
-				'icon'	=> 'fa fa-trash',
-				'label'	=> 'hapus',
-			);
-
-			$reff = gg_module::get_id($val['module_reff'],array('module_value'));
-			$check = array_filter($reff);
-
-			$reff = empty($check)?'':$reff[0]['module_value'];
-			
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
 				'No'		=> array(
@@ -83,10 +68,16 @@ class process_admin extends _page{
 					$no,
 					true
 				),
+				'Kode'		=> array(
+					'left',
+					'10%',
+					$val['module_code'],
+					true
+				),
 				'Nama'		=> array(
 					'left',
 					'auto',
-					'Stock '.$val['module_value'],
+					$val['module_value'],
 					true
 				),
 				'Regex'		=> array(
@@ -95,25 +86,12 @@ class process_admin extends _page{
 					$val['module_note'],
 					true
 				),
-				'divisi'		=> array(
-					'left',
-					'15%',
-					$reff,
-					true
-				),
 				'Edit'			=> array(
 					'center',
 					'10%',
 					edit_button($edit),
 					false
 				),
-				'Hapus'			=> array(
-					'center',
-					'10%',
-					hapus_button($hapus),
-					false
-				)
-				
 			);
 		}
 		
@@ -122,11 +100,11 @@ class process_admin extends _page{
 
 	private static function head_title(){
 		$args = array(
-			'title'	=> 'Process <small>data process</small>',
+			'title'	=> 'Scanner <small>data scanner</small>',
 			'link'	=> array(
 				0	=> array(
 					'func'	=> self::$object,
-					'label'	=> 'process'
+					'label'	=> 'scanner'
 				)
 			),
 			'date'	=> false
@@ -139,9 +117,9 @@ class process_admin extends _page{
 		$data = self::table();
 		
 		$box = array(
-			'label'		=> 'Data process',
+			'label'		=> 'Data scanner',
 			'tool'		=> '',
-			'action'	=> parent::action(),
+			'action'	=> '',
 			'func'		=> 'sobad_table',
 			'data'		=> $data
 		);
@@ -164,25 +142,6 @@ class process_admin extends _page{
 	// ----------------------------------------------------------
 	// Form data category -----------------------------------
 	// ----------------------------------------------------------
-	public static function add_form($func='',$load='sobad_portlet'){
-		$vals = array(0,'',0,'process',0,'pcs',0);
-		$vals = array_combine(self::_array(),$vals);
-
-		if($func=='add_0'){
-			$func = '_add_db';
-		}
-		
-		$args = array(
-			'title'		=> 'Tambah data stock',
-			'button'	=> '_btn_modal_save',
-			'status'	=> array(
-				'link'		=> $func,
-				'load'		=> $load
-			)
-		);
-		
-		return self::_data_form($args,$vals);
-	}
 
 	protected static function edit_form($vals=array()){
 		$check = array_filter($vals);
@@ -191,7 +150,7 @@ class process_admin extends _page{
 		}
 		
 		$args = array(
-			'title'		=> 'Edit data stock',
+			'title'		=> 'Edit data scanner',
 			'button'	=> '_btn_modal_save',
 			'status'	=> array(
 				'link'		=> '_update_db',
@@ -208,11 +167,6 @@ class process_admin extends _page{
 			return '';
 		}
 
-		$reff = gg_module::_gets('divisi',array('ID','module_value'));
-		$reff = convToOption($reff,'ID','module_value');
-
-		$reff[0] = 'Tidak Ada';
-
 		$data = array(
 			0 => array(
 				'func'			=> 'opt_hidden',
@@ -225,15 +179,6 @@ class process_admin extends _page{
 				'type'			=> 'hidden',
 				'key'			=> 'module_key',
 				'value'			=> $vals['module_key']
-			),
-			array(
-				'func'			=> 'opt_select',
-				'data'			=> $reff,
-				'key'			=> 'module_reff',
-				'label'			=> 'reff divisi',
-				'class'			=> 'input-circle',
-				'select'		=> $vals['module_reff'],
-				'status'		=> ''
 			),
 			array(
 				'func'			=> 'opt_input',

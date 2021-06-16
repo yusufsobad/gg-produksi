@@ -32,7 +32,7 @@
 		// Information data table
 		
 		$table = array(
-				'ggk-detal'		=> self::ggk_detal(),
+				'ggk-detail'		=> self::ggk_detail(),
 				'ggk-employee'		=> self::ggk_employee(),
 				'ggk-module'		=> self::ggk_module(),
 				'ggk-post'		=> self::ggk_post(),
@@ -44,7 +44,7 @@
 	}
 		
 
-		private static function ggk_detal(){
+		private static function ggk_detail(){
 			$list = array(
 				'ID'	=> 0,
 				'process_id'	=> 0,
@@ -73,8 +73,7 @@
 			$list = array(
 				'module_key'	=> '',
 				'module_value'	=> '',
-				'module_nominal'	=> 0,
-				'module_unit'	=> '',
+				'module_code'	=> '',
 				'module_note'	=> '',
 				'module_reff'	=> 0,	
 			);

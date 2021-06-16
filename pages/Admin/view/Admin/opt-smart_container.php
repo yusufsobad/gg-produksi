@@ -15,6 +15,7 @@ class sContainer_admin extends _page{
 			'module_value',
 			'module_note',
 			'module_key',
+			'module_reff'
 		);
 
 		return $args;
@@ -66,6 +67,19 @@ class sContainer_admin extends _page{
 				'icon'	=> 'fa fa-trash',
 				'label'	=> 'hapus',
 			);
+
+			$divisi = '-';$nik = '-';$name = '-';$time = '-';
+			if($val['module_reff']>0){
+				$work = gg_production::get_id($val['module_reff'],array('user_id','divisi_id','scan_date'));
+				$work = $work[0];
+
+				$divisi = $work['module_value_divi'];
+				$nik = employee_admin::_ID_card($work['divisi_user'],$work['no_induk_user'],$work['no_pasok_user']);
+				$name = $work['name_user'];
+				
+				$date = strtotime($work['scan_date']);
+				$time = date('H:i',$date);
+			}
 			
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
@@ -77,8 +91,32 @@ class sContainer_admin extends _page{
 				),
 				'Kode'		=> array(
 					'left',
-					'auto',
+					'10%',
 					$val['module_value'],
+					true
+				),
+				'Bagian'		=> array(
+					'left',
+					'10%',
+					$divisi,
+					true
+				),
+				'ID card'		=> array(
+					'left',
+					'10%',
+					$nik,
+					true
+				),
+				'Nama'		=> array(
+					'left',
+					'auto',
+					$name,
+					true
+				),
+				'Waktu Scan'	=> array(
+					'left',
+					'10%',
+					$time,
 					true
 				),
 				'Edit'			=> array(
@@ -145,7 +183,7 @@ class sContainer_admin extends _page{
 	// Form data category -----------------------------------
 	// ----------------------------------------------------------
 	public static function add_form($func='',$load='sobad_portlet'){
-		$vals = array(0,'',0,'smart_container');
+		$vals = array(0,'',0,'smart_container',0);
 		$vals = array_combine(self::_array(),$vals);
 
 		if($func=='add_0'){

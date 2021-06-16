@@ -47,11 +47,11 @@ function setting_admin(){
 		'child'		=> null
 	);
 
-	$args['process'] = array(
+	$args['scanner'] = array(
 		'status'	=> '',
 		'icon'		=> '',
-		'label'		=> 'Process',
-		'func'		=> 'process_admin',
+		'label'		=> 'Scanner',
+		'func'		=> 'scanner_admin',
 		'child'		=> null
 	);
 
