@@ -3,6 +3,7 @@ $sobad_data = array(
 	'reg_page'			=> array(),
 	'reg_sidebar'		=> array(),
 	'reg_load'			=> array(),
+	'reg_theme'			=> '',
 	'reg_script_css'	=> array(),
 	'reg_script_js'		=> array(),
 	'reg_script_head'	=> array(),
@@ -18,7 +19,7 @@ function reg_hook($name,$arr = array()){
 	global $sobad_data;
 	
 	if(isset($sobad_data[$name])){
-		if($name=='reg_exe'){
+		if($name=='reg_exe' || $name=='reg_theme'){
 			$sobad_data[$name] = $arr;
 		}else{
 			foreach($arr as $key => $val){
@@ -56,12 +57,9 @@ class sobad_page extends _error{
 			if($val['home']==true){
 				$reg_page['Home'] = array(
 					'page'	=> $val['page'],
-					'home'	=> true,
+					'theme'	=> isset($val['theme'])?$val['theme']:'default',
+					'home'	=> true
 				);
-
-				if(isset($val['theme'])){
-					$reg_page['Home']['theme'] = $val['theme'];
-				}
 			}
 		}
 
