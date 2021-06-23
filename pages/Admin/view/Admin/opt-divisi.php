@@ -219,7 +219,7 @@ class divisi_admin extends _page{
 		$id = str_replace('detail_', '', $id);
 		intval($id);
 
-		$args = gg_employee::get_all(array('picture','no_induk','name','divisi','no_pasok'),"AND divisi='$id'");
+		$args = gg_employee::get_all(array('picture','no_induk','name','divisi','no_meja'),"AND divisi='$id'");
 
 		$data['class'] = '';
 		$data['table'] = array();
@@ -247,7 +247,7 @@ class divisi_admin extends _page{
 				'ID'		=> array(
 					'left',
 					'10%',
-					employee_admin::_ID_card($val['divisi'],$val['no_induk'],$val['no_pasok']),
+					employee_admin::_ID_card($val['divisi'],$val['no_induk']),
 					true
 				),
 				'Nama'		=> array(
@@ -260,6 +260,12 @@ class divisi_admin extends _page{
 					'left',
 					'15%',
 					$val['module_value_divi'],
+					true
+				),
+				'No Meja'		=> array(
+					'left',
+					'10%',
+					$val['no_meja'],
 					true
 				)
 			);

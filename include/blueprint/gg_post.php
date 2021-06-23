@@ -12,8 +12,4 @@ class gg_post extends _class{
 
 		return $args;
 	}
-
-	public static function send_data($actual=0,$reject=0){
-		$length = strlen($scan);
-	}
 }

@@ -106,6 +106,20 @@ class sobad_asset{
 		}
 	}
 
+	public static function ascii_to_hexa($ascii=''){
+		if(empty($ascii)){
+			return '';
+		}
+		
+		$hex = '';
+		for ($i = 0; $i < strlen($ascii); $i++) {
+			$byte = strtoupper(dechex(ord($ascii{$i})));
+			$byte = str_repeat('0', 2 - strlen($byte)).$byte;
+			$hex .= $byte;
+		}
+		return $hex;
+	}
+
 	public static function hexa_to_ascii($str=''){
 		if(empty($str)){
 			return '';

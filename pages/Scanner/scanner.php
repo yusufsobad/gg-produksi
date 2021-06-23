@@ -13,7 +13,7 @@ class _production{
 			'user_id'	=> 0,
 			'operator'	=> '-',
 			'proses'	=> '-',
-			'batch'		=> '-',
+			'pasok'		=> 0,
 			'meja'		=> '-',
 		);
 
@@ -46,7 +46,7 @@ class _production{
 				break;
 			}
 
-			$regx = "/^$regx/i";
+			$regx = "/$regx/i";
 			if(preg_match($regx, $scan)){
 				$code = $vl['module_code'];
 				break;
@@ -78,6 +78,45 @@ class _production{
 		return array('index' => $sc_db['ID'], 'position' => $sc_db['module_reff']);
 	}
 
+	private static function _add_detail($scan='',$max=1){
+		$default = self::$default;
+
+		// check max scann
+		$check = gg_production::get_id($default['work_id'],array('ID','process_id'));
+		$check = count($check);
+
+		if($check>=$max){
+			die(_error::_alert_db('Maximal scan!!!'));
+		}
+
+		$q = sobad_db::_insert_table('ggk-detail',array(
+				'process_id'	=> $default['work_id'],
+				'scan_detail'	=> $scan,
+		));
+
+		return $q;
+	}
+
+	private static function _add_operator($scan=''){
+		$default = self::$default;
+
+		$div = substr($scan,0,2);
+		$meja = substr($scan, 2,4);
+		$user = gg_employee::get_all(array('ID'),"AND divisi='$div' AND no_meja='$meja'");
+		$check = array_filter($user);
+		if(empty($check)){
+			die(_error::_alert_db('Operator undefined!!!'));
+		}
+
+		$q = sobad_db::_update_single($default['work_id'],'ggk-production',array(
+			'operator_id'		=> 	$user[0]['ID']
+		));
+
+		$q = self::_add_detail($scan);
+
+		return $q;
+	}
+
 	private static function _add_production($scan=''){
 		$default = self::$default;
 
@@ -93,6 +132,7 @@ class _production{
 		$default['work_id'] = $q;
 
 		self::$default = $default;
+		return $q;
 	}
 
 	public static function scan_code($scan='',$data=array()){
@@ -112,7 +152,7 @@ class _production{
 
 		}else{
 			// Check user id sudah scan atau belum
-			if(!preg_match("/[0-9]{8}/", $scan)){
+			if(!preg_match("/[0-9]{6}/", $scan)){
 				die(_error::_alert_db("Scan User terlebih dahulu !!!"));
 			}
 		}
@@ -145,7 +185,7 @@ class _production{
 		$default = self::$default;
 
 		// Check id scan User
-		if(preg_match("/[0-9]{8}/", $scan)){
+		if(preg_match("/[0-9]{6}/", $scan)){
 			self::_check_idCard($scan);
 			return true;
 		}
@@ -160,48 +200,60 @@ class _production{
 		$divisi = empty($check)?0:$divisi[0]['divisi'];
 		$code = self::_check_codeScan($scan);
 
+		// Check id scan Operator
+		if($code=='OP' && in_array($divisi,array(6,7))){
+			$idx = self::_add_operator($scan);
+		}
+
 		// Check id scan Smart Container
-		if($code=='SC' && in_array($divisi,array(1,2,6))){
+		if($code=='SC' && $divisi==6){
 			$sc_db = self::_check_scPosition($scan);
+			$idx = self::_add_production($scan);
+		}
 
-			self::_add_production($scan);
+		// Check id scan Smart Container
+		if($code=='SC' && $divisi==7){
+			$sc_db = self::_check_scPosition($scan);
+			$idx = self::_add_production($scan);
+		}
 
-			if($divisi!=1){
-				sobad_db::_update_single($sc_db['position'],'ggk-production',array(
-					'_reff'		=> $default['work_id'],
-				));
-			}
+		// Check id scan Baki
+		if($code=='IP' && in_array($divisi,array(3,4,5))){
+			$sc_db = self::_check_scPosition($scan);
+			$idx = self::_add_production($scan);
 		}
 
 		// Check id scan Smart Container
 		if($code=='SC' && $divisi==3){
-			$sc_db = self::_check_scPosition($scan);
-
-			//Check Jumlah Scan
-			$qty = gg_production::get_all(array('ID'),"AND _reff='".$default['work_id']."'");
-			$qty = count($qty);
-
-			if($qty>=6){
-				die(_error::_alert_db("Jumlah Smart Container Max !!!"));
-			}
-
-			sobad_db::_update_single($sc_db['position'],'ggk-production',array(
-				'_reff'		=> $default['work_id'],
-			));
+			$idx = self::_add_detail($scan,6);
 		}
 
-		// Check id scan Smart Container
-		if($code=='IP' && in_array($divisi,array(3,4,6))){
-			$sc_db = self::_check_scPosition($scan);
-
-			self::_add_production($scan);
-
-			if($divisi!=1){
-				sobad_db::_update_single($sc_db['position'],'ggk-production',array(
-					'_reff'		=> $default['work_id'],
-				));
-			}
+		// Check id scan Banderoll
+		if($code=='BP' && $divisi==5){
+			$idx = self::_add_detail($scan,10);
 		}
+		
+// Crash --> Check ulang
+		// Check id scan Ball
+		if($code=='BL' && $divisi==8){
+			$idx = self::_add_production($scan);
+		}
+
+		// Check id scan Banderoll
+		if($code=='BP' && $divisi==8){
+			$idx = self::_add_detail($scan,20);
+		}
+
+		// Check id scan Ball
+		if($code=='BX' && $divisi==8){
+			$idx = self::_add_production($scan);
+		}
+
+		// Check id scan Banderoll
+		if($code=='BL' && $divisi==8){
+			$idx = self::_add_detail($scan,20);
+		}
+// End Crash
 	}
 
 	private static function _check_idCard($scan=''){

@@ -2,13 +2,13 @@
 (!defined('DEFPATH'))?exit:'';
 
 $args = array();
-$args['Login'] = array(
-	'page'	=> 'login_gg',
-	'home'	=> true
+$args['login'] = array(
+	'page'	=> 'login_system',
+	'home'	=> false
 );
 reg_hook('reg_page',$args);
 
-class login_gg{
+class login_system{
 
 	public function _reg(){
 		$GLOBALS['body'] = 'login';
@@ -63,7 +63,7 @@ class login_gg{
 			jQuery(document).ready(function() {     
 			  Metronic.init(); // init metronic core components
 			  Layout.init(); // init current layout
-			  Login.init("login_gg");
+			  Login.init("login_system");
 			  Demo.init();
 			       // init background slide images
 			       $.backstretch([
@@ -93,7 +93,7 @@ class login_gg{
 		<!-- BEGIN LOGIN -->
 		<div class="content">
 		<?php
-			print(user_login::login('login_gg'));
+			print(user_login::login('login_system'));
 		?>
 		</div>
 		<!-- END LOGIN -->

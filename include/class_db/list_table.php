@@ -62,7 +62,7 @@
 				'picture'	=> 0,
 				'divisi'	=> 0,
 				'no_induk'	=> 0,
-				'no_pasok'	=> 0,
+				'no_meja'	=> 0,
 				'status'	=> 0,	
 			);
 			
@@ -98,10 +98,10 @@
 				'divisi_id'	=> 0,
 				'scan_date'	=> date('Y-m-d H:i:s'),
 				'p_total'	=> 0,
+				'p_receh'	=> 0,
 				'p_afkir'	=> 0,
 				'scan_id'	=> '',
-				'batch_id'	=> 0,
-				'_reff'	=> 0,	
+				'operator_id'	=> 0,	
 			);
 			
 			return $list;

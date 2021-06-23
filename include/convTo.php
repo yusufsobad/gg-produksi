@@ -53,6 +53,7 @@ function sobad_convToPdf($args = array()){
 	try{
 		$html2pdf = new HTML2PDF($pos, $lay, 'en', true, 'UTF-8',array(0,0,0,0));
 		$html2pdf->pdf->SetDisplayMode('fullpage');
+		$html2pdf->setTestTdInOnePage(false);
 		$html2pdf->writeHTML($content, isset($_GET['vuehtml']));
 		$html2pdf->Output($nama.".pdf");
 	}

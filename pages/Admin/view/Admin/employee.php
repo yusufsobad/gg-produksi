@@ -18,7 +18,7 @@ class employee_admin extends _file_manager{
 			'ID',
 			'name',
 			'no_induk',
-			'no_pasok',
+			'no_meja',
 			'divisi',
 			'picture',
 		);
@@ -26,9 +26,9 @@ class employee_admin extends _file_manager{
 		return $args;
 	}
 
-	public static function _ID_card($div=0,$ind=0,$pas=0){
+	public static function _ID_card($div=0,$ind=0){
 		$ind = sprintf('%04d',$ind);
-		return $div.$ind.$pas;
+		return $div.$ind;
 	}
 
 	protected static function table(){
@@ -121,10 +121,10 @@ class employee_admin extends _file_manager{
 					$val['name'],
 					true
 				),
-				'Pasok'		=> array(
+				'Meja'		=> array(
 					'right',
-					'7%',
-					sprintf('%02d',$val['no_pasok']),
+					'10%',
+					sprintf('%03d',$val['no_meja']),
 					true
 				),
 				'Edit'		=> array(
@@ -378,9 +378,9 @@ class employee_admin extends _file_manager{
 				'func'			=> 'opt_input',
 				'type'			=> 'text',
 				'key'			=> 'no_pasok',
-				'label'			=> 'Pasok Ke',
+				'label'			=> 'Meja Ke',
 				'class'			=> 'input-circle',
-				'value'			=> $vals['no_pasok'],
+				'value'			=> $vals['no_meja'],
 				'data'			=> ''
 			),
 			array(
@@ -391,7 +391,6 @@ class employee_admin extends _file_manager{
 				'label'			=> 'Bagian',
 				'class'			=> 'input-circle',
 				'select'		=> $vals['divisi'],
-				'status'		=> $vals['ID']==0?'':'disabled'
 			),
 		);	
 
