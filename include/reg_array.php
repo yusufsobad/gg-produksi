@@ -56,8 +56,12 @@ class sobad_page extends _error{
 			if($val['home']==true){
 				$reg_page['Home'] = array(
 					'page'	=> $val['page'],
-					'home'	=> true
+					'home'	=> true,
 				);
+
+				if(isset($val['theme'])){
+					$reg_page['Home']['theme'] = $val['theme'];
+				}
 			}
 		}
 
