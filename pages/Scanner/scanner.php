@@ -85,7 +85,7 @@ class _production{
 		$product = gg_production::get_id($default['work_id'],array('ID','process_id'));
 		$check = count($product);
 
-		if($check==1 && empty($product[0]['work_id'])){
+		if($check==1 && empty($product[0]['process_id'])){
 			$check = 0;
 		}
 
@@ -189,7 +189,7 @@ class _production{
 			die(_error::_alert_db("Scan Operator terlebih dahulu !!!"));
 		}
 
-		sobad_db::_update_single($data['work_id'],array(
+		sobad_db::_update_single($data['work_id'],'ggk-production',array(
 			'p_total'		=> $quantity,
 			'p_receh'		=> ($quantity-200),
 			'p_afkir'		=> $afkir
