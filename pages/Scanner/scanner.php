@@ -109,6 +109,7 @@ class _production{
 		}
 
 		$q = sobad_db::_update_single($default['work_id'],'ggk-production',array(
+			'ID'				=> $default['work_id'],
 			'operator_id'		=> 	$user[0]['ID']
 		));
 
