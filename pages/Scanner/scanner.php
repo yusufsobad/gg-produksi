@@ -100,7 +100,7 @@ class _production{
 	private static function _add_operator($scan=''){
 		$default = self::$default;
 
-		$div = (int) substr($scan,0,2); 
+		$div = self::_check_divisi($scan); 
 		$meja = (int) substr($scan, 2,4); 
 		$user = gg_employee::get_all(array('ID'),"AND divisi='$div' AND no_meja='$meja'");
 		$check = array_filter($user);
