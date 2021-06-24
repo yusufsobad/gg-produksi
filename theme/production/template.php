@@ -1,5 +1,6 @@
 <?php
+(!defined('THEMEPATH'))?exit:'';
 
-abstract class production_template(){
-	
+abstract class production_template{
+
 }

@@ -4,7 +4,8 @@
 $args = array();
 $args['login'] = array(
 	'page'	=> 'login_system',
-	'home'	=> false
+	'home'	=> false,
+	'theme'	=> 'default'
 );
 reg_hook('reg_page',$args);
 
@@ -166,7 +167,7 @@ class login_system{
 		setcookie('id','');
 		setcookie('name','');		
 
-		return '/'.URL;
+		return '/'.URL.'/login';
 	}	
 
 }

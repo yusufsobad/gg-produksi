@@ -23,6 +23,7 @@ class production_gg{
 
 	private function _script(){
 		$script = new vendor_script();
+		$theme = new production_script;
 
 		// url script jQuery - Vendor
 		$get_jquery = $script->_get_('_js_core',array('jquery-core'));
@@ -30,7 +31,8 @@ class production_gg{
 
 		// url script css ----->
 		$css = array_merge(
-				$script->_get_('_css_global')
+				$script->_get_('_css_global'),
+				$theme->_get_('_css_page_style')
 			);
 		
 		// url script css ----->
@@ -51,7 +53,7 @@ class production_gg{
 	private function load_script(){
 		?>
 			<script>
-			
+				$("body.production").css("height",$(window).height());
 			</script>
 		<?php
 	}

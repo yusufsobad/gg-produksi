@@ -1,4 +1,7 @@
 <?php
+(!defined('THEMEPATH'))?exit:'';
+
+require dirname(__FILE__).'/script.php';
 
 class production_layout extends production_template{
 
@@ -9,10 +12,10 @@ class production_layout extends production_template{
 
 		?>
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-30 max-height">
 					<?php self::information() ;?>
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-70 max-height">
 					<?php self::position() ;?>
 				</div>
 			</div>
@@ -21,12 +24,15 @@ class production_layout extends production_template{
 
 	private static function information(){
 		?>
-			<div class="box-information">
+			<div class="box-information box-shadow">
 				<div class="detail-information">
 					<div class="title-production">
-						<h1> Data <span>Produksi</span></h1>
+						<h2> Data <span>Produksi</span></h2>
 					</div>
 					<div class="detail-production">
+						
+					</div>
+					<div class="chart-production">
 						
 					</div>
 					<div class="total-production">
@@ -44,13 +50,15 @@ class production_layout extends production_template{
 					
 				</div>
 				<div id="layout-information">
-					<div class="title-production">
-						<h3>
-							<span>Urutan Proses</span>
-						</h3>
-					</div>
-					<div class="detail-position">
-						
+					<div class="box-info-detail box-shadow">
+						<div class="title-production">
+							<h3>
+								<span>Urutan Proses</span>
+							</h3>
+						</div>
+						<div class="detail-position">
+							
+						</div>
 					</div>
 				</div>
 			</div>

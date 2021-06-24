@@ -12,11 +12,11 @@ class control_gg{
 
 	public function _reg(){
 		$url = get_page_url();
-		$url = empty($url)?'login':$url;
+		$url = empty($url)?'production':$url;
 
 		if(!isset($_SESSION[_prefix.'page'])){
-			$pages = new sobad_page($url);
-			$pages->_get();
+			$object = new sobad_page($url);
+			$object->_get();
 		}
 	}
 }

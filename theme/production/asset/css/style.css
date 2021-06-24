@@ -1,0 +1,126 @@
+/* General */
+
+.col-md-30{
+	float: left;
+	width: 30%;
+}
+
+.col-md-70{
+	float: left;
+	width: 70%;
+}
+
+.col-md-30,.col-md-70{
+	position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.box-shadow{
+	box-shadow: 0px 6px 10px #ddd, 6px 0px 10px #ddd, -6px 0px 10px #ddd;
+}
+
+/* -------- End -------- */
+
+
+
+
+/* primary layout */
+
+body.production{
+	width: 100%;
+	padding: 15px;
+}
+
+body.production .max-height{
+	height: 100%;
+}
+
+body.production .row {
+    margin: 0px;
+    height: 100%;
+}
+
+/* -------- End -------- */
+
+
+
+
+/* Information layout */
+
+.box-information {
+    height: inherit;
+    border-radius: 25px;
+}
+
+.box-information .detail-information {
+    padding: 25px;
+    height: inherit;
+}
+
+.title-production>h2 {
+	color: #333;
+	font-weight: 700;
+	margin-top: 0px;
+}
+
+.title-production>h2>span {
+	color: #bc1b1b !important;
+}
+
+.detail-information .detail-production {
+    height: 40%;
+}
+
+.detail-information .chart-production {
+    height: 30%;
+}
+
+.detail-information .total-production {
+    height: 20%;
+}
+
+/* -------- End -------- */
+
+
+
+/* Position layout */
+
+.box-position {
+    width: 100%;
+    height: inherit;
+    position: relative;
+}
+
+div#layout-position {
+    width: 100%;
+    height: inherit;
+    position: relative;
+}
+
+div#layout-information {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.box-info-detail {
+    width: 250px;
+    border-radius: 15px;
+}
+
+.box-info-detail>.title-production {
+    background-color: #bc1b1b;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.title-production>h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 20px;
+}
+
+/* -------- End -------- */
