@@ -179,6 +179,18 @@ class _production{
 			}
 		}
 
+		$product = sobad_production::get_id($data['work_id'],array('operator_id'));
+		if($product[0]['operator_id']==0){
+			die(_error::_alert_db("Scan Operator terlebih dahulu !!!"));
+		}
+
+		sobad_db::_update_single($data['work_id'],array(
+			'p_total'		=> $quantity,
+			'p_receh'		=> ($quantity-200),
+			'p_afkir'		=> $afkir
+		));
+
+		return $data;
 	}
 
 	private static function _check_scanid($scan=''){
@@ -207,20 +219,20 @@ class _production{
 
 		// Check id scan Smart Container
 		if($code=='SC' && $divisi==6){
-			$sc_db = self::_check_scPosition($scan);
 			$idx = self::_add_production($scan);
+			$sc_db = self::_check_scPosition($scan);
 		}
 
 		// Check id scan Smart Container
 		if($code=='SC' && $divisi==7){
-			$sc_db = self::_check_scPosition($scan);
 			$idx = self::_add_production($scan);
+			$sc_db = self::_check_scPosition($scan);
 		}
 
 		// Check id scan Baki
 		if($code=='IP' && in_array($divisi,array(3,4,5))){
-			$sc_db = self::_check_scPosition($scan);
 			$idx = self::_add_production($scan);
+			$sc_db = self::_check_scPosition($scan);
 		}
 
 		// Check id scan Smart Container
@@ -232,7 +244,7 @@ class _production{
 		if($code=='BP' && $divisi==5){
 			$idx = self::_add_detail($scan,10);
 		}
-		
+
 // Crash --> Check ulang
 		// Check id scan Ball
 		if($code=='BL' && $divisi==8){
