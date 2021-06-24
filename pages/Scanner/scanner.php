@@ -197,9 +197,11 @@ class _production{
 		$default = self::$default;
 
 		// Check id scan User
-		if(preg_match("/[0-9]{6}/", $scan)){
-			self::_check_idCard($scan);
-			return true;
+		if(strlen($scan)<=6){
+			if(preg_match("/[0-9]{6}/", $scan)){
+				self::_check_idCard($scan);
+				return true;
+			}
 		}
 
 		if(empty(self::$default['user_id'])){
