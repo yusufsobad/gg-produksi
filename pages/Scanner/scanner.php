@@ -100,8 +100,8 @@ class _production{
 	private static function _add_operator($scan=''){
 		$default = self::$default;
 
-		$div = substr($scan,0,2);
-		$meja = substr($scan, 2,4);
+		$div = (int) substr($scan,0,2);
+		$meja = (int) substr($scan, 2,4);
 		$user = gg_employee::get_all(array('ID'),"AND divisi='$div' AND no_meja='$meja'");
 		$check = array_filter($user);
 		if(empty($check)){
@@ -217,6 +217,8 @@ class _production{
 		// Check id scan Operator
 		if($code=='OP' && in_array($divisi,array(6,7))){
 			$idx = self::_add_operator($scan);
+			$default['pasok'] = substr($scan,6);
+			$default['meja'] = substr($scan,2,4);
 		}
 
 		// Check id scan Smart Container
@@ -268,6 +270,8 @@ class _production{
 			$idx = self::_add_detail($scan,20);
 		}
 // End Crash
+
+		self::$default = $default;
 	}
 
 	private static function _check_idCard($scan=''){
