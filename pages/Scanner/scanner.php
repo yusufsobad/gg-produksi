@@ -179,7 +179,7 @@ class _production{
 			}
 		}
 
-		$product = sobad_production::get_id($data['work_id'],array('operator_id'));
+		$product = gg_production::get_id($data['work_id'],array('operator_id'));
 		if($product[0]['operator_id']==0){
 			die(_error::_alert_db("Scan Operator terlebih dahulu !!!"));
 		}
