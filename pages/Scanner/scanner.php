@@ -82,8 +82,12 @@ class _production{
 		$default = self::$default;
 
 		// check max scann
-		$check = gg_production::get_id($default['work_id'],array('ID','process_id'));
-		$check = count($check);
+		$product = gg_production::get_id($default['work_id'],array('ID','process_id'));
+		$check = count($product);
+
+		if($check==1 && empty($product[0]['work_id'])){
+			$check = 0;
+		}
 
 		if($check>=$max){
 			die(_error::_alert_db('Maximal scan!!!'));
