@@ -23,6 +23,8 @@ class production_layout extends production_template{
 	}
 
 	private static function information(){
+		$data = self::$data;
+		
 		?>
 			<div class="box-information box-shadow">
 				<div class="detail-information">
@@ -30,13 +32,13 @@ class production_layout extends production_template{
 						<h2> Data <span>Produksi</span></h2>
 					</div>
 					<div class="detail-production">
-						
+						<?php self::_process($data['process']) ;?>
 					</div>
 					<div class="chart-production">
-						
+						<?php self::_chart($data['chart']) ;?>
 					</div>
 					<div class="total-production">
-						
+						<?php self::_information($data['total']) ;?>
 					</div>
 				</div>
 			</div>
@@ -44,10 +46,12 @@ class production_layout extends production_template{
 	}
 
 	private static function position(){
+		$data = self::$data;
+
 		?>
 			<div class="box-position">
 				<div id="layout-position">
-					
+					<?php self::_block($data['position']) ;?>
 				</div>
 				<div id="layout-information">
 					<div class="box-info-detail box-shadow">
@@ -57,7 +61,7 @@ class production_layout extends production_template{
 							</h3>
 						</div>
 						<div class="detail-position">
-							
+							<?php self::_list($data['list']) ;?>
 						</div>
 					</div>
 				</div>

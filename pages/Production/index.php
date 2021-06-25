@@ -18,7 +18,8 @@ class production_gg{
 	}
 
 	public function _page(){
-		production_layout::load_here();
+		$data = data_production::_get_data();
+		production_layout::load_here($data);
 	}
 
 	private function _script(){
@@ -32,12 +33,14 @@ class production_gg{
 		// url script css ----->
 		$css = array_merge(
 				$script->_get_('_css_global'),
+				$script->_get_('_css_chart'),
 				$theme->_get_('_css_page_style')
 			);
 		
 		// url script css ----->
 		$js = array_merge(
-				$script->_get_('_js_core')
+				$script->_get_('_js_core'),
+				$script->_get_('_js_chart')
 			);
 			
 		ob_start();
@@ -54,6 +57,7 @@ class production_gg{
 		?>
 			<script>
 				$("body.production").css("height",$(window).height());
+				gg_chart();
 			</script>
 		<?php
 	}

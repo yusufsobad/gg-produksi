@@ -377,7 +377,7 @@ class employee_admin extends _file_manager{
 			array(
 				'func'			=> 'opt_input',
 				'type'			=> 'text',
-				'key'			=> 'no_pasok',
+				'key'			=> 'no_meja',
 				'label'			=> 'Meja Ke',
 				'class'			=> 'input-circle',
 				'value'			=> $vals['no_meja'],

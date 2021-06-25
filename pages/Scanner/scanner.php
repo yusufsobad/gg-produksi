@@ -222,8 +222,9 @@ class _production{
 		// Check id scan Operator
 		if($code=='OP' && in_array($divisi,array(6,7))){
 			$idx = self::_add_operator($scan);
-			$default['pasok'] = substr($scan,6);
-			$default['meja'] = substr($scan,2,4);
+			
+			self::$default['pasok'] = substr($scan,6);
+			self::$default['meja'] = substr($scan,2,4);
 		}
 
 		// Check id scan Smart Container
@@ -275,8 +276,6 @@ class _production{
 			$idx = self::_add_detail($scan,20);
 		}
 // End Crash
-
-		self::$default = $default;
 	}
 
 	private static function _check_idCard($scan=''){
