@@ -27,14 +27,14 @@ class metronic_layout extends metronic_template{
 		<?php
 	}
 
-	public static function load_here(){
-		self::_header();
+	public static function load_here($menu=''){
+		self::_header($menu);
 		self::_clearfix();
 		self::_container();
 		self::_footer();
 	}
 
-	private static function _header(){
+	private static function _header($menu=''){
 		$lang = array();
 		if(constant('language')){
 			global $reg_language;
@@ -66,7 +66,7 @@ class metronic_layout extends metronic_template{
 			<!-- BEGIN HEADER -->
 			<div class="page-header -i navbar navbar-fixed-top">
 				<?php
-					metronic_header::_create($args);
+					metronic_header::_create($args,$menu);
 				?>
 			</div>
 			<!-- END HEADER -->

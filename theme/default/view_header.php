@@ -119,7 +119,7 @@ class metronic_header{
 	}
 
 	public static function sidemenu_horizontal($args=array(),$class=''){
-		$req = '';
+		$req = array();
 		$check = array_filter($args);
 		if(!empty($check)){
 			foreach($args as $key => $val){
