@@ -36,7 +36,8 @@ function sobad_curl($args=array()){
     	return json_encode($data);
     }
 
-    if(!isset($args['object'])){
+    if(!isset($args['object']) || !isset($args['_object'])){
+    	$args['object'] = isset($args['object'])?$args['object']:$args['_object'];
 		$data = array(
 	        'status'    => 'error',
 	        'msg'       => 'key Object not Found!!!'
