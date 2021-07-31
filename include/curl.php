@@ -84,10 +84,18 @@ function sobad_curl($args=array()){
 	
 	$msg = $object::{$ajax_func}($dt[0],$dt[1],$dt[2],$dt[3],$dt[4]);
 	
-	$data = array(
-	    'status'    => 'success',
-	    'msg'       => $msg
-    );
+	if(isset($args['_object'])){
+		$data = array(
+		    'status'    => 'success',
+	    	'msg'       => 'Request berhasil!!!',
+	    	'data'		=> $msg
+    	);
+	}else{
+		$data = array(
+		    'status'    => 'success',
+	    	'msg'       => $msg
+    	);
+	}
 	
 	return json_encode($data);
 }
