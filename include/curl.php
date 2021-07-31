@@ -88,7 +88,7 @@ function sobad_curl($args=array()){
 		$data = array(
 		    'status'    => 'success',
 	    	'msg'       => 'Request berhasil!!!',
-	    	'data'		=> $msg
+	    	'data'		=> array($msg)
     	);
 	}else{
 		$data = array(
