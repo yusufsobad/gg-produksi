@@ -15,7 +15,7 @@ class control_gg{
 		$url = empty($url)?'production':$url;
 
 		if(!isset($_SESSION[_prefix.'user'])){
-			$_SESSION[_prefix.'page'] = $url;
+			//$_SESSION[_prefix.'page'] = $url;
 
 			$object = new sobad_page($url);
 			$object->_get();
