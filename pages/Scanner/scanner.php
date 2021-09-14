@@ -11,10 +11,13 @@ class _production{
 			'scan_id'	=> '-',
 			'work_id'	=> 0,
 			'user_id'	=> 0,
-			'operator'	=> '-',
+			'_operator'	=> '-',
 			'proses'	=> '-',
 			'pasok'		=> 0,
 			'meja'		=> '-',
+			'divisi'	=> 0,
+			'_default'	=> 200,
+			'_login'	=> false
 		);
 
 		foreach ($args as $key => $val) {
@@ -140,6 +143,41 @@ class _production{
 		return $q;
 	}
 
+	public static function scan_login($scan=''){
+		$data = self::$default;
+
+		$year = date('Y');$month = date('m');$day = date('d');
+
+		$div = self::_check_divisi($scan);
+		if(!empty($div)){
+			$nik = (int) substr($scan,2,4);
+
+			$module = gg_module::get_id($div,array('ID','module_value'));
+			$module = $module[0];
+
+			$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
+			
+			$check = array_filter($user);
+			if(empty($check)){
+				die(_error::_alert_db("User Tidak di temukan !!!"));
+			}
+
+			$user = $user[0];
+
+			$data['user_id'] = $user['ID'];
+			$data['operator'] = $user['name'];
+			$data['proses'] = $module['module_value'];
+			$data['divisi'] = $module['ID'];
+			$data['_login'] = true;
+
+		}else{
+			die(_error::_alert_db('Bagian User Undefined !!!'));
+		}
+
+		$data['scan_id'] = $scan;
+		return $data;
+	}
+
 	public static function scan_code($scan='',$data=array()){
 		self::_default($data);
 		$data = self::$default;
@@ -148,7 +186,8 @@ class _production{
 		if(!empty($check)){
 			// Check scan user id
 			if(!isset($data['user_id'])){
-				die(_error::_alert_db("Scan User terlebih dahulu !!!"));
+				$data['_login'] = false;
+				return $data;
 			}
 
 			if($scan==$data['user_id']){
@@ -195,6 +234,7 @@ class _production{
 			'p_afkir'		=> $afkir
 		));
 
+		//$data['input'] = false;
 		return $data;
 	}
 
@@ -276,38 +316,5 @@ class _production{
 			$idx = self::_add_detail($scan,20);
 		}
 // End Crash
-	}
-
-	private static function _check_idCard($scan=''){
-		$data = self::$default;
-
-		$year = date('Y');$month = date('m');$day = date('d');
-
-		$div = self::_check_divisi($scan);
-		if(!empty($div)){
-			$nik = (int) substr($scan,2,4);
-
-			$module = gg_module::get_id($div,array('module_value','module_code'));
-			$module = $module[0];
-
-			$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
-			
-			$check = array_filter($user);
-			if(empty($check)){
-				die(_error::_alert_db("User Tidak di temukan !!!"));
-			}
-
-			$user = $user[0];
-
-			$data['user_id'] = $user['ID'];
-			$data['operator'] = $user['name'];
-			$data['proses'] = $module['module_value'];
-			$data['input'] = $module['module_code']=='0'?false:true;
-
-		}else{
-			die(_error::_alert_db('Bagian User Undefined !!!'));
-		}
-
-		self::$default = $data;
 	}
 }
