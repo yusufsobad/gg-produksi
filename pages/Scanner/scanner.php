@@ -109,7 +109,7 @@ class _production{
 
 		$div = self::_check_divisi($scan); 
 		$meja = (int) substr($scan, 2,4); 
-		$user = gg_employee::get_all(array('ID'),"AND divisi='$div' AND no_meja='$meja'");
+		$user = gg_employee::get_all(array('ID'),"AND divisi='$div' AND no_induk='$meja'");
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator undefined!!!'));
@@ -234,7 +234,7 @@ class _production{
 			'p_afkir'		=> $afkir
 		));
 
-		//$data['input'] = false;
+		$data['input'] = false;
 		return $data;
 	}
 
@@ -263,8 +263,9 @@ class _production{
 		if($code=='OP' && in_array($divisi,array(6,7))){
 			$idx = self::_add_operator($scan);
 			
+			self::$default['input'] = true;
 			self::$default['pasok'] = substr($scan,6);
-			self::$default['meja'] = substr($scan,2,4);
+			//self::$default['meja'] = substr($scan,2,4);
 		}
 
 		// Check id scan Smart Container
