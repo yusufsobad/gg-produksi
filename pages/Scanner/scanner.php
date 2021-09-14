@@ -167,7 +167,7 @@ class _production{
 			$data['user_id'] = $user['ID'];
 			$data['operator'] = $user['name'];
 			$data['proses'] = $module['module_value'];
-			$data['divisi'] = $module['ID'];
+			$data['divisi'] = $div;
 			$data['_login'] = true;
 
 		}else{
