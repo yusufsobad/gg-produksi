@@ -4,7 +4,8 @@
 $args = array();
 $args['login'] = array(
 	'page'	=> 'login_system',
-	'home'	=> true
+	'home'	=> false,
+	'theme'	=> 'default'
 );
 reg_hook('reg_page',$args);
 
@@ -70,9 +71,9 @@ class login_system{
 			        "asset/img/bg/1.jpg",
 			        "asset/img/bg/2.jpg",
 					"asset/img/bg/3.jpg",
-			        "asset/img/bg/4.jpg",
-					"asset/img/bg/5.jpg",
-			        "asset/img/bg/6.jpg",
+			//		"asset/img/bg/4.jpg",
+			//		"asset/img/bg/5.jpg",
+			//		"asset/img/bg/6.jpg",
 			        ], {
 			          fade: 1000,
 			          duration: 8000
@@ -122,7 +123,7 @@ class login_system{
 				);
 			}
 		}else{
-			$q = kmi_user::check_login($user,$pass);
+			//$q = kmi_user::check_login($user,$pass);
 		}
 
 		$check = array_filter($q);
@@ -133,14 +134,7 @@ class login_system{
 
 			$r=$q[0];
 
-			if(strtolower($user)!='admin'){
-				$_user = kmi_user::get_id($r['ID'],array('picture'));
-				$link = '/asset/img/user/';
-
-				$link .= $_user[0]['notes_pict'];
-			}else{
-				$link = '';
-			}
+			$link = '';
 
 			$_SESSION[$prefix.'page'] = $r['dept'];
 			$_SESSION[$prefix.'user'] = $user;
@@ -173,7 +167,7 @@ class login_system{
 		setcookie('id','');
 		setcookie('name','');		
 
-		return '/'.URL;
+		return '/'.URL.'/login';
 	}	
 
 }

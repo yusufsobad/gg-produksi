@@ -2,5 +2,5 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /cordova-v3/index.php?direct=$1 [NC,L,QSA]
+RewriteRule ^(.*)$ /gg-produksi/index.php?direct=$1 [NC,L,QSA]
 </IfModule>

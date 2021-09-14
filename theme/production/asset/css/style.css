@@ -1,0 +1,292 @@
+/* General */
+
+.col-md-30{
+	float: left;
+	width: 30%;
+}
+
+.col-md-70{
+	float: left;
+	width: 70%;
+}
+
+.col-md-30,.col-md-70{
+	position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.box-shadow{
+	box-shadow: 0px 6px 10px #ddd, 6px 0px 10px #ddd, -6px 0px 10px #ddd;
+}
+
+.display-table {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.display-column {
+    display: table-cell;
+    width: 100%;
+    height: inherit;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Color */
+
+.bg-white{
+	background-color:#fff;
+}
+
+.bg-gg-red{
+	background-color:#bc1b1b;
+}
+
+.bg-gg-blue-ocean{
+	background-color:#0b92e0;
+}
+
+.bg-gg-green{
+	background-color:#19a45a;
+}
+
+.bg-gg-yellow{
+	background-color:#ff8400;
+}
+
+.bg-gg-blue{
+	background-color:#0e2174;
+}
+
+.bg-gg-darkblue{
+	background-color:#081342;
+}
+
+/* -------- End -------- */
+
+
+
+
+/* primary layout */
+
+body.production{
+	width: 100%;
+	padding: 15px;
+}
+
+body.production .max-height{
+	height: 100%;
+}
+
+body.production .row {
+    margin: 0px;
+    height: 100%;
+}
+
+/* -------- End -------- */
+
+
+
+
+/* Information layout */
+
+.box-information {
+    height: inherit;
+    border-radius: 25px;
+}
+
+.box-information .detail-information {
+    padding: 25px;
+    height: inherit;
+}
+
+.title-production>h2 {
+	color: #333;
+	font-weight: 700;
+	margin-top: 0px;
+}
+
+.title-production>h2>span {
+	color: #bc1b1b !important;
+}
+
+.detail-information .detail-production {
+    height: 40%;
+}
+
+.detail-information .chart-production {
+    height: 30%;
+}
+
+.detail-information .total-production {
+    height: 20%;
+}
+
+/* -- Detail Information */
+
+.detail-production>.gg-process {
+    width: 50%;
+    float: left;
+}
+
+.detail-production .ggbox-process {
+    margin: 10px;
+    border-radius: 15px;
+}
+
+.process-info {
+    padding-bottom: 10px;
+}
+
+.process-info label {
+    width: 30%;
+    float: left;
+    font-size: 10px;
+    margin-bottom: -5px;
+    text-transform: capitalize;
+}
+
+.process-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+}
+
+img.process-image {
+    width: inherit;
+    height: inherit;
+}
+
+.process-title>h3 {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.process-chart-info {
+    width: 70%;
+    float: left;
+    position: relative;
+}
+
+.bg-chart-info {
+    height: 6px;
+    margin-top: 3px;
+}
+
+.process-chart-info>.bg-chart-info {
+    position: absolute;
+}
+
+.chart-production>.box-chart {
+    margin: 10px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.box-info-total {
+    background: #bc1b1b;
+    color: #fff;
+    height: 100%;
+    margin: 10px;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.primary-production {
+    font-size: 60px;
+    line-height: 0.9;
+}
+
+.second-production {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+label.second-production {
+    font-weight: unset !important;
+    line-height: 0.8;
+    padding-top: 5px;
+}
+
+label.primary-production {
+    font-size: 24px !important;
+    font-weight: unset;
+	padding-top: 5px;
+}
+
+/* -------- End -------- */
+
+
+
+/* Position layout */
+
+.box-position {
+    width: 100%;
+    height: inherit;
+    position: relative;
+}
+
+div#layout-position {
+    width: 100%;
+    height: inherit;
+    position: relative;
+}
+
+div#layout-information {
+    position: absolute;
+    top: 40%;
+    left: 70%;
+}
+
+.box-info-detail {
+    width: 250px;
+    border-radius: 15px;
+}
+
+.box-info-detail>.title-production {
+    background-color: #bc1b1b;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.title-production>h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 20px;
+}
+
+.block-box-pos {
+    position: absolute;
+    padding: 5px;
+}
+
+.block-box-pos>.block-box-color {
+    height: 100%;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.detail-position {
+    padding: 15px;
+    background: #fff;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.detail-listcolor>.box-listcolor {
+    height: 15px;
+    width: 15px;
+    float: left;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.block-box-color label {
+    margin-bottom: 0px;
+}
+
+/* -------- End -------- */
