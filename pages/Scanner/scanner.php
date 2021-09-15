@@ -11,13 +11,18 @@ class _production{
 			'scan_id'	=> '-',
 			'work_id'	=> 0,
 			'user_id'	=> 0,
-			'_operator'	=> '-',
 			'proses'	=> '-',
 			'pasok'		=> 0,
 			'meja'		=> '-',
 			'divisi'	=> 0,
+			'_operator'	=> '-',
 			'_default'	=> 200,
-			'_login'	=> false
+			'_login'	=> false,
+			'__number'	=> 0,
+			'__smart'	=> '-',
+			'__baki'	=> '-',
+			'__banderol'=> '-',
+			'__box'		=> '-',
 		);
 
 		foreach ($args as $key => $val) {
@@ -96,6 +101,7 @@ class _production{
 			die(_error::_alert_db('Maximal scan!!!'));
 		}
 
+		self::$default['__number'] = $check;
 		$q = sobad_db::_insert_table('ggk-detail',array(
 				'process_id'	=> $default['work_id'],
 				'scan_detail'	=> $scan,
@@ -107,17 +113,20 @@ class _production{
 	private static function _add_operator($scan=''){
 		$default = self::$default;
 
-		$div = self::_check_divisi($scan); 
-		$meja = (int) substr($scan, 2,4); 
-		$user = gg_employee::get_all(array('ID'),"AND divisi='$div' AND no_induk='$meja'");
+		$div = self::_check_divisi($scan);
+		$induk = (int) substr($scan, 2,4);
+		$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator undefined!!!'));
 		}
 
+		self::$default['_operator'] = $user[0]['name'];
+		self::$default['proses'] = $user[0]['meta_value_divi'];
+
 		$q = sobad_db::_update_single($default['work_id'],'ggk-production',array(
 			'ID'				=> $default['work_id'],
-			'operator_id'		=> 	$user[0]['ID']
+			'operator_id'		=> $user[0]['ID']
 		));
 
 		$q = self::_add_detail($scan);
@@ -269,30 +278,30 @@ class _production{
 		}
 
 		// Check id scan Smart Container
-		if($code=='SC' && $divisi==6){
-			$idx = self::_add_production($scan);
-			$sc_db = self::_check_scPosition($scan);
-		}
-
-		// Check id scan Smart Container
-		if($code=='SC' && $divisi==7){
+		if($code=='SC' && in_array($divisi,array(6,7)){
+			self::$default['__smart'] = $scan;
 			$idx = self::_add_production($scan);
 			$sc_db = self::_check_scPosition($scan);
 		}
 
 		// Check id scan Baki
 		if($code=='IP' && in_array($divisi,array(3,4,5))){
+			self::$default['__baki'] = $scan;
+			self::$default['__number'] = 0;
+			
 			$idx = self::_add_production($scan);
 			$sc_db = self::_check_scPosition($scan);
 		}
 
 		// Check id scan Smart Container
 		if($code=='SC' && $divisi==3){
+			self::$default['__smart'] = $scan;
 			$idx = self::_add_detail($scan,6);
 		}
 
 		// Check id scan Banderoll
 		if($code=='BP' && $divisi==5){
+			self::$default['__banderol'] = $scan;
 			$idx = self::_add_detail($scan,10);
 		}
 
@@ -304,17 +313,13 @@ class _production{
 
 		// Check id scan Banderoll
 		if($code=='BP' && $divisi==8){
+			self::$default['__banderol'] = $scan;
 			$idx = self::_add_detail($scan,20);
 		}
 
-		// Check id scan Ball
+		// Check id scan Box
 		if($code=='BX' && $divisi==8){
 			$idx = self::_add_production($scan);
-		}
-
-		// Check id scan Banderoll
-		if($code=='BL' && $divisi==8){
-			$idx = self::_add_detail($scan,20);
 		}
 // End Crash
 	}
