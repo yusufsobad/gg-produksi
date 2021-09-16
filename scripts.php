@@ -3,7 +3,9 @@
 
 if(!class_exists('vendor_script')){
 
-	class vendor_script{
+	require_once 'addon_script.php';
+
+	class vendor_script extends addon_script{
 		public function _get_($func='',$idx=array()){
 			if(is_callable(array($this,$func))){
 				$script = self::$func($idx);
