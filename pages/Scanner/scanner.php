@@ -19,9 +19,11 @@ class _production{
 			'_default'	=> 200,
 			'_login'	=> false,
 			'__number'	=> 0,
+			'__noball'	=> 0,
 			'__smart'	=> '-',
 			'__baki'	=> '-',
 			'__banderol'=> '-',
+			'__ball'	=> '-',
 			'__box'		=> '-',
 		);
 
@@ -288,7 +290,7 @@ class _production{
 		if($code=='IP' && in_array($divisi,array(3,4,5))){
 			self::$default['__baki'] = $scan;
 			self::$default['__number'] = 0;
-			
+
 			$idx = self::_add_production($scan);
 			$sc_db = self::_check_scPosition($scan);
 		}
@@ -307,14 +309,16 @@ class _production{
 
 // Crash --> Check ulang
 		// Check id scan Ball
-		if($code=='BL' && $divisi==8){
-			$idx = self::_add_production($scan);
-		}
-
 		// Check id scan Banderoll
 		if($code=='BP' && $divisi==8){
 			self::$default['__banderol'] = $scan;
 			$idx = self::_add_detail($scan,20);
+		}
+
+		if($code=='BL' && $divisi==8){
+			self::$default['__ball'] = $scan;
+			self::$default['__number'] = 0;
+			$idx = self::_add_production($scan);
 		}
 
 		// Check id scan Box
