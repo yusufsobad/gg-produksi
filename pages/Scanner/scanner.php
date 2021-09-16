@@ -280,7 +280,7 @@ class _production{
 		}
 
 		// Check id scan Smart Container
-		if($code=='SC' && in_array($divisi,array(6,7)){
+		if($code=='SC' && in_array($divisi,array(6,7))){
 			self::$default['__smart'] = $scan;
 			$idx = self::_add_production($scan);
 			$sc_db = self::_check_scPosition($scan);
