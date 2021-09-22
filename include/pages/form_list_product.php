@@ -6,7 +6,7 @@ abstract class _list_product extends _new_product{
 	// Layout List Product --------------------------------------
 	// ----------------------------------------------------------
 	
-	public function _layout_list($args=array()){
+	public static function _layout_list($args=array()){
 		$id = isset($args['ID'])?$args['ID']:0;
 		$status = isset($args['status'])?$args['status']:0;
 		
@@ -68,7 +68,7 @@ abstract class _list_product extends _new_product{
 			self::_script_layout($id,$id_sell,$func,$status);
 	}
 
-	private function _get_ongkir($data=array()){
+	private static function _get_ongkir($data=array()){
 		$check = array_filter($data);
 		if(empty($check)){
 			$data = array(
@@ -107,7 +107,7 @@ abstract class _list_product extends _new_product{
 		<?php
 	}
 
-	private function _script_layout($id=0,$id_sell=0,$func='',$status=0){
+	private static function _script_layout($id=0,$id_sell=0,$func='',$status=0){
 		if($status != 0){
 			echo '<script type="text/javascript">';
 			echo "	$('#quotation_detail table a').attr('disabled','disabled');";
@@ -173,7 +173,7 @@ abstract class _list_product extends _new_product{
 	// Function List Product -----------------------------------
 	// ---------------------------------------------------------
 
-	private function _detail_product($id=0){
+	private static function _detail_product($id=0){
 		intval($id);
 		
 		$args = array('ID','barang','qty','unit','price','discount');
@@ -194,7 +194,7 @@ abstract class _list_product extends _new_product{
 		return $data;
 	}
 
-	private function _get_product($q){
+	private static function _get_product($q){
 		$data = array();
 		$asset = 'asset/img/upload/';
 		
@@ -354,11 +354,11 @@ abstract class _list_product extends _new_product{
 	// Form data product ----------------------------------------
 	// ----------------------------------------------------------
 
-	public function _form_newProduct(){
+	public static function _form_newProduct(){
 		return parent::add_form();
 	}
 	
-	public function _form_product($id=0){
+	public static function _form_product($id=0){
 		$_SESSION['filter_product'] = array();
 
 		$id = str_replace('product_','',$id);
@@ -366,7 +366,7 @@ abstract class _list_product extends _new_product{
 		return parent::insert_to($id);
 	}
 
-	public function _add_product($args=array()){
+	public static function _add_product($args=array()){
 		$args = sobad_asset::ajax_conv_json($args);
 		$args['barang'] = str_replace('apply_','',$args['barang']);
 		
@@ -381,7 +381,7 @@ abstract class _list_product extends _new_product{
 		return self::_get_table_product($q,$args['reff']);
 	}
 
-	public function _delete_product($args=array()){
+	public static function _delete_product($args=array()){
 		$args = sobad_asset::ajax_conv_json($args);
 		
 		$reff = $args['reff'];
@@ -394,7 +394,7 @@ abstract class _list_product extends _new_product{
 		return self::_get_table_product($q,$reff);
 	}
 
-	private function _get_table_product($q,$id){
+	private static function _get_table_product($q,$id){
 		if($q!==0){
 			$args = self::_detail_product($id);
 			ob_start();

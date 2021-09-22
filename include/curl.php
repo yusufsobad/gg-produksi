@@ -35,8 +35,15 @@ function sobad_curl($args=array()){
 	
     	return json_encode($data);
     }
+
+    if(isset($args['_object'])){
+    	$object = '';
+    	if(isset($args['object'])){
+    		$object = $args['object'];
+    	}
+    }
     
-    if(!isset($args['object'])){
+    if(empty($object)){
 		$data = array(
 	        'status'    => 'error',
 	        'msg'       => 'key Object not Found!!!'
@@ -45,16 +52,15 @@ function sobad_curl($args=array()){
     	return json_encode($data);
 	}
 
-	if(!class_exists($args['object'])){
+	if(!class_exists($object)){
 		$data = array(
 	        'status'    => 'error',
-	        'msg'       => 'Object not Found : '.$args['object']
+	        'msg'       => 'Object not Found : '.$object
         );
 	
     	return json_encode($data);
 	}
-    
-    $object = $args['object'];
+
 	$ajax_func = $args['func'];
 	$_data = $args['data'];
 

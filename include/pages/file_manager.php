@@ -8,7 +8,7 @@ abstract class _file_manager extends _page{
 	// Form new product -----------------------------------------
 	// ----------------------------------------------------------
 
-	protected function _get_image_list_file($start=1){
+	protected static function _get_image_list_file($start=1){
 		$args = array('ID','notes','var');
 
 		$kata = '';$where = property_exists(new static, 'file_where')?static::$file_where:'';
@@ -73,7 +73,7 @@ abstract class _file_manager extends _page{
 		return $_list;
 	}
 
-	public function _search_list_file($args=array()){
+	public static function _search_list_file($args=array()){
 		$args = sobad_asset::ajax_conv_json($args);
 		$args = array(
 			'words'	=> $args['words_file'],
@@ -93,7 +93,7 @@ abstract class _file_manager extends _page{
 		return ob_get_clean();
 	}
 
-	public function _pagination_list_file($start=1){
+	public static function _pagination_list_file($start=1){
 		$status = is_array($_POST['args'])?true:false;
 		$args = sobad_asset::ajax_conv_array_json($_POST['args']);
 		$args = array(
@@ -114,7 +114,7 @@ abstract class _file_manager extends _page{
 		return ob_get_clean();
 	}
 
-	public function _remove_file_list($idx=0){
+	public static function _remove_file_list($idx=0){
 		$asset = static::$url;
 
 		$post = sobad_post::get_id($idx,array('notes'));
@@ -145,7 +145,7 @@ abstract class _file_manager extends _page{
 		return ob_get_clean();
 	}
 
-	public function _item_form($args=array()){
+	public static function _item_form($args=array()){
 		$_list = self::_get_image_list_file(1);
 		$_list['object'] = static::$object;
 
@@ -206,7 +206,7 @@ abstract class _file_manager extends _page{
 		return modal_admin($args);
 	}
 
-	public function _upload_product(){
+	public static function _upload_product(){
 		$name_file = sobad_asset::handling_upload_file('file',static::$url);
 
 		$args = array(

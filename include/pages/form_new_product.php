@@ -8,7 +8,7 @@ abstract class _new_product extends form_product{
 	// Form new product -----------------------------------------
 	// ----------------------------------------------------------
 
-	protected function _get_image_list_file($start=1,$search=false,$cari=array()){
+	protected static function _get_image_list_file($start=1,$search=false,$cari=array()){
 		$args = array('ID','notes','var');
 
 		$kata = '';$where = "ORDER BY inserted DESC ";
@@ -69,7 +69,7 @@ abstract class _new_product extends form_product{
 		return $_list;
 	}
 
-	public function _search_list_file($args=array()){
+	public static function _search_list_file($args=array()){
 		$args = sobad_asset::ajax_conv_json($args);
 		$args = array(
 			'words'	=> $args['words_file'],
@@ -86,7 +86,7 @@ abstract class _new_product extends form_product{
 		return ob_get_clean();
 	}
 
-	public function _pagination_list_file($start=1){
+	public static function _pagination_list_file($start=1){
 		$status = is_array($_POST['args'])?true:false;
 		$args = sobad_asset::ajax_conv_array_json($_POST['args']);
 		$args = array(
@@ -104,7 +104,7 @@ abstract class _new_product extends form_product{
 		return ob_get_clean();
 	}
 
-	public function _remove_file_list($idx=0){
+	public static function _remove_file_list($idx=0){
 		$asset = '../asset/img/upload/';
 
 		$post = sobad_post::get_id($idx,array('notes'));
@@ -131,7 +131,7 @@ abstract class _new_product extends form_product{
 		return ob_get_clean();
 	}
 
-	public function _get_table_packet_product($id=0){
+	public static function _get_table_packet_product($id=0){
 		$data = array();
 		$data['class'] = '';
 		$data['table'] = array();
@@ -204,7 +204,7 @@ abstract class _new_product extends form_product{
 		return $data;
 	}
 
-	public function add_form($idx=''){
+	public static function add_form($idx=''){
 		$idx = str_replace('new_', '', $idx);
 		$vals = array(0,intval($idx),'','','',0,'',2);
 		
@@ -220,7 +220,7 @@ abstract class _new_product extends form_product{
 		return self::_item_form($args,$vals);
 	}
 
-	public function _item_form($args=array(),$vals=array()){
+	public static function _item_form($args=array(),$vals=array()){
 		$_list = self::_get_image_list_file(1);
 		$_list['object'] = static::$object;
 
@@ -362,7 +362,7 @@ abstract class _new_product extends form_product{
 		return modal_admin($args);
 	}
 
-	public function _upload_product(){
+	public static function _upload_product(){
 		sobad_asset::handling_upload_file('file','../asset/img/upload');
 
 		$args = array(
@@ -382,7 +382,7 @@ abstract class _new_product extends form_product{
 		return ob_get_clean();
 	}
 
-	public function _layout_product($data=array()){
+	public static function _layout_product($data=array()){
 		$status = false;$image[0] = 'no-image.png';
 		$args = $data['form'];
 
@@ -535,7 +535,7 @@ abstract class _new_product extends form_product{
 		<?php
 	}
 
-	public function form_new_packet_product($idx=0){
+	public static function form_new_packet_product($idx=0){
 		$_SESSION[_prefix.'filter_product'] = array(
 			'load'		=> 'here_modal3',
 			'script'	=> 'set_apply_packet(this)',
@@ -548,7 +548,7 @@ abstract class _new_product extends form_product{
 		return parent::insert_to($id);
 	}
 
-	public function add_new_packet_product($idx=0){
+	public static function add_new_packet_product($idx=0){
 		$idx = str_replace('apply_', '', $idx);
 		intval($idx);
 

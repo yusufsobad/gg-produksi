@@ -3,11 +3,11 @@
 abstract class form_product extends _file_manager{
 	protected static $object = 'form_product';
 
-	protected function _array(){
+	protected static function _array(){
 		return array('ID','name','product_code','price','picture','type','var');
 	}
 
-	private function table($sort='name ASC'){	
+	private static function table($sort='name ASC'){	
 		$data = array();
 		$filter = property_exists(new static, 'filter')?static::$filter:array();
 		$args = self::_array();
@@ -140,12 +140,12 @@ abstract class form_product extends _file_manager{
 		return $data;
 	}
 
-	public function insert_to($id){
+	public static function insert_to($id){
 		$table = self::table();		
 		return self::modal_layout($table);
 	}
 
-	private function modal_layout($table){
+	private static function modal_layout($table){
 		$data = array(
 			'label'		=> 'Daftar Product',
 			'table'		=> $table
@@ -174,7 +174,7 @@ abstract class form_product extends _file_manager{
 	// ----------------------------------------------------------
 	// Function selling to database -----------------------------
 	// ----------------------------------------------------------
-	private function _get_table_product($idx,$args=array()){
+	private static function _get_table_product($idx,$args=array()){
 		if($idx==0){
 			$idx = 1;
 		}
@@ -196,11 +196,11 @@ abstract class form_product extends _file_manager{
 		return self::modal_layout($table);
 	}
 
-	public function _pagination_product($idx){
+	public static function _pagination_product($idx){
 		return self::_get_table_product($idx);
 	}
 
-	public function _search_product($args=array()){
+	public static function _search_product($args=array()){
 		$args = sobad_asset::ajax_conv_json($args);
 		return self::_get_table_product(1,$args);
 	}
