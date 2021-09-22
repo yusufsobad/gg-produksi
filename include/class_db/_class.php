@@ -58,11 +58,11 @@ abstract class _class{
 
 	public static function count($limit='1=1 ',$args=array(),$type=''){
 		self::$_type = $type;
-		
+
 		$inner = '';$meta = false;
 		$limit = empty($limit)?"1=1 ":$limit;
 
-		$blueprint = self::schema();
+		$blueprint = self::schema();		
 		$table = $blueprint['table'];
 		if(isset($blueprint['detail'])){
 			$check = array_filter($blueprint['detail']);
@@ -223,7 +223,7 @@ abstract class _class{
 		$lst = isset($joined['column'])?$joined['column']:self::list_join();
 		$tbl = $joined['table'];
 		$col = $joined['key'];
-		
+	
 		$inner = '';
 		foreach($args as $key => $val){
 			if(in_array($val,$lst)){

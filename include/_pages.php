@@ -18,11 +18,11 @@ abstract class _page{
 	// ----------------------------------------------------------
 	// Layout Pages  --------------------------------------------
 	// ----------------------------------------------------------
-	public function _sidemenu(){
+	public static function _sidemenu(){
 		return static::layout();
 	}
 
-	public function _tabs($type){
+	public static function _tabs($type){
 		self::$type = $type;
 		$data = static::get_box();
 		$metronic = new metronic_layout();
@@ -42,7 +42,7 @@ abstract class _page{
 		$search = isset($cari['search'])?$cari['search']:'';
 		$src = array();
 
-		$meta = array();
+		$meta = array();$tbl_meta='';
 		if(property_exists(new static, 'table')){
 			$post = '';
 			if(property_exists(new static, 'post')){
@@ -50,7 +50,7 @@ abstract class _page{
 			}
 
 			$object = static::$table;
-			
+
 			if(property_exists(new $object, 'tbl_meta')){
 				$tbl_meta = $object::$tbl_meta;
 				$meta = $object::list_meta($post);
@@ -116,7 +116,7 @@ abstract class _page{
 		return array($where,$kata,$_search);
 	}
 
-	protected function action(){
+	protected static function action(){
 		$add = array(
 			'ID'	=> 'add_0',
 			'func'	=> 'add_form',
@@ -134,7 +134,7 @@ abstract class _page{
 	// ----------------------------------------------------------
 
 		// -------------- get value select opt ----------------------
-	public function get_cities($id=0){
+	public static function get_cities($id=0){
 		$kota = array();
 		if($id!=0){
 			$cities = sobad_wilayah::get_cities($id);
@@ -151,7 +151,7 @@ abstract class _page{
 		return $kota;
 	}
 
-	public function get_subdistricts($id=0){
+	public static function get_subdistricts($id=0){
 		$kec = array();
 		if($id!=0){
 			$kec = sobad_wilayah::get_subdistricts($id);
@@ -161,7 +161,7 @@ abstract class _page{
 		return $kec;
 	}
 
-	public function get_postcodes($prov=0,$kota=0,$kec=0){
+	public static function get_postcodes($prov=0,$kota=0,$kec=0){
 		$pos = array();
 		if($kec!=0){
 			$pos = sobad_wilayah::get_postcode($prov,$kota,$kec);
@@ -173,17 +173,17 @@ abstract class _page{
 
 	// -------------- option select onchange --------------------
 
-	public function option_city($id=0){
+	public static function option_city($id=0){
 		$data = self::get_cities($id);
 		return self::_conv_option($data);
 	}
 
-	public function option_subdistrict($id=0){
+	public static function option_subdistrict($id=0){
 		$data = self::get_subdistricts($id);
 		return self::_conv_option($data);
 	}
 
-	public function option_postcode($id=0){
+	public static function option_postcode($id=0){
 		$ids = sobad_wilayah::get_id_by_subdistrict($id);
 
 		$prov = $ids[0]['id_prov'];
@@ -211,7 +211,7 @@ abstract class _page{
 	// ----------------------------------------------------------
 	// Function Pages to database -------------------------------
 	// ----------------------------------------------------------
-	protected function _get_table($idx,$args=array()){
+	protected static function _get_table($idx,$args=array()){
 		if($idx==0){
 			$idx = 1;
 		}
@@ -225,16 +225,16 @@ abstract class _page{
 		return table_admin($table);
 	}
 
-	public function _pagination($idx){
+	public static function _pagination($idx){
 		return self::_get_table($idx);
 	}
 
-	public function _search($args=array()){
+	public static function _search($args=array()){
 		$args = sobad_asset::ajax_conv_json($args);
 		return self::_get_table(1,$args);
 	}
 
-	public function _trash($id=0){
+	public static function _trash($id=0){
 		$id = str_replace('trash_','',$id);
 		intval($id);
 
@@ -249,7 +249,7 @@ abstract class _page{
 		}
 	}
 
-	public function _recovery($id=0){
+	public static function _recovery($id=0){
 		$id = str_replace('recovery_','',$id);
 		intval($id);
 
@@ -264,19 +264,27 @@ abstract class _page{
 		}
 	}
 
-	public function _delete($id=0){
+	public static function _delete($id=0){
 		$id = str_replace('del_','',$id);
 		intval($id);
 
 		$object = static::$table;
 		$table = $object::$table;
 
+		$post = '';
+		if(property_exists(new static, 'post')){
+			$post = static::$post;
+		}
+
+		$schema = $object::blueprint($post);
+
 		if(property_exists($object, 'tbl_meta')){
 			$q = sobad_db::_delete_multiple("meta_id='$id'",$object::$tbl_meta);
 		}
 
 		if(property_exists($object, 'tbl_join')){
-			$q = sobad_db::_delete_multiple("reff='$id'",$object::$tbl_join);
+			$reff = $schema['joined']['key'];
+			$q = sobad_db::_delete_multiple($reff."='$id'",$object::$tbl_join);
 		}
 
 		$q = sobad_db::_delete_single($id,$table);
@@ -287,7 +295,7 @@ abstract class _page{
 		}
 	}
 
-	public function _edit($id=0){
+	public static function _edit($id=0){
 		$id = str_replace('edit_','',$id);
 		intval($id);
 		
@@ -309,7 +317,7 @@ abstract class _page{
 		return static::edit_form($q[0]);
 	}
 
-	public function _import(){
+	public static function _import(){
 		$fileName = $_FILES["data"]["tmp_name"];
 		
 		if ($_FILES["data"]["size"] > 0) {
@@ -356,12 +364,12 @@ abstract class _page{
 	// Function Update to database ------------------------------
 	// ----------------------------------------------------------
 
-	protected function _schema($_args=array(),$add=false){
+	protected static function _schema($_args=array(),$add=false){
 		$args = sobad_asset::ajax_conv_json($_args);
 		if(is_callable(array(new static(), '_callback'))){
 			$args = static::_callback($args,$_args);
 		}
-		
+	
 		$id = $args['ID'];
 		unset($args['ID']);
 	
@@ -409,13 +417,13 @@ abstract class _page{
 		return array('index' => $id, 'data' => $q,'search' => $src);
 	}	
 
-	public function _update_db($_args=array(),$menu='default',$obj=''){
+	public static function _update_db($_args=array(),$menu='default',$obj=''){
 		$args = self::_schema($_args,false);
 		$q = $args['data'];
 		$src = $args['search'];
 
 		if(is_callable(array(new static(), '_updateDetail'))){
-			$args = static::_updateDetail($args,$_args);
+			static::_updateDetail($args,$_args);
 		}
 
 		if($q!==0){
@@ -432,7 +440,7 @@ abstract class _page{
 		}
 	}
 
-	protected function _update_meta_db($idx=0,$args=array(),$schema=array()){
+	protected static function _update_meta_db($idx=0,$args=array(),$schema=array()){
 		$q = $idx;
 		$object = static::$table;
 		// Meta Table
@@ -470,13 +478,13 @@ abstract class _page{
 	// Function Add to database -------------------------------
 	// ----------------------------------------------------------	
 
-	public function _add_db($_args=array(),$menu='default',$obj=''){
+	public static function _add_db($_args=array(),$menu='default',$obj=''){
 		$args = self::_schema($_args,true);
 		$q = $args['data'];
 		$src = $args['search'];
 
 		if(is_callable(array(new static(), '_addDetail'))){
-			$args = static::_addDetail($args,$_args);
+			static::_addDetail($args,$_args);
 		}
 		
 		if($q!==0){
@@ -493,7 +501,7 @@ abstract class _page{
 		}
 	}
 
-	protected function _add_meta_db($idx=0,$args=array(),$schema=array()){
+	protected static function _add_meta_db($idx=0,$args=array(),$schema=array()){
 		$q = $idx;
 		// Meta Table
 		if(isset($schema['meta'])){
