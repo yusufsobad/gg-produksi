@@ -1,9 +1,9 @@
 <?php
 
-class kmi_user extends _class{
-	public static $table = 'abs-user';
+class cordova_user extends _class{
+	public static $table = 'user';
 
-	protected static $database = 'absen2020';
+	protected static $database = 'cordova20';
 
 	public static function _list(){
 		$list = array(
@@ -24,12 +24,12 @@ class kmi_user extends _class{
 			'detail'	=> array(
 				'divisi'	=> array(
 					'key'		=> 'ID',
-					'table'		=> 'abs-module',
+					'table'		=> 'module',
 					'column'	=> array('meta_value','meta_note')
 				),
 				'picture'	=> array(
 					'key'		=> 'ID',
-					'table'		=> 'abs-post',
+					'table'		=> 'post',
 					'column'	=> array('notes')
 				)
 			),
@@ -40,13 +40,13 @@ class kmi_user extends _class{
 
 	public static function check_login($user='',$pass=''){
 		$conn = conn::connect();
-		$args = array('`abs-user`.ID','`abs-user`.name','`abs-module`.meta_note AS dept');
+		$args = array('`user`.ID','`user`.name','`module`.meta_note AS dept');
 
 		$user = $conn->real_escape_string($user);
 		$pass = $conn->real_escape_string($pass);
 
-		$inner = "LEFT JOIN `abs-module` ON `abs-user`.divisi = `abs-module`.ID ";
-		$where = $inner."WHERE `abs-user`.username='$user' AND `abs-user`.password='$pass' AND `abs-user`.status IN ('1','2','3','4')";
+		$inner = "LEFT JOIN `module` ON `user`.divisi = `module`.ID ";
+		$where = $inner."WHERE `user`.username='$user' AND `user`.password='$pass' AND `user`.status IN ('1','2','3','4')";
 
 		$data = parent::_get_data($where,$args);
 		$check = array_filter($data);

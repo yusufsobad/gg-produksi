@@ -36,8 +36,9 @@ function sobad_curl($args=array()){
     	return json_encode($data);
     }
 
+    $object = '';
     if(isset($args['_object'])){
-    	$object = '';
+    	$object = $args['_object'];
     	if(isset($args['object'])){
     		$object = $args['object'];
     	}
