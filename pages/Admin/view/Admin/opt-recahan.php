@@ -24,7 +24,7 @@ class recahan_admin extends _page{
 		$data = array();
 		$args = self::_array();
 		
-		$kata = '';$where = "AND module_key='recahan'";
+		$kata = '';$where = "AND module_key='block'";
 		if(parent::$search){
 			$src = parent::like_search($args,$where);	
 			$cari = $src[0];
@@ -59,14 +59,6 @@ class recahan_admin extends _page{
 				'label'	=> 'edit'
 			);
 			
-			$hapus = array(
-				'ID'	=> 'del_'.$id,
-				'func'	=> '_delete',
-				'color'	=> 'red',
-				'icon'	=> 'fa fa-trash',
-				'label'	=> 'hapus',
-			);
-			
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
 				'No'		=> array(
@@ -78,13 +70,13 @@ class recahan_admin extends _page{
 				'Nama'		=> array(
 					'left',
 					'auto',
-					'Stock '.$val['module_value'],
+					'Block '.$val['module_value'],
 					true
 				),
 				'Jumlah'		=> array(
-					'left',
+					'right',
 					'15%',
-					format_nominal($val['module_note']),
+					format_nominal($val['module_note']).' Batang',
 					true
 				),
 				'Edit'			=> array(
@@ -93,13 +85,6 @@ class recahan_admin extends _page{
 					edit_button($edit),
 					false
 				),
-				'Hapus'			=> array(
-					'center',
-					'10%',
-					hapus_button($hapus),
-					false
-				)
-				
 			);
 		}
 		
@@ -127,7 +112,7 @@ class recahan_admin extends _page{
 		$box = array(
 			'label'		=> 'Data recahan',
 			'tool'		=> '',
-			'action'	=> parent::action(),
+			'action'	=> '',
 			'func'		=> 'sobad_table',
 			'data'		=> $data
 		);
@@ -150,26 +135,6 @@ class recahan_admin extends _page{
 	// ----------------------------------------------------------
 	// Form data category -----------------------------------
 	// ----------------------------------------------------------
-	public static function add_form($func='',$load='sobad_portlet'){
-		$vals = array(0,'',0,'recahan');
-		$vals = array_combine(self::_array(),$vals);
-
-		if($func=='add_0'){
-			$func = '_add_db';
-		}
-		
-		$args = array(
-			'title'		=> 'Tambah data recahan',
-			'button'	=> '_btn_modal_save',
-			'status'	=> array(
-				'link'		=> $func,
-				'load'		=> $load
-			)
-		);
-		
-		return self::_data_form($args,$vals);
-	}
-
 	protected static function edit_form($vals=array()){
 		$check = array_filter($vals);
 		if(empty($check)){

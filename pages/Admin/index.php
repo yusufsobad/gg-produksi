@@ -57,6 +57,7 @@ class admin_gg{
 				$script->_get_('_js_contextmenu'),
 				$script->_get_('_js_tags_input'),
 				$script->_get_('_js_chart'),
+				$script->_get_('_js_swimlane'),
 				//$script->_get_('_js_form_editable'),
 				//$script->_get_('_js_page_modal'),
 				$theme->_get_('_js_page_level')

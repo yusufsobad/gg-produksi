@@ -18,6 +18,8 @@ class gg_module extends _class{
 				'scanner',
 				'divisi',
 				'smart_container',
+				'block',
+				'default_sc'
 			);
 
 			if(in_array($type, $args)){

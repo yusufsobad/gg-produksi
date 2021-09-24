@@ -5,6 +5,9 @@ class _production{
 	private static $default = array();
 
 	private static function _default($args=array()){
+		$def = gg_module::_gets('default_sc',array('module_note'));
+		$def = $def[0]['module_note'];
+
 		$data = array(
 			'scanner'	=> true,
 			'input'		=> false,
@@ -16,7 +19,7 @@ class _production{
 			'meja'		=> '-',
 			'divisi'	=> 0,
 			'_operator'	=> '-',
-			'_default'	=> 200,
+			'_default'	=> (int) $def,
 			'_login'	=> false,
 			'__number'	=> 0,
 			'__noball'	=> 0,
@@ -124,7 +127,7 @@ class _production{
 		}
 
 		self::$default['_operator'] = $user[0]['name'];
-		self::$default['proses'] = $user[0]['meta_value_divi'];
+		self::$default['proses'] = $user[0]['module_value_divi'];
 
 		$q = sobad_db::_update_single($default['work_id'],'ggk-production',array(
 			'ID'				=> $default['work_id'],
@@ -297,22 +300,31 @@ class _production{
 
 		// Check id scan Smart Container
 		if($code=='SC' && $divisi==3){
+			$maxD = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='BK'");
+			$maxD = $maxD[0]['module_reff'];
+
 			self::$default['__smart'] = $scan;
-			$idx = self::_add_detail($scan,6);
+			$idx = self::_add_detail($scan,$maxD);
 		}
 
 		// Check id scan Banderoll
 		if($code=='BP' && $divisi==5){
+			$maxD = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='BD'");
+			$maxD = $maxD[0]['module_reff'];
+
 			self::$default['__banderol'] = $scan;
-			$idx = self::_add_detail($scan,10);
+			$idx = self::_add_detail($scan,$maxD);
 		}
 
 // Crash --> Check ulang
 		// Check id scan Ball
 		// Check id scan Banderoll
 		if($code=='BP' && $divisi==8){
+			$maxD = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='BL'");
+			$maxD = $maxD[0]['module_reff'];
+
 			self::$default['__banderol'] = $scan;
-			$idx = self::_add_detail($scan,20);
+			$idx = self::_add_detail($scan,$maxD);
 		}
 
 		if($code=='BL' && $divisi==8){

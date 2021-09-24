@@ -1,7 +1,7 @@
 <?php
 
-class sContainer_admin extends _page{
-	protected static $object = 'sContainer_admin';
+class defaultSC_admin extends _page{
+	protected static $object = 'recahan_admin';
 
 	protected static $table = 'gg_module';
 
@@ -25,25 +25,11 @@ class sContainer_admin extends _page{
 		$data = array();
 		$args = self::_array();
 		
-		$kata = '';$where = "AND module_key='smart_container'";
-		if(parent::$search){
-			$src = parent::like_search($args,$where);	
-			$cari = $src[0];
-			$where = $src[0];
-			$kata = $src[1];
-		}else{
-			$cari=$where;
-		}
-	
-		$limit = '';
-		$where .= $limit;
+		$kata = '';$where = "AND module_key='default_sc'";
 
 		$object = self::$table;
-		$sum_data = $object::count("1=1 ".$cari,$args);
 		$args = $object::get_all($args,$where);
 		
-		$data['data'] = array('data' => $kata);
-		$data['search'] = array('Semua','nama','kode');
 		$data['class'] = '';
 		$data['table'] = array();
 
@@ -60,27 +46,6 @@ class sContainer_admin extends _page{
 				'label'	=> 'edit'
 			);
 			
-			$hapus = array(
-				'ID'	=> 'del_'.$id,
-				'func'	=> '_delete',
-				'color'	=> 'red',
-				'icon'	=> 'fa fa-trash',
-				'label'	=> 'hapus',
-			);
-
-			$divisi = '-';$nik = '-';$name = '-';$time = '-';
-			if($val['module_reff']>0){
-				$work = gg_production::get_id($val['module_reff'],array('user_id','divisi_id','scan_date'));
-				$work = $work[0];
-
-				$divisi = $work['module_value_divi'];
-				$nik = employee_admin::_ID_card($work['divisi_user'],$work['no_induk_user']);
-				$name = $work['name_user'];
-				
-				$date = strtotime($work['scan_date']);
-				$time = date('H:i',$date);
-			}
-			
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
 				'No'		=> array(
@@ -89,34 +54,16 @@ class sContainer_admin extends _page{
 					$no,
 					true
 				),
-				'Kode'		=> array(
-					'left',
-					'10%',
-					$val['module_value'],
-					true
-				),
-				'Bagian'		=> array(
-					'left',
-					'10%',
-					$divisi,
-					true
-				),
-				'ID card'		=> array(
-					'left',
-					'10%',
-					$nik,
-					true
-				),
 				'Nama'		=> array(
 					'left',
 					'auto',
-					$name,
+					$val['module_value'],
 					true
 				),
-				'Waktu Scan'	=> array(
-					'left',
-					'10%',
-					$time,
+				'Jumlah'		=> array(
+					'right',
+					'15%',
+					format_nominal($val['module_reff']).' '.$val['module_note'],
 					true
 				),
 				'Edit'			=> array(
@@ -125,13 +72,6 @@ class sContainer_admin extends _page{
 					edit_button($edit),
 					false
 				),
-				'Hapus'			=> array(
-					'center',
-					'10%',
-					hapus_button($hapus),
-					false
-				)
-				
 			);
 		}
 		
@@ -140,11 +80,11 @@ class sContainer_admin extends _page{
 
 	private static function head_title(){
 		$args = array(
-			'title'	=> 'Smart Container <small>data smart container</small>',
+			'title'	=> 'Default <small>data default</small>',
 			'link'	=> array(
 				0	=> array(
 					'func'	=> self::$object,
-					'label'	=> 'smart container'
+					'label'	=> 'default'
 				)
 			),
 			'date'	=> false
@@ -157,9 +97,9 @@ class sContainer_admin extends _page{
 		$data = self::table();
 		
 		$box = array(
-			'label'		=> 'Data Smart Container',
+			'label'		=> 'Data default',
 			'tool'		=> '',
-			'action'	=> parent::action(),
+			'action'	=> '',
 			'func'		=> 'sobad_table',
 			'data'		=> $data
 		);
@@ -182,26 +122,6 @@ class sContainer_admin extends _page{
 	// ----------------------------------------------------------
 	// Form data category -----------------------------------
 	// ----------------------------------------------------------
-	public static function add_form($func='',$load='sobad_portlet'){
-		$vals = array(0,'',0,'smart_container',0);
-		$vals = array_combine(self::_array(),$vals);
-
-		if($func=='add_0'){
-			$func = '_add_db';
-		}
-		
-		$args = array(
-			'title'		=> 'Tambah data SC',
-			'button'	=> '_btn_modal_save',
-			'status'	=> array(
-				'link'		=> $func,
-				'load'		=> $load
-			)
-		);
-		
-		return self::_data_form($args,$vals);
-	}
-
 	protected static function edit_form($vals=array()){
 		$check = array_filter($vals);
 		if(empty($check)){
@@ -209,7 +129,7 @@ class sContainer_admin extends _page{
 		}
 		
 		$args = array(
-			'title'		=> 'Edit data SC',
+			'title'		=> 'Edit data default',
 			'button'	=> '_btn_modal_save',
 			'status'	=> array(
 				'link'		=> '_update_db',
@@ -234,19 +154,22 @@ class sContainer_admin extends _page{
 				'value'			=> $vals['ID']
 			),
 			array(
-				'func'			=> 'opt_hidden',
-				'type'			=> 'hidden',
-				'key'			=> 'module_key',
-				'value'			=> $vals['module_key']
-			),
-			array(
 				'func'			=> 'opt_input',
 				'type'			=> 'text',
 				'key'			=> 'module_value',
-				'label'			=> 'kode SC',
+				'label'			=> 'Nama',
 				'class'			=> 'input-circle',
 				'value'			=> $vals['module_value'],
-				'data'			=> 'placeholder="kode SC"'
+				'data'			=> 'disabled'
+			),
+			array(
+				'func'			=> 'opt_input',
+				'type'			=> 'price',
+				'key'			=> 'module_reff',
+				'label'			=> 'Default',
+				'class'			=> 'input-circle',
+				'value'			=> format_nominal($vals['module_reff']),
+				'data'			=> 'placeholder="Jumlah"'
 			)
 		);
 		

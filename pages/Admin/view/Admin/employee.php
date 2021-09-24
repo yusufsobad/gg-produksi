@@ -205,7 +205,7 @@ class employee_admin extends _file_manager{
 		return tabs_admin($opt,$tabs);
 	}
 
-	protected function action(){
+	protected static function action(){
 		$import = array(
 			'ID'	=> 'import_0',
 			'func'	=> 'import_form',

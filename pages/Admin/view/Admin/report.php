@@ -99,11 +99,58 @@ class report_admin extends _page{
 		
 		$opt = array(
 			'title'		=> self::head_title(),
-			'style'		=> array(),
-			'script'	=> array()
+			'style'		=> array(self::$object,'_style'),
+			'script'	=> array(self::$object,'_script')
 		);
 		
 		return portlet_admin($opt,$box);
+	}
+
+	public function _style(){
+		?>
+			<style type="text/css">
+				.kanban_default_corner>div {
+				    display: none;
+				}
+			</style>
+		<?php
+	}
+
+	public function _script(){
+		?>
+			<script type="text/javascript">
+
+			    var dp = new DayPilot.Kanban("sobad_portlet");
+			    dp.columns.list = [
+			        {name: "Gilling", id: "1"},
+			        {name: "Leader Block", id: "6"},
+			        {name: "Push Cutter", id: "2"},
+			        {name: "Leader Inpeksi", id: "7"},
+			        {name: "Inner", id: "3"},
+			        {name: "Packing", id: "4"},
+			        {name: "Banderol", id: "5"},
+			        {name: "Ball", id: "8"},
+			        {name: "Box", id: "9"}
+			    ];
+
+			    dp.swimlanes.list = [
+			    	{name: "Checking", id: "C"},
+				    {name: "Operator", id: "O"},
+				    {name: "Produksi", id: "P"},
+				    {name: "-", id: "B"},
+				    {name: "Tracking", id: "T"}
+				];
+
+			    dp.cards.list = [
+			        {id: 1, "name": "Yusuf Eko", column: "6", swimlane: "C", text: "ID : 612006", barColor: "#999"},
+			        {id: 2, "name": "Eko Nugroho", column: "1", swimlane: "O", text: "ID : 112001", barColor: "#ff3232ff"},
+			        {id: 3, "name": "199", column: "1", swimlane: "P", text: "Afkir : 1<br>Jumlah : 200"}
+			    ];
+			    dp.cardMoveHandling = "Disabled";
+			    dp.init();
+
+			</script>
+		<?php
 	}
 
 	protected function action(){

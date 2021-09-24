@@ -26,11 +26,11 @@ function sidemenu_admin(){
 		'child'		=> setting_admin()
 	);
 
-	$args['report'] = array(
+	$args['tracking-user'] = array(
 		'status'	=> '',
 		'icon'		=> 'fa fa-book',
-		'label'		=> 'Report',
-		'func'		=> 'report_admin',
+		'label'		=> 'Tracking',
+		'func'		=> 'tracking_user',
 		'child'		=> null
 	);
 	
@@ -39,6 +39,15 @@ function sidemenu_admin(){
 
 function setting_admin(){
 	$args = array();
+	
+	$args['block'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Block',
+		'func'		=> 'block_admin',
+		'child'		=> null
+	);
+
 	$args['recahan'] = array(
 		'status'	=> '',
 		'icon'		=> '',
@@ -60,6 +69,14 @@ function setting_admin(){
 		'icon'		=> '',
 		'label'		=> 'Divisi',
 		'func'		=> 'divisi_admin',
+		'child'		=> null
+	);
+
+	$args['default-SC'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Default SC',
+		'func'		=> 'defaultSC_admin',
 		'child'		=> null
 	);
 
