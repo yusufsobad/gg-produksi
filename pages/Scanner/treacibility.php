@@ -21,6 +21,16 @@ class _treacibility{
 		return $user;
 	}
 
+	public static function get_block($id=0){
+		$block = gg_module::get_id(array('ID','module_value'));
+		$check = array_filter($block);
+		if(empty($check)){
+			return array('name' => '-');
+		}
+
+		return array('name' => $block[0]['module_value']);
+	}
+
 	public static function get_blocks(){
 		$block = gg_module::_gets('block',array('ID','module_value'));
 		$block = convToOption($block,'ID','module_value');
@@ -32,15 +42,23 @@ class _treacibility{
 		$div = _production::_check_divisi($scan);
 		if($div==6){
 			$user = self::_check_user(6,$scan);
+			$idx = $user['ID'];
 
-			// Insert Login User
-			sobad_db::_insert_table("ggk-login-user",array('id_user' => $user[0]['ID'], 'id_block' => $block));
+			// Check Leader Block Login
+			$where = "AND id_user='$idx' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
+			$check = gg_login::get_all(array('ID'),$where);
+			$check = array_filter($check);
+			if(empty($check)){
+				// Insert Login User
+				sobad_db::_insert_table("ggk-login-user",array('id_user' => $user[0]['ID'], 'id_block' => $block));
+			}
 
 		}else{
 			die(_error::_alert_db('User Bukan Leader Block !!!'));
 		}
 
 		return array(
+			'ID'		=> $idx,
 			'picture'	=> self::$picture,
 			'name'		=> $user[0]['name'],
 			'nik'		=> $scan
@@ -63,6 +81,7 @@ class _treacibility{
 		}
 
 		return array(
+			'ID'		=> $user['ID'],
 			'picture'	=> self::$picture,
 			'name'		=> $user[0]['name'],
 			'nik'		=> $scan
