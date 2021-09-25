@@ -22,7 +22,7 @@ class _treacibility{
 	}
 
 	public static function get_block($id=0){
-		$block = gg_module::get_id(array('ID','module_value'));
+		$block = gg_module::get_id($id,array('ID','module_value'));
 		$check = array_filter($block);
 		if(empty($check)){
 			return array('name' => '-');
