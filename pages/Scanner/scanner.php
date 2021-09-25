@@ -37,7 +37,7 @@ class _production{
 		self::$default = $data;
 	}
 
-	private static function _check_divisi($scan=''){
+	public static function _check_divisi($scan=''){
 		$divisi = gg_module::_gets('divisi',array('ID','module_note'));
 		$divisi = convToOption($divisi,'module_note','ID');
 
@@ -47,7 +47,7 @@ class _production{
 		return $div;
 	}
 
-	private static function _check_codeScan($scan=''){
+	public static function _check_codeScan($scan=''){
 		$process = gg_module::_gets('scanner',array('module_code','module_note'));
 		$code = 0;
 

@@ -34,6 +34,7 @@
 		$table = array(
 				'ggk-detail'		=> self::ggk_detail(),
 				'ggk-employee'		=> self::ggk_employee(),
+				'ggk-login-user'		=> self::ggk_login_user(),
 				'ggk-module'		=> self::ggk_module(),
 				'ggk-post'		=> self::ggk_post(),
 				'ggk-production'		=> self::ggk_production(),
@@ -46,7 +47,6 @@
 
 		private static function ggk_detail(){
 			$list = array(
-				'ID'	=> 0,
 				'process_id'	=> 0,
 				'scan_detail'	=> '',
 				'_inserted'	=> date('Y-m-d H:i:s'),	
@@ -64,6 +64,18 @@
 				'no_induk'	=> 0,
 				'no_meja'	=> 0,
 				'status'	=> 0,	
+			);
+			
+			return $list;
+		}
+
+		private static function ggk_login_user(){
+			$list = array(
+				'id_user'	=> 0,
+				'id_pasok'	=> 0,
+				'id_block'	=> 0,
+				'inserted'	=> date('Y-m-d H:i:s'),
+				'receh'	=> 0,	
 			);
 			
 			return $list;

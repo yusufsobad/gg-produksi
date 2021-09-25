@@ -1,9 +1,9 @@
 <?php
 
-class gg_post extends _class{
-	public static $table = 'ggk-post';
+class gg_login extends _class{
+	public static $table = 'ggk-login-user';
 
-	public static function blueprint($type='order'){
+	public static function blueprint($type='login'){
 	// Konsep Blueprint	Schema
 		$args = array(
 			'type'		=> $type,
