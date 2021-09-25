@@ -18,7 +18,7 @@ class _treacibility{
 			die(_error::_alert_db("User Tidak di temukan !!!"));
 		}
 
-		return $user;
+		return $user[0];
 	}
 
 	public static function get_block($id=0){
@@ -60,7 +60,7 @@ class _treacibility{
 		return array(
 			'ID'		=> $idx,
 			'picture'	=> self::$picture,
-			'name'		=> $user[0]['name'],
+			'name'		=> $user['name'],
 			'nik'		=> $scan
 		);
 	}
@@ -83,7 +83,7 @@ class _treacibility{
 		return array(
 			'ID'		=> $user['ID'],
 			'picture'	=> self::$picture,
-			'name'		=> $user[0]['name'],
+			'name'		=> $user['name'],
 			'nik'		=> $scan
 		);
 	}
