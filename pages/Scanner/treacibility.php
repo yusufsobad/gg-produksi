@@ -30,7 +30,7 @@ class _treacibility{
 
 	public static function get_leaderBlock($scan='',$block=0){
 		$div = _production::_check_divisi($scan);
-		if($div!=6){
+		if($div==6){
 			$user = self::_check_user(6,$scan);
 
 			// Insert Login User
@@ -51,7 +51,7 @@ class _treacibility{
 		$y = date('Y');$m = date('m');$d = date('d');
 		$div = _production::_check_divisi($scan);
 
-		if($div!=9){
+		if($div==9){
 			$user = self::_check_user(9,$scan);
 
 			// Update Login User
