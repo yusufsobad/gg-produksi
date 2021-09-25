@@ -11,7 +11,7 @@ class _treacibility{
 		$module = gg_module::get_id($div,array('ID','module_value'));
 		$module = $module[0];
 
-		$user = gg_employee::get_all(array('ID','name'),"AND divisi='6' AND no_induk='$nik'");
+		$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
 			
 		$check = array_filter($user);
 		if(empty($check)){
@@ -37,7 +37,7 @@ class _treacibility{
 			sobad_db::_insert_table("ggk-login-user",array('id_user' => $user[0]['ID'], 'id_block' => $block));
 
 		}else{
-			die(_error::_alert_db('Bagian User Undefined !!!'));
+			die(_error::_alert_db('User Bukan Leader Block !!!'));
 		}
 
 		return array(
@@ -59,7 +59,7 @@ class _treacibility{
 			sobad_db::_update_multiple($where,"ggk-login-user",array('id_pasok' => $user[0]['ID'], 'id_user' => $block));
 
 		}else{
-			die(_error::_alert_db('Bagian User Undefined !!!'));
+			die(_error::_alert_db('User Bukan Pasok !!!'));
 		}
 
 		return array(
