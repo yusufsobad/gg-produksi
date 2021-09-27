@@ -5,6 +5,17 @@ class _treacibility{
 
 	private static $default = array();
 
+	private static function _get_recehan($block=0){
+		$receh = gg_module::get_id($block,array('module_note'));
+		$check = array_filter($receh);
+
+		if(!empty($receh)){
+			return (int) $receh[0]['module_note'];
+		}
+
+		return 0;
+	}
+
 	private static function _default($args=array()){
 		$data = array(
 			'work_id'			=> 0,
@@ -15,7 +26,11 @@ class _treacibility{
 			'no_pasok'			=> '-',
 			'_total'			=> 0,
 			'_afkir'			=> 0,
-			'_default'			=> 0
+			'_default'			=> 0,
+			'_totGilling'		=> 0,
+			'_totPushCutter'	=> 0,
+			'_totRecehan'		=> 0,
+			'_totAfkir'			=> 0
 		);
 
 		foreach ($args as $key => $val) {
@@ -145,6 +160,119 @@ class _treacibility{
 		return $block;
 	}
 
+	public static function get_statusProduction($pasok=0,$block=0){
+		$y = date('Y');$m = date('m');$d = date('d');
+
+		// Get Total 
+		$where = "AND id_user='$pasok' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
+		$product = gg_production::get_all(array('p_total','p_afkir'),$where);
+
+		$afkir = 0;$total = 0;
+		foreach ($product as $key => $val) {
+			$afkir += $val['p_afkir'];
+			$total += $val['p_total'];
+		}
+
+		self::$default['_totGilling'] = $total;
+		self::$default['_totPushCutter'] = $total;
+		self::$default['_totAfkir'] = $afkir;
+		self::$default['_totRecehan'] = self::_get_recehan($block);
+	}
+
+	public static function get_loadData($pasok=0,$block=0){
+		$y = date('Y');$m = date('m');$d = date('d');
+		$where = "AND id_user='$pasok' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
+
+		// Default Data
+		$args = array(
+			'input'		=> array(
+				'status'	=> false,
+				'data'		=> array()
+			),
+			'history'	=> array(
+				'status'	=> false,
+				'data'		=> array()
+			),
+			'total'		=> array(
+				'status'	=> true,
+				'data'		=> array()
+			)
+		);
+
+		// Get input -------------------------------------------------
+		$input = gg_production::get_all(array('scan_id','scan_detail'),$where." AND status='0'");
+		$check = array_filter($input);
+
+		if(!empty($check)){
+			$def = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='SC'");
+			$def = $def[0]['module_reff'];
+	
+			$args['input']['status'] = true;
+			
+			$_inp = array(
+				'status'			=> 0,
+				'smart_container'	=> '-',
+				'gilling'			=> '-',
+				'push_cutter'		=> '-',
+				'no_pasok'			=> '-',
+				'_default'			=> 0
+			);
+
+			$_inp['smart_container'] = $input[0]['scan_id'];
+			$_inp['_default'] = $def;
+
+			if(empty($input[0]['scan_detail'])){
+				$_inp['status'] = 1;
+			}else{
+				$_inp['status'] = count($input) + 1;
+
+				foreach ($input as $key => $val) {
+					$div = self::_check_divisi($val['scan_detail']);
+
+					if($div==1){
+						$_inp['gilling'] = $scan;
+						$_inp['pasok'] = (int) substr($scan, 6,2);
+					}else if($div==2){
+						$_inp['push_cutter'] = $scan;
+					}
+				}
+			}
+		}		
+		// End Get input --------------------------------------------------
+
+		// Get History ------------------------------------------------------
+		$history = gg_production::get_all(array('scan_id','p_total','p_afkir','scan_detail'),$where." AND status='1'");
+		$args['history']['status'] = count($history)<=0?false:true;
+
+		$_hist = array()
+		foreach ($history as $key => $val) {
+			$_hist[] = array(
+				'smart_container'	=> $val['scan_id'],
+				'gilling'			=> $gilling,
+				'push_cutter'		=> $pushc,
+				'no_pasok'			=> '-',
+				'_total'			=> $val['p_total'],
+				'_afkir'			=> $val['p_afkir']
+			);
+		}
+		// End Get History --------------------------------------------------
+
+		// Get Status Produksi ------------------------------------------------------
+		self::get_statusProduction($pasok,$block);
+		$args['total']['data'] = array(
+			'_totGilling'		=> self::$default['_totGilling'],
+			'_totPushCutter'	=> self::$default['_totPushCutter'],
+			'_totRecehan'		=> self::$default['_totRecehan'],
+			'_totAfkir'			=> self::$default['_totAfkir'],
+		);
+		// End Get Status Produksi --------------------------------------------------
+
+		$args['input']['data'] = $_inp;
+		$args['history']['data'] = $_hist;
+
+		return $args;
+	}
+
 	public static function get_leaderBlock($scan='',$block=0){
 		$y = date('Y');$m = date('m');$d = date('d');
 		$div = self::_check_divisi($scan);
@@ -238,20 +366,12 @@ class _treacibility{
 		return self::$default;
 	}
 
-	public static function send_data($quantity=0,$afkir=0,$data=array()){
+	public static function send_data($quantity=0,$afkir=0,$block=0,$data=array()){
 		self::_default($data);
 		$data = self::$default;
 
 		if(empty($quantity)){
 			die(_error::_alert_db("Quantity tidak boleh kosong !!!"));
-		}
-
-		$check = array_filter($data);
-		if(!empty($check)){
-			// Check scan user id 
-			if(!isset($data['user_id']) || empty($data['user_id'])){
-				die(_error::_alert_db("Scan User terlebih dahulu !!!"));
-			}
 		}
 
 		sobad_db::_update_single($data['work_id'],'ggk-production',array(
@@ -260,9 +380,22 @@ class _treacibility{
 			'status'		=> 1
 		));
 
+		// Pengurangan Recehan
+		if($afkir > 0){
+			$receh = self::_get_recehan($block);
+			$receh -= $afkir;
+
+			sobad_db::_update_single($block,'ggk-module',array('ID' => $block, 'module_note' => $receh));
+		}
+
 		$data['_total'] = $quantity;
 		$data['_afkir'] = $afkir;
 		$data['input'] = false;
-		return $data;
+
+		self::$default = $data;
+
+		// Get Status Produksi
+		self::get_statusProduction($data['user_id'],$block);
+		return self::$default;
 	}
 }
