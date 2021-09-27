@@ -244,7 +244,7 @@ class _treacibility{
 		$history = gg_production::get_all(array('scan_id','p_total','p_afkir','scan_detail'),$where." AND status='1'");
 		$args['history']['status'] = count($history)<=0?false:true;
 
-		$_hist = array()
+		$_hist = array();
 		foreach ($history as $key => $val) {
 			$_hist[] = array(
 				'smart_container'	=> $val['scan_id'],
