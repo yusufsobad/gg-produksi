@@ -13,6 +13,8 @@ class _treacibility{
 			'gilling'			=> '-',
 			'push_cutter'		=> '-',
 			'no_pasok'			=> '-',
+			'_total'			=> 0,
+			'_afkir'			=> 0,
 			'_default'			=> 0
 		);
 
@@ -234,5 +236,38 @@ class _treacibility{
 
 		self::_add_detail($scan,2);
 		return self::$default;
+	}
+
+	public static function send_data($quantity=0,$afkir=0,$data=array()){
+		self::_default($data);
+		$data = self::$default;
+
+		if(empty($quantity)){
+			die(_error::_alert_db("Quantity tidak boleh kosong !!!"));
+		}
+
+		$check = array_filter($data);
+		if(!empty($check)){
+			// Check scan user id 
+			if(!isset($data['user_id']) || empty($data['user_id'])){
+				die(_error::_alert_db("Scan User terlebih dahulu !!!"));
+			}
+		}
+
+		$product = gg_production::get_id($data['work_id'],array('operator_id'));
+		if($product[0]['operator_id']==0){
+			die(_error::_alert_db("Scan Operator terlebih dahulu !!!"));
+		}
+
+		sobad_db::_update_single($data['work_id'],'ggk-production',array(
+			'p_total'		=> $quantity,
+			'p_afkir'		=> $afkir,
+			'status'		=> 1
+		));
+
+		$data['_total'] = $quantity;
+		$data['_afkir'] = $afkir;
+		$data['input'] = false;
+		return $data;
 	}
 }
