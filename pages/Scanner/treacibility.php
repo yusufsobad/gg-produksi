@@ -254,11 +254,6 @@ class _treacibility{
 			}
 		}
 
-		$product = gg_production::get_id($data['work_id'],array('operator_id'));
-		if($product[0]['operator_id']==0){
-			die(_error::_alert_db("Scan Operator terlebih dahulu !!!"));
-		}
-
 		sobad_db::_update_single($data['work_id'],'ggk-production',array(
 			'p_total'		=> $quantity,
 			'p_afkir'		=> $afkir,
