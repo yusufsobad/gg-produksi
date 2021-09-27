@@ -72,13 +72,10 @@ class _treacibility{
 			die(_error::_alert_db('Maximal scan!!!'));
 		}
 
-		self::$default['__number'] = $check;
 		$q = sobad_db::_insert_table('ggk-detail',array(
 				'process_id'	=> $default['work_id'],
 				'scan_detail'	=> $scan,
 		));
-
-		return $q;
 	}
 
 	private static function _add_production($scan='',$note=''){
@@ -201,8 +198,7 @@ class _treacibility{
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
 		}
 
-		$q = self::_add_detail($scan,2);
-
-		return $q;
+		self::_add_detail($scan,2);
+		return self::$default;
 	}
 }
