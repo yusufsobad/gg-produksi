@@ -110,10 +110,8 @@
 				'divisi_id'	=> 0,
 				'scan_date'	=> date('Y-m-d H:i:s'),
 				'p_total'	=> 0,
-				'p_receh'	=> 0,
 				'p_afkir'	=> 0,
-				'scan_id'	=> '',
-				'operator_id'	=> 0,	
+				'scan_id'	=> '',	
 			);
 			
 			return $list;

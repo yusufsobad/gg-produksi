@@ -5,6 +5,34 @@ class _treacibility{
 
 	private static $default = array();
 
+	private static function _default($args=array()){
+		$data = array(
+			'work_id'			=> 0,
+			'user_id'			=> 0,
+			'smart_container'	=> '-',
+			'gilling'			=> '-',
+			'push_cutter'		=> '-',
+			'no_pasok'			=> '-',
+			'_default'			=> 0
+		);
+
+		foreach ($args as $key => $val) {
+			$data[$key] = isset($data[$key])?$val:'';
+		}
+
+		self::$default = $data;
+	}
+
+	public static function _check_divisi($scan=''){
+		$divisi = gg_module::_gets('divisi',array('ID','module_note'));
+		$divisi = convToOption($divisi,'module_note','ID');
+
+		$aw = substr($scan,0,2);
+		$div = isset($divisi[$aw])?$divisi[$aw]:0;
+
+		return $div;
+	}
+
 	private static function _check_user($div=0,$scan=""){
 		$nik = (int) substr($scan,2,4);
 
@@ -19,6 +47,64 @@ class _treacibility{
 		}
 
 		return $user[0];
+	}
+
+		private static function _add_detail($scan='',$max=1){
+		$default = self::$default;
+		$y = date('Y');$m = date('m');$d = date('d');
+
+		// Check Double Scan
+		$check = gg_production::get_id($default['work_id'],array('ID'),"AND scan_detail='$scan'");
+		$check = array_filter($product);
+		if(!empty($check)){
+			die(_error::_alert_db('Double Scan ID!!!'));
+		}
+
+		// check max scann
+		$product = gg_production::get_id($default['work_id'],array('ID','process_id'));
+		$check = count($product);
+
+		if($check==1 && empty($product[0]['process_id'])){
+			$check = 0;
+		}
+
+		if($check>=$max){
+			die(_error::_alert_db('Maximal scan!!!'));
+		}
+
+		self::$default['__number'] = $check;
+		$q = sobad_db::_insert_table('ggk-detail',array(
+				'process_id'	=> $default['work_id'],
+				'scan_detail'	=> $scan,
+		));
+
+		return $q;
+	}
+
+	private static function _add_production($scan='',$note=''){
+		$default = self::$default;
+		$y = date('Y');$m = date('m');$d = date('d');
+
+		// Check Scan
+		$where = "AND user_id='".$default['user_id']."' AND scan_id='$scan' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
+		$check = gg_production::get_all(array('ID'),$where);
+		$check = array_filter($check);
+		if(!empty($check)){
+			die(_error::_alert_db("Double Scan ID ".$note." !!!"));
+		}
+
+		$user = gg_employee::get_id($default['user_id'],array('divisi'));
+		$div = $user[0]['divisi'];
+
+		$q = sobad_db::_insert_table('ggk-production',array(
+				'user_id'		=> $default['user_id'],
+				'divisi_id'		=> $div,
+				'scan_id'		=> $scan
+		));
+
+		$default['work_id'] = $q;
+
+		self::$default = $default;
 	}
 
 	public static function get_block($id=0){
@@ -39,7 +125,9 @@ class _treacibility{
 	}
 
 	public static function get_leaderBlock($scan='',$block=0){
-		$div = _production::_check_divisi($scan);
+		$y = date('Y');$m = date('m');$d = date('d');
+		$div = self::_check_divisi($scan);
+
 		if($div==6){
 			$user = self::_check_user(6,$scan);
 			$idx = $user['ID'];
@@ -50,7 +138,7 @@ class _treacibility{
 			$check = array_filter($check);
 			if(empty($check)){
 				// Insert Login User
-				sobad_db::_insert_table("ggk-login-user",array('id_user' => $user[0]['ID'], 'id_block' => $block));
+				sobad_db::_insert_table("ggk-login-user",array('id_user' => $user['ID'], 'id_block' => $block));
 			}
 
 		}else{
@@ -67,7 +155,7 @@ class _treacibility{
 
 	public static function get_pasok($scan='',$block=0){
 		$y = date('Y');$m = date('m');$d = date('d');
-		$div = _production::_check_divisi($scan);
+		$div = self::_check_divisi($scan);
 
 		if($div==9){
 			$user = self::_check_user(9,$scan);
@@ -86,5 +174,35 @@ class _treacibility{
 			'name'		=> $user['name'],
 			'nik'		=> $scan
 		);
+	}
+
+	public static function get_smartContainer($scan='',$user=0){
+		self::_default(array('user_id' => $user));
+		$code = self::_check_codeScan($scan);
+
+		// Check id scan Smart Container
+		if($code=='SC'){
+			$idx = self::_add_production($scan,"Smart Container");
+		}else{
+			die(_error::_alert_db("ID bukan Smart Container!!!"));
+		}
+
+		return self::$default;
+	}
+
+	public static function get_operator($scan='',$args=array()){
+		self::_default($args);
+
+		$div = self::_check_divisi($scan);
+		$induk = (int) substr($scan, 2,4);
+		$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
+		$check = array_filter($user);
+		if(empty($check)){
+			die(_error::_alert_db('Operator belum Terdaftar!!!'));
+		}
+
+		$q = self::_add_detail($scan,2);
+
+		return $q;
 	}
 }
