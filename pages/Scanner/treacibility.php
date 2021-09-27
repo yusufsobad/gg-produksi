@@ -49,7 +49,29 @@ class _treacibility{
 		return $user[0];
 	}
 
-		private static function _add_detail($scan='',$max=1){
+	public static function _check_codeScan($scan=''){
+		$process = gg_module::_gets('scanner',array('module_code','module_note'));
+		$code = 0;
+
+		// Check id scan User
+		foreach ($process as $ky => $vl) {
+			$regx = $vl['module_note'];
+			if(empty($regx)){
+				$code = 0;
+				break;
+			}
+
+			$regx = "/$regx/i";
+			if(preg_match($regx, $scan)){
+				$code = $vl['module_code'];
+				break;
+			}
+		}
+
+		return $code;
+	}
+
+	private static function _add_detail($scan='',$max=1){
 		$default = self::$default;
 		$y = date('Y');$m = date('m');$d = date('d');
 
@@ -159,7 +181,7 @@ class _treacibility{
 
 			// Update Login User
 			$where = "id_user='$block' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
-			sobad_db::_update_multiple($where,"ggk-login-user",array('id_pasok' => $user[0]['ID'], 'id_user' => $block));
+			sobad_db::_update_multiple($where,"ggk-login-user",array('id_pasok' => $user['ID'], 'id_user' => $block));
 
 		}else{
 			die(_error::_alert_db('User Bukan Pasok !!!'));
