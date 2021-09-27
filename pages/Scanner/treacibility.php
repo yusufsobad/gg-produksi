@@ -164,7 +164,7 @@ class _treacibility{
 		$y = date('Y');$m = date('m');$d = date('d');
 
 		// Get Total 
-		$where = "AND id_user='$pasok' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
+		$where = "AND user_id='$pasok' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
 		$product = gg_production::get_all(array('p_total','p_afkir'),$where);
 
 		$afkir = 0;$total = 0;
@@ -181,7 +181,7 @@ class _treacibility{
 
 	public static function get_loadData($pasok=0,$block=0){
 		$y = date('Y');$m = date('m');$d = date('d');
-		$where = "AND id_user='$pasok' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
+		$where = "AND user_id='$pasok' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
 
 		// Default Data
 		$args = array(
