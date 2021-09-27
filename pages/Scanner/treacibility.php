@@ -76,7 +76,7 @@ class _treacibility{
 		$y = date('Y');$m = date('m');$d = date('d');
 
 		// Check Double Scan
-		$check = gg_production::get_id($default['work_id'],array('ID'),"AND scan_detail='$scan'");
+		$check = gg_production::get_id($default['work_id'],array('ID','scan_detail'),"AND scan_detail='$scan'");
 		$check = array_filter($product);
 		if(!empty($check)){
 			die(_error::_alert_db('Double Scan ID!!!'));
@@ -206,6 +206,7 @@ class _treacibility{
 			die(_error::_alert_db("ID bukan Smart Container!!!"));
 		}
 
+		self::$default['smart_container'] = $scan;
 		return self::$default;
 	}
 
@@ -218,6 +219,13 @@ class _treacibility{
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
+		}
+
+		if($div==1){
+			self::$default['gilling'] = $scan;
+			self::$default['pasok'] = (int) substr($scan, 6,2);
+		}else if($div==2){
+			self::$default['gilling'] = $scan;
 		}
 
 		self::_add_detail($scan,2);
