@@ -241,19 +241,28 @@ class _treacibility{
 		// End Get input --------------------------------------------------
 
 		// Get History ------------------------------------------------------
-		$history = gg_production::get_all(array('scan_id','p_total','p_afkir','scan_detail'),$where." AND status='1'");
+		$history = gg_production::get_all(array('ID','scan_id','p_total','p_afkir','scan_detail'),$where." AND status='1'");
 		$args['history']['status'] = count($history)<=0?false:true;
 
 		$_hist = array();
 		foreach ($history as $key => $val) {
-			$_hist[] = array(
-				'smart_container'	=> $val['scan_id'],
-				'gilling'			=> $gilling,
-				'push_cutter'		=> $pushc,
-				'no_pasok'			=> '-',
-				'_total'			=> $val['p_total'],
-				'_afkir'			=> $val['p_afkir']
-			);
+			$idx = $val['ID'];
+			if(!isset($_hist[$idx])){
+				$_hist[$idx] = array(
+					'smart_container'	=> $val['scan_id'],
+					'no_pasok'			=> '-',
+					'_total'			=> $val['p_total'],
+					'_afkir'			=> $val['p_afkir']
+				);
+			}
+
+			$div = self::_check_divisi($val['scan_detail']);
+			if($div==1){
+				$_hist[$idx]['gilling'] = $scan;
+				$_hist[$idx]['pasok'] = (int) substr($scan, 6,2);
+			}else if($div==2){
+				$_hist[$idx]['push_cutter'] = $scan;
+			}
 		}
 		// End Get History --------------------------------------------------
 
