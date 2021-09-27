@@ -225,8 +225,12 @@ class _treacibility{
 			self::$default['gilling'] = $scan;
 			self::$default['pasok'] = (int) substr($scan, 6,2);
 		}else if($div==2){
-			self::$default['gilling'] = $scan;
+			self::$default['push_cutter'] = $scan;
 		}
+
+		$def = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='SC'");
+		$def = $def[0]['module_reff'];
+		self::$default['_default'] = $def;
 
 		self::_add_detail($scan,2);
 		return self::$default;
