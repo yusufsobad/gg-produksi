@@ -40,6 +40,14 @@ class _treacibility{
 		self::$default = $data;
 	}
 
+	private static function get_noPasok($user=0){
+		$y = date('Y');$m = date('m');$d = date('d');
+		$where = "AND operator_id='$user' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
+
+		$pasok = gg_production::get_all(array('ID','operator_id'),$where);
+		return count($pasok);
+	}
+
 	public static function _check_divisi($scan=''){
 		$divisi = gg_module::_gets('divisi',array('ID','module_note'));
 		$divisi = convToOption($divisi,'module_note','ID');
@@ -88,7 +96,29 @@ class _treacibility{
 		return $code;
 	}
 
-	private static function _add_detail($scan='',$max=1){
+	private static function _check_scPosition($scan=''){
+		$data = self::$default;
+
+		$sc_db = gg_module::_gets('smart_container',array('ID','module_reff'),"AND module_value='$scan'");
+		$check = array_filter($sc_db);
+		
+		if(empty($check)){
+			$q = sobad_db::_insert_table('ggk-module',array(
+				'module_key' 		=> 'smart_container',
+				'module_value'		=> $scan,
+				'module_reff'		=> $data['work_id']
+			));
+
+			return array('index' => $q, 'position' => 0);
+		}
+
+		$sc_db = $sc_db[0];
+		sobad_db::_update_single($sc_db['ID'],'ggk-module',array('module_reff' => $data['work_id']));
+
+		return array('index' => $sc_db['ID'], 'position' => $sc_db['module_reff']);
+	}
+
+	private static function _add_detail($scan='',$user_id=0,$max=1){
 		$default = self::$default;
 		$y = date('Y');$m = date('m');$d = date('d');
 
@@ -113,6 +143,7 @@ class _treacibility{
 
 		$q = sobad_db::_insert_table('ggk-detail',array(
 				'process_id'	=> $default['work_id'],
+				'operator_id'	=> $user_id,
 				'scan_detail'	=> $scan,
 		));
 	}
@@ -345,6 +376,7 @@ class _treacibility{
 			die(_error::_alert_db("ID bukan Smart Container!!!"));
 		}
 
+		self::_check_scPosition($scan);
 		self::$default['smart_container'] = $scan;
 		return self::$default;
 	}
@@ -371,7 +403,7 @@ class _treacibility{
 		$def = $def[0]['module_reff'];
 		self::$default['_default'] = $def;
 
-		self::_add_detail($scan,2);
+		self::_add_detail($scan,$user[0]['ID'],2);
 		return self::$default;
 	}
 

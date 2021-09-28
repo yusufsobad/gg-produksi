@@ -33,6 +33,7 @@
 		
 		$table = array(
 				'ggk-detail'		=> self::ggk_detail(),
+				'ggk-detail-afkir'		=> self::ggk_detail_afkir(),
 				'ggk-employee'		=> self::ggk_employee(),
 				'ggk-login-user'		=> self::ggk_login_user(),
 				'ggk-module'		=> self::ggk_module(),
@@ -48,8 +49,21 @@
 		private static function ggk_detail(){
 			$list = array(
 				'process_id'	=> 0,
+				'operator_id'	=> 0,
 				'scan_detail'	=> '',
 				'_inserted'	=> date('Y-m-d H:i:s'),	
+			);
+			
+			return $list;
+		}
+
+		private static function ggk_detail_afkir(){
+			$list = array(
+				'user_id'	=> 0,
+				'scan_id'	=> 0,
+				'afkir'	=> 0,
+				'pasok'	=> 0,
+				'inserted'	=> date('Y-m-d H:i:s'),	
 			);
 			
 			return $list;
@@ -73,6 +87,7 @@
 			$list = array(
 				'id_user'	=> 0,
 				'id_pasok'	=> 0,
+				'id_pasok2'	=> 0,
 				'id_block'	=> 0,
 				'inserted'	=> date('Y-m-d H:i:s'),
 				'receh'	=> 0,	
@@ -111,7 +126,8 @@
 				'scan_date'	=> date('Y-m-d H:i:s'),
 				'p_total'	=> 0,
 				'p_afkir'	=> 0,
-				'scan_id'	=> '',	
+				'scan_id'	=> '',
+				'status'	=> 0,	
 			);
 			
 			return $list;
