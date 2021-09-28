@@ -295,6 +295,11 @@ class _treacibility{
 				$_hist[$idx]['push_cutter'] = $scan;
 			}
 		}
+
+		$_histy = array();
+		foreach ($_hist as $key => $val) {
+			$_histy[] = $val;
+		}
 		// End Get History --------------------------------------------------
 
 		// Get Status Produksi ------------------------------------------------------
@@ -308,7 +313,7 @@ class _treacibility{
 		// End Get Status Produksi --------------------------------------------------
 
 		$args['input']['data'] = $_inp;
-		$args['history']['data'] = $_hist;
+		$args['history']['data'] = $_histy;
 
 		return $args;
 	}
