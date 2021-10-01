@@ -26,7 +26,7 @@ class gg_production extends _class{
 			),
 			'joined'	=> array(
 				'key'		=> 'process_id',
-				'table'		=> self::$tbl_join
+				'table'		=> self::$tbl_join,
 				'detail'	=> array(
 					'operator_id'	=> array(
 						'key'		=> 'ID',
