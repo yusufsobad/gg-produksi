@@ -299,7 +299,7 @@ class _treacibility{
 
 					if($user[0]['divisi']==1){
 						$_inp['gilling'] = $user[0]['name'];
-						$_inp['pasok'] = $val['pasok_ke'];
+						$_inp['no_pasok'] = $val['pasok_ke'];
 					}else if($user[0]['divisi']==2){
 						$_inp['push_cutter'] = $user[0]['name'];
 					}
@@ -330,7 +330,7 @@ class _treacibility{
 
 			if($user[0]['divisi']==1){
 				$_hist[$idx]['gilling'] = $user[0]['name'];
-				$_hist[$idx]['pasok'] = $val['pasok_ke'];
+				$_hist[$idx]['no_pasok'] = $val['pasok_ke'];
 			}else if($user[0]['divisi']==2){
 				$_hist[$idx]['push_cutter'] = $user[0]['name'];
 			}
@@ -440,7 +440,7 @@ class _treacibility{
 		if($user[0]['divisi']==1){
 			$pasok += 1;
 			self::$default['gilling'] = $user[0]['name'];
-			self::$default['pasok'] = $pasok + 1;
+			self::$default['no_pasok'] = $pasok;
 		}else if($user[0]['divisi']==2){
 			$pasok = 0;
 			self::$default['push_cutter'] = $user[0]['name'];
