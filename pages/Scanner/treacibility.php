@@ -449,7 +449,6 @@ class _treacibility{
 		$def = $def[0]['module_reff'];
 		self::$default['_default'] = $def;
 
-		$scan = $user[0]['module_note_divi'].sprintf("%04d",$user[0]['no_induk']);
 		self::_add_detail($scan,$user[0]['ID'],$pasok,2);
 		return self::$default;
 	}
