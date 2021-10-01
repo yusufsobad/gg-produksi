@@ -438,9 +438,10 @@ class _treacibility{
 
 		$pasok = self::get_noPasok($user[0]['ID']);
 		if($user[0]['divisi']==1){
+			$pasok += 1;
 			self::$default['gilling'] = $user[0]['name'];
 			self::$default['pasok'] = $pasok + 1;
-		}else if($div==2){
+		}else if($user[0]['divisi']==2){
 			$pasok = 0;
 			self::$default['push_cutter'] = $user[0]['name'];
 		}
