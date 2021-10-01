@@ -50,6 +50,7 @@
 			$list = array(
 				'process_id'	=> 0,
 				'operator_id'	=> 0,
+				'pasok_ke'	=> 0,
 				'scan_detail'	=> '',
 				'_inserted'	=> date('Y-m-d H:i:s'),	
 			);

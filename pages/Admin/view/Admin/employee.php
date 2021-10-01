@@ -124,7 +124,7 @@ class employee_admin extends _file_manager{
 				'Meja'		=> array(
 					'right',
 					'10%',
-					sprintf('%04d',$val['module_value_no_m']),
+					'NBK'.sprintf('%04d',$val['module_value_no_m']),
 					true
 				),
 				'Edit'		=> array(
@@ -342,8 +342,11 @@ class employee_admin extends _file_manager{
 		}
 
 		$idm = $vals['no_meja'];
-		$meja = gg_module::_gets('no_meja',array('ID','module_value'),"AND (module_reff='0' OR ID='$idm')");
-		$meja = convToOption($meja,'ID','module_value');
+		$meja = array();
+		$mdl = gg_module::_gets('no_meja',array('ID','module_value'),"AND (module_reff='0' OR ID='$idm')");
+		foreach ($mdl as $key => $val) {
+			$meja[$val['ID']] = "NBK".sprintf("%04d",$val['module_value']);
+		}
 
 		$meja[0] = 'Tidak Ada';
 

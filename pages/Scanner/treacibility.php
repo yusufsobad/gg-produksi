@@ -142,7 +142,7 @@ class _treacibility{
 		return array('index' => $sc_db['ID'], 'position' => $sc_db['module_reff']);
 	}
 
-	private static function _add_detail($scan='',$user_id=0,$max=1){
+	private static function _add_detail($scan='',$user_id=0,$pasok=0,$max=1){
 		$default = self::$default;
 		$y = date('Y');$m = date('m');$d = date('d');
 
@@ -167,6 +167,7 @@ class _treacibility{
 
 		$q = sobad_db::_insert_table('ggk-detail',array(
 				'process_id'	=> $default['work_id'],
+				'pasok_ke'		=> $pasok,
 				'operator_id'	=> $user_id,
 				'scan_detail'	=> $scan,
 		));
@@ -265,7 +266,7 @@ class _treacibility{
 		);
 
 		// Get input -------------------------------------------------
-		$input = gg_production::get_all(array('scan_id','scan_detail'),$where." AND status='0'");
+		$input = gg_production::get_all(array('scan_id','pasok_ke','scan_detail'),$where." AND status='0'");
 		$check = array_filter($input);
 
 		if(!empty($check)){
@@ -292,13 +293,15 @@ class _treacibility{
 				$_inp['status'] = count($input) + 1;
 
 				foreach ($input as $key => $val) {
-					$div = self::_check_divisi($val['scan_detail']);
+					$scan = $val['scan_detail'];
+					$idx = self::_check_noTable($scan);
+					$user = gg_employee::get_id($idx,array('ID','name','divisi'));
 
-					if($div==1){
-						$_inp['gilling'] = $scan;
-						$_inp['pasok'] = (int) substr($scan, 6,2);
-					}else if($div==2){
-						$_inp['push_cutter'] = $scan;
+					if($user[0]['divisi']==1){
+						$_inp['gilling'] = $user[0]['name'];
+						$_inp['pasok'] = $val['pasok_ke'];
+					}else if($user[0]['divisi']==2){
+						$_inp['push_cutter'] = $user[0]['name'];
 					}
 				}
 			}
@@ -306,7 +309,7 @@ class _treacibility{
 		// End Get input --------------------------------------------------
 
 		// Get History ------------------------------------------------------
-		$history = gg_production::get_all(array('ID','scan_id','p_total','p_afkir','scan_detail'),$where." AND status='1'");
+		$history = gg_production::get_all(array('ID','scan_id','p_total','p_afkir','pasok_ke','scan_detail'),$where." AND status='1'");
 		$args['history']['status'] = count($history)<=0?false:true;
 
 		$_hist = array();
@@ -321,12 +324,15 @@ class _treacibility{
 				);
 			}
 
-			$div = self::_check_divisi($val['scan_detail']);
-			if($div==1){
-				$_hist[$idx]['gilling'] = $scan;
-				$_hist[$idx]['pasok'] = (int) substr($scan, 6,2);
-			}else if($div==2){
-				$_hist[$idx]['push_cutter'] = $scan;
+			$scan = $val['scan_detail'];
+			$idx = self::_check_noTable($scan);
+			$user = gg_employee::get_id($idx,array('ID','name','divisi'));
+
+			if($user[0]['divisi']==1){
+				$_inp['gilling'] = $user[0]['name'];
+				$_inp['pasok'] = $val['pasok_ke'];
+			}else if($user[0]['divisi']==2){
+				$_inp['push_cutter'] = $user[0]['name'];
 			}
 		}
 
@@ -424,7 +430,7 @@ class _treacibility{
 		self::_default($args);
 
 		$idx = self::_check_noTable($scan);
-		$user = gg_employee::get_id($idx,array('ID','name','divisi'));
+		$user = gg_employee::get_id($idx,array('ID','name','divisi','no_induk'));
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
@@ -435,6 +441,7 @@ class _treacibility{
 			self::$default['gilling'] = $user[0]['name'];
 			self::$default['pasok'] = $pasok + 1;
 		}else if($div==2){
+			$pasok = 0;
 			self::$default['push_cutter'] = $user[0]['name'];
 		}
 
@@ -442,7 +449,8 @@ class _treacibility{
 		$def = $def[0]['module_reff'];
 		self::$default['_default'] = $def;
 
-		self::_add_detail($scan,$user[0]['ID'],2);
+		$scan = $user[0]['module_note_divi'].sprintf("%04d",$user[0]['no_induk']);
+		self::_add_detail($scan,$user[0]['ID'],$pasok,2);
 		return self::$default;
 	}
 
