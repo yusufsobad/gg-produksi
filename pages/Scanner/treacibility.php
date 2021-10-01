@@ -329,10 +329,10 @@ class _treacibility{
 			$user = gg_employee::get_id($idx,array('ID','name','divisi'));
 
 			if($user[0]['divisi']==1){
-				$_inp['gilling'] = $user[0]['name'];
-				$_inp['pasok'] = $val['pasok_ke'];
+				$_hist['gilling'] = $user[0]['name'];
+				$_hist['pasok'] = $val['pasok_ke'];
 			}else if($user[0]['divisi']==2){
-				$_inp['push_cutter'] = $user[0]['name'];
+				$_hist['push_cutter'] = $user[0]['name'];
 			}
 		}
 
