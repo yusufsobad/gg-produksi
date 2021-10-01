@@ -294,8 +294,8 @@ class _treacibility{
 
 				foreach ($input as $key => $val) {
 					$scan = $val['scan_detail'];
-					$idx = self::_check_noTable($scan);
-					$user = gg_employee::get_id($idx,array('ID','name','divisi'));
+					$idxm = self::_check_noTable($scan);
+					$user = gg_employee::get_id($idxm,array('ID','name','divisi'));
 
 					if($user[0]['divisi']==1){
 						$_inp['gilling'] = $user[0]['name'];
@@ -325,14 +325,14 @@ class _treacibility{
 			}
 
 			$scan = $val['scan_detail'];
-			$idx = self::_check_noTable($scan);
-			$user = gg_employee::get_id($idx,array('ID','name','divisi'));
+			$idxm = self::_check_noTable($scan);
+			$user = gg_employee::get_id($idxm,array('ID','name','divisi'));
 
 			if($user[0]['divisi']==1){
-				$_hist['gilling'] = $user[0]['name'];
-				$_hist['pasok'] = $val['pasok_ke'];
+				$_hist[$idx]['gilling'] = $user[0]['name'];
+				$_hist[$idx]['pasok'] = $val['pasok_ke'];
 			}else if($user[0]['divisi']==2){
-				$_hist['push_cutter'] = $user[0]['name'];
+				$_hist[$idx]['push_cutter'] = $user[0]['name'];
 			}
 		}
 
