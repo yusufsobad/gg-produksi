@@ -61,7 +61,7 @@ class _treacibility{
 	public static function _check_noTable($scan=''){
 		// Get Regex No Bangku
 		$nbk = gg_module::_gets('scanner',array('module_note'),"AND module_code='NBK'");
-		$nbk = $nbk[0]['module_code'];
+		$nbk = $nbk[0]['module_note'];
 
 		if(!preg_match("/$nbk/i", $scan)){
 			die(_error::_alert_db("ID bukan no Meja!!!"));
@@ -69,7 +69,7 @@ class _treacibility{
 
 		preg_match_all("/$nbk/i", $scan,$no_meja);
 		$scan = (int) $no_meja[1];
-die(_error::_alert_db(json_encode($no_meja)));
+
 		$meja = gg_module::_gets('no_meja',array('ID'),"AND module_value='$scan' AND module_reff='1'");
 		$check = array_filter($meja);
 		if(empty($check)){
