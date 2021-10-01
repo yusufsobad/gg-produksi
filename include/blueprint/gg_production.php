@@ -23,15 +23,17 @@ class gg_production extends _class{
 					'table'		=> 'ggk-module',
 					'column'	=> array('module_value','module_note')
 				),
-				'operator_id'	=> array(
-					'key'		=> 'ID',
-					'table'		=> 'ggk-employee',
-					'column'	=> array('name','divisi','no_induk','no_meja')
-				),
 			),
 			'joined'	=> array(
 				'key'		=> 'process_id',
 				'table'		=> self::$tbl_join
+				'detail'	=> array(
+					'operator_id'	=> array(
+						'key'		=> 'ID',
+						'table'		=> 'ggk-employee',
+						'column'	=> array('name','divisi','no_induk','no_meja')
+					),
+				)
 			)
 		);
 
