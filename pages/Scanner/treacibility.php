@@ -68,7 +68,7 @@ class _treacibility{
 		}
 
 		preg_match_all("/$nbk/i", $scan,$no_meja);
-		$scan = (int) $no_meja[1];
+		$scan = (int) $no_meja[1][0];
 
 		$meja = gg_module::_gets('no_meja',array('ID'),"AND module_value='$scan' AND module_reff='1'");
 		$check = array_filter($meja);
