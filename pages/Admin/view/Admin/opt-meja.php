@@ -77,7 +77,7 @@ class noTable_admin extends _page{
 				'No Bangku'		=> array(
 					'left',
 					'20%',
-					sprintf("%04d",$val['module_value']),
+					'NBK' . sprintf("%04d",$val['module_value']),
 					true
 				),
 				'Operator'		=> array(

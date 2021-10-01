@@ -59,6 +59,17 @@ class _treacibility{
 	}
 
 	public static function _check_noTable($scan=''){
+		// Get Regex No Bangku
+		$nbk = gg_module::_gets('scanner',array('module_note'),"AND module_code='NBK'");
+		$nbk = $nbk[0]['module_code'];
+
+		if(!preg_match("/$nbk/i", $scan)){
+			die(_error::_alert_db("ID bukan no Meja!!!"));
+		}
+
+		preg_match_all("/$nbk/i", $scan,$no_meja);
+		$scan = (int) $no_meja[1];
+
 		$meja = gg_module::_gets('no_meja',array('ID'),"AND module_value='$scan' AND module_reff='1'");
 		$check = array_filter($meja);
 		if(empty($check)){
@@ -198,7 +209,7 @@ class _treacibility{
 	}
 
 	public static function get_location(){
-		$loc = gg_module::get_all(array('ID','module_value'),"AND module_key='location'");
+		$loc = gg_module::_gets('location',array('ID','module_value'));
 		$check = array_filter($loc);
 		if(empty($check)){
 			return array('name' => '-');
@@ -419,7 +430,7 @@ class _treacibility{
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
 		}
 
-		$pasok = self::get_pasok($user[0]['ID']);
+		$pasok = self::get_noPasok($user[0]['ID']);
 		if($user[0]['divisi']==1){
 			self::$default['gilling'] = $user[0]['name'];
 			self::$default['pasok'] = $pasok + 1;

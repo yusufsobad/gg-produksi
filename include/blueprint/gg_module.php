@@ -20,7 +20,8 @@ class gg_module extends _class{
 				'smart_container',
 				'block',
 				'default_sc',
-				'no_meja'
+				'no_meja',
+				'location'
 			);
 
 			if(in_array($type, $args)){
