@@ -58,6 +58,19 @@ class _treacibility{
 		return $div;
 	}
 
+	public static function _check_noTable($scan=''){
+		$meja = gg_module::_gets('no_meja',array('ID'),"AND module_value='$scan' AND module_reff='1'");
+		$check = array_filter($meja);
+		if(empty($check)){
+			die(_error::_alert_db("No Meja Belum terpakai!!!"));
+		}
+
+		$meja = $meja[0]['ID'];
+		$user = gg_employee::get_all(array('ID'),"AND no_meja='$meja'");
+
+		return $user[0]['ID'];
+	}
+
 	private static function _check_user($div=0,$scan=""){
 		$nik = (int) substr($scan,2,4);
 
@@ -182,6 +195,16 @@ class _treacibility{
 		}
 
 		return array('name' => $block[0]['module_value']);
+	}
+
+	public static function get_location(){
+		$loc = gg_module::get_all(array('ID','module_value'),"AND module_key='location'");
+		$check = array_filter($loc);
+		if(empty($check)){
+			return array('name' => '-');
+		}
+
+		return array('name' => $loc[0]['module_value']);
 	}
 
 	public static function get_blocks(){
@@ -389,19 +412,19 @@ class _treacibility{
 	public static function get_operator($scan='',$args=array()){
 		self::_default($args);
 
-		$div = self::_check_divisi($scan);
-		$induk = (int) substr($scan, 2,4);
-		$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
+		$idx = self::_check_noTable($scan);
+		$user = gg_employee::get_id($idx,array('ID','name','divisi'));
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
 		}
 
-		if($div==1){
-			self::$default['gilling'] = $scan;
-			self::$default['pasok'] = (int) substr($scan, 6,2);
+		$pasok = self::get_pasok($user[0]['ID']);
+		if($user[0]['divisi']==1){
+			self::$default['gilling'] = $user[0]['name'];
+			self::$default['pasok'] = $pasok + 1;
 		}else if($div==2){
-			self::$default['push_cutter'] = $scan;
+			self::$default['push_cutter'] = $user[0]['name'];
 		}
 
 		$def = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='SC'");

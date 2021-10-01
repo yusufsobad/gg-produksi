@@ -17,6 +17,11 @@ class gg_employee extends _class{
 					'key'		=> 'ID',
 					'table'		=> 'ggk-post',
 					'column'	=> array('name')
+				),
+				'no_meja'	=> array(
+					'key'		=> 'ID',
+					'table'		=> 'ggk-module',
+					'column'	=> array('module_value','module_reff')
 				)
 			)
 		);

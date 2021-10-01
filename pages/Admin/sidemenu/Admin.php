@@ -48,6 +48,14 @@ function setting_admin(){
 		'child'		=> null
 	);
 
+	$args['no-bangku'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'No Bangku',
+		'func'		=> 'noTable_admin',
+		'child'		=> null
+	);
+
 	$args['recahan'] = array(
 		'status'	=> '',
 		'icon'		=> '',

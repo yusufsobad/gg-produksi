@@ -19,7 +19,8 @@ class gg_module extends _class{
 				'divisi',
 				'smart_container',
 				'block',
-				'default_sc'
+				'default_sc',
+				'no_meja'
 			);
 
 			if(in_array($type, $args)){
