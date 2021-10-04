@@ -248,26 +248,27 @@ class _treacibility{
 			}
 
 		// Set Gilling
-			if($val['divisi_oper']==1){
-				$idg = $val['ID'];
-				if(!isset($_temp[$idg])){
-					$_temp[$idg] = array(
-						'parent'	=> 0,
-						'divisi'	=> 1,
-						'user_id'	=> $idx,
-						'name'		=> $val['name_oper'],
-						'picture'	=> self::$picture,
-						'_total'	=> 0,
-						'_afkir'	=> 0
-					);
-				}
+			$idg = $val['ID'];
+			if(!isset($_temp[$idg])){
+				$_temp[$idg] = array(
+					'parent'	=> 0,
+					'divisi'	=> 1,
+					'user_id'	=> 0,
+					'name'		=> '-',
+					'picture'	=> self::$picture,
+					'_total'	=> 0,
+					'_afkir'	=> 0
+				);
+			}
 
-				if($val['divisi_oper']==2){
-					$_temp[$idg]['parent'] = $val['operator_id'];
-				}else{
-					$_temp[$idg]['_total'] += $val['p_total'];
-					$_temp[$idg]['_afkir'] += $val['p_afkir'];
-				}
+			if($val['divisi_oper']==2){
+				$_temp[$idg]['parent'] = $val['operator_id'];
+			}else{
+				$_temp[$idg]['user_id'] = $idx;
+				$_temp[$idg]['name'] = $val['name_oper'];
+
+				$_temp[$idg]['_total'] += $val['p_total'];
+				$_temp[$idg]['_afkir'] += $val['p_afkir'];
 			}
 		}
 
