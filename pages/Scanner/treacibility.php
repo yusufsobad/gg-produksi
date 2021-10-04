@@ -30,7 +30,8 @@ class _treacibility{
 			'_totGilling'		=> 0,
 			'_totPushCutter'	=> 0,
 			'_totRecehan'		=> 0,
-			'_totAfkir'			=> 0
+			'_totAfkir'			=> 0,
+			'_detail'			=> array()
 		);
 
 		foreach ($args as $key => $val) {
@@ -219,6 +220,71 @@ class _treacibility{
 		return array('name' => $loc[0]['module_value']);
 	}
 
+	private static function group_operators($id=0){
+		$y = date('Y');$m = date('m');$d = date('d');
+		$where = "AND user_id='$id' AND (YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d')";
+		$flow = gg_production::get_all(array('ID','p_total','p_total','operator_id'),$where);
+
+		$push = array();$_temp = array();
+		foreach ($flow as $key => $val) {
+			$idx = $val['operator_id'];
+
+		// Set data Push Cutter	
+			if($val['divisi_oper']==2){
+				if(!isset($push[$idx])){
+					$push[$idx] = array(
+						'divisi'	=> 2,
+						'user_id'	=> $idx,
+						'name'		=> $val['name_oper'],
+						'picture'	=> self::$picture,
+						'_total'	=> 0,
+						'_afkir'	=> 0,
+						'_detail'	=> array()
+					);
+				}
+
+				$push[$idx]['_total'] += $val['p_total'];
+				$push[$idx]['_afkir'] += $val['p_afkir'];
+			}
+
+		// Set Gilling
+			if($val['divisi_oper']==1){
+				$idg = $val['ID'];
+				if(!isset($_temp[$idg])){
+					$_temp[$idg] = array(
+						'parent'	=> 0,
+						'divisi'	=> 1,
+						'user_id'	=> $idx,
+						'name'		=> $val['name_oper'],
+						'picture'	=> self::$picture,
+						'_total'	=> 0,
+						'_afkir'	=> 0
+					);
+				}
+
+				if($val['divisi_oper']==2){
+					$_temp[$idg]['parent'] = $val['operator_id'];
+				}else{
+					$_temp[$idg]['_total'] += $val['p_total'];
+					$_temp[$idg]['_afkir'] += $val['p_afkir'];
+				}
+			}
+		}
+
+	// Set data flow
+		foreach ($_temp as $key => $val) {
+			$idx = $val['parent'];
+			$push[$idx]['_detail'][] = $val;
+		}
+
+		$data = array();
+		foreach ($push as $key => $val) {
+			$data[] = $val;
+		}
+
+		return $data;
+	}
+
 	public static function get_blocks(){
 		$block = gg_module::_gets('block',array('ID','module_value'));
 		$block = convToOption($block,'ID','module_value');
@@ -262,10 +328,14 @@ class _treacibility{
 			'total'		=> array(
 				'status'	=> true,
 				'data'		=> array()
+			),
+			'layout'	=> array(
+				'status'	=> false,
+				'data'		=> array()
 			)
 		);
 
-		// Get input -------------------------------------------------
+		// Get input --------------------------------------------------------------
 		$input = gg_production::get_all(array('scan_id','pasok_ke','scan_detail'),$where." AND status='0'");
 		$check = array_filter($input);
 
@@ -306,9 +376,9 @@ class _treacibility{
 				}
 			}
 		}		
-		// End Get input --------------------------------------------------
+		// End Get input ---------------------------------------------------------
 
-		// Get History ------------------------------------------------------
+		// Get History -----------------------------------------------------------
 		$history = gg_production::get_all(array('ID','scan_id','p_total','p_afkir','pasok_ke','scan_detail'),$where." AND status='1'");
 		$args['history']['status'] = count($history)<=0?false:true;
 
@@ -340,7 +410,7 @@ class _treacibility{
 		foreach ($_hist as $key => $val) {
 			$_histy[] = $val;
 		}
-		// End Get History --------------------------------------------------
+		// End Get History ----------------------------------------------------------
 
 		// Get Status Produksi ------------------------------------------------------
 		self::get_statusProduction($pasok,$block);
@@ -351,6 +421,15 @@ class _treacibility{
 			'_totAfkir'			=> self::$default['_totAfkir'],
 		);
 		// End Get Status Produksi --------------------------------------------------
+
+		// Get Status Layout --------------------------------------------------------
+		$lay = self::group_operators($pasok);
+		$check = array_filter($lay);
+		if(!empty($check)){
+			$args['layout']['status'] = true;
+			$args['layout']['data'] = $lay;
+		}
+		// End Get Status Layout ----------------------------------------------------
 
 		$args['input']['data'] = $_inp;
 		$args['history']['data'] = $_histy;
@@ -481,9 +560,36 @@ class _treacibility{
 		$data['input'] = false;
 
 		self::$default = $data;
+		self::flow_operator($data['user_id']);
 
 		// Get Status Produksi
 		self::get_statusProduction($data['user_id'],$block);
 		return self::$default;
+	}
+
+	Public static function flow_operator($pasok=0,$idp=0,$idg=0){
+		$detail = self::group_operators($pasok);
+
+		// Check position
+		$pos = array();
+		foreach ($detail as $key => $val) {
+			// position Push Cutter
+			if($val['user_id']==$idp){
+				$val['pos_x'] = $key;
+				$val['pos_y'] = 0;
+				$pos[] = $val;
+			}
+
+			foreach ($val['_detail'] as $ky => $vl) {
+				// position Gilling
+				if($val['user_id']==$idp){
+					$vl['pos_x'] = $key;
+					$vl['pos_y'] = $ky + 1;
+					$pos[] = $vl;
+				}
+			}
+		}
+
+		self::$default['_detail'] = $pos;
 	}
 }
