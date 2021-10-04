@@ -561,15 +561,25 @@ class _treacibility{
 		$data['input'] = false;
 
 		self::$default = $data;
-		self::flow_operator($data['user_id']);
+		self::flow_operator($data['user_id'],$data['work_id']);
 
 		// Get Status Produksi
 		self::get_statusProduction($data['user_id'],$block);
 		return self::$default;
 	}
 
-	Public static function flow_operator($pasok=0,$idp=0,$idg=0){
+	Public static function flow_operator($pasok=0,$work=0){
 		$detail = self::group_operators($pasok);
+
+		// Get operator
+		$opr = gg_production::get_id($work,array('ID','operator_id'));
+		foreach ($opr as $key => $val) {
+			if($val['divisi_oper']==2){
+				$idp = $val['operator_id'];
+			}else{
+				$idg = $val['operator_id'];
+			}
+		}
 
 		// Check position
 		$pos = array();
