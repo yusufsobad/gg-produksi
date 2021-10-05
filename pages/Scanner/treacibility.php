@@ -229,7 +229,7 @@ class _treacibility{
 	private static function group_operators($id=0){
 		$y = date('Y');$m = date('m');$d = date('d');
 		$where = "AND user_id='$id' AND (YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d')";
-		$flow = gg_production::get_all(array('ID','p_total','p_total','operator_id'),$where);
+		$flow = gg_production::get_all(array('ID','p_total','p_afkir','operator_id'),$where);
 
 		$push = array();$_temp = array();
 		foreach ($flow as $key => $val) {
@@ -237,7 +237,7 @@ class _treacibility{
 
 		// Get data picture
 			$_user = gg_employee::get_id($idx,array('picture'));
-			$_user = $user[0]['notes_pict'];
+			$_user = $_user[0]['notes_pict'];
 
 		// Set data Operator	
 			if(!isset($push[$idx])){

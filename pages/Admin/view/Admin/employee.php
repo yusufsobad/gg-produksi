@@ -106,7 +106,7 @@ class employee_admin extends _file_manager{
 				),
 				'Bagian'		=> array(
 					'left',
-					'15%',
+					'12%',
 					self::_conv_status($val['divisi']),
 					true
 				),
@@ -120,6 +120,12 @@ class employee_admin extends _file_manager{
 					'left',
 					'auto',
 					$val['name'],
+					true
+				),
+				'Panggilan'		=> array(
+					'left',
+					'17%',
+					$val['nickname'],
 					true
 				),
 				'Meja'		=> array(
