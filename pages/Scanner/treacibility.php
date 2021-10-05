@@ -274,7 +274,7 @@ class _treacibility{
 			$idc = $val['child'];
 			if(!in_array($idc,$_data[$idp])){
 				$_data[$idp][] = $idc;
-				$data[$_idpr[$idp]]['_detail'] = $push[$idp];
+				$data[$_idpr[$idp]]['_detail'] = $push[$idc];
 			}
 		}
 
