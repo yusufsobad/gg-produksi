@@ -95,7 +95,7 @@ class _treacibility{
 		$module = gg_module::get_id($div,array('ID','module_value'));
 		$module = $module[0];
 
-		$user = gg_employee::get_all(array('ID','picture','name'),"AND divisi='$div' AND no_induk='$nik'");
+		$user = gg_employee::get_all(array('ID','picture','name','nickname'),"AND divisi='$div' AND no_induk='$nik'");
 			
 		$check = array_filter($user);
 		if(empty($check)){
@@ -244,7 +244,7 @@ class _treacibility{
 				$push[$idx] = array(
 					'divisi'	=> $val['divisi_oper'],
 					'user_id'	=> $idx,
-					'name'		=> $val['name_oper'],
+					'name'		=> $val['nickname_oper'],
 					'picture'	=> self::_check_picture($_user),
 					'_total'	=> 0,
 					'_afkir'	=> 0,
@@ -371,13 +371,13 @@ class _treacibility{
 				foreach ($input as $key => $val) {
 					$scan = $val['scan_detail'];
 					$idxm = self::_check_noTable($scan);
-					$user = gg_employee::get_id($idxm,array('ID','name','divisi'));
+					$user = gg_employee::get_id($idxm,array('ID','nickname','divisi'));
 
 					if($user[0]['divisi']==1){
-						$_inp['gilling'] = $user[0]['name'];
+						$_inp['gilling'] = $user[0]['nickname'];
 						$_inp['no_pasok'] = $val['pasok_ke'];
 					}else if($user[0]['divisi']==2){
-						$_inp['push_cutter'] = $user[0]['name'];
+						$_inp['push_cutter'] = $user[0]['nickname'];
 					}
 				}
 			}
@@ -402,13 +402,13 @@ class _treacibility{
 
 			$scan = $val['scan_detail'];
 			$idxm = self::_check_noTable($scan);
-			$user = gg_employee::get_id($idxm,array('ID','name','divisi'));
+			$user = gg_employee::get_id($idxm,array('ID','nickname','divisi'));
 
 			if($user[0]['divisi']==1){
-				$_hist[$idx]['gilling'] = $user[0]['name'];
+				$_hist[$idx]['gilling'] = $user[0]['nickname'];
 				$_hist[$idx]['no_pasok'] = $val['pasok_ke'];
 			}else if($user[0]['divisi']==2){
-				$_hist[$idx]['push_cutter'] = $user[0]['name'];
+				$_hist[$idx]['push_cutter'] = $user[0]['nickname'];
 			}
 		}
 
@@ -467,7 +467,7 @@ class _treacibility{
 		return array(
 			'ID'		=> $idx,
 			'picture'	=> self::_check_picture($user['notes_pict']),
-			'name'		=> $user['name'],
+			'name'		=> $user['nickname'],
 			'nik'		=> $scan
 		);
 	}
@@ -490,7 +490,7 @@ class _treacibility{
 		return array(
 			'ID'		=> $user['ID'],
 			'picture'	=> self::_check_picture($user['notes_pict']),
-			'name'		=> $user['name'],
+			'name'		=> $user['nickname'],
 			'nik'		=> $scan
 		);
 	}
@@ -515,7 +515,7 @@ class _treacibility{
 		self::_default($args);
 
 		$idx = self::_check_noTable($scan);
-		$user = gg_employee::get_id($idx,array('ID','name','divisi','no_induk'));
+		$user = gg_employee::get_id($idx,array('ID','nickname','divisi','no_induk'));
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
@@ -524,11 +524,11 @@ class _treacibility{
 		$pasok = self::get_noPasok($user[0]['ID']);
 		if($user[0]['divisi']==1){
 			$pasok += 1;
-			self::$default['gilling'] = $user[0]['name'];
+			self::$default['gilling'] = $user[0]['nickname'];
 			self::$default['no_pasok'] = $pasok;
 		}else if($user[0]['divisi']==2){
 			$pasok = 0;
-			self::$default['push_cutter'] = $user[0]['name'];
+			self::$default['push_cutter'] = $user[0]['nickname'];
 		}
 
 		$def = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='SC'");

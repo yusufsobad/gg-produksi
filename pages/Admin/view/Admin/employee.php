@@ -21,6 +21,7 @@ class employee_admin extends _file_manager{
 			'no_meja',
 			'divisi',
 			'picture',
+			'nickname'
 		);
 
 		return $args;
@@ -294,7 +295,7 @@ class employee_admin extends _file_manager{
 		$no = gg_employee::get_maxNIK();
 		$no = sprintf("%04d",$no+1);
 
-		$div = str_replace('employee_', '', $_POST['type']);
+		$div = str_replace('employee_', '', $_POST['type'],'');
 
 		$vals = array(0,'',$no,1,$div,0);
 		$vals = array_combine(self::_array(), $vals);
@@ -384,6 +385,15 @@ class employee_admin extends _file_manager{
 				'class'			=> 'input-circle',
 				'value'			=> $vals['name'],
 				'data'			=> 'placeholder="Nama Karyawan"'
+			),
+			array(
+				'func'			=> 'opt_input',
+				'type'			=> 'text',
+				'key'			=> 'nickname',
+				'label'			=> 'Nama Panggilan',
+				'class'			=> 'input-circle',
+				'value'			=> $vals['nickname'],
+				'data'			=> 'placeholder="Nama Panggilan"'
 			),
 			array(
 				'func'			=> 'opt_select',
