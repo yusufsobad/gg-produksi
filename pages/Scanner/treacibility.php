@@ -1,7 +1,7 @@
 <?php
 
 class _treacibility{
-	private static $picture = "https://gg.soloabadi.com/kartosura/asset/img/user/no-profile.jpg";
+	private static $picture = "https://gg.soloabadi.com/kartosura/asset/img/user/";
 
 	private static $default = array();
 
@@ -39,6 +39,12 @@ class _treacibility{
 		}
 
 		self::$default = $data;
+	}
+
+	private static function _check_picture($name=''){
+		$loc = self::$picture;
+		$default = "no-profile.jpg";
+		return empty($name)?$loc.$default:$loc.$name;
 	}
 
 	private static function get_noPasok($user=0){
@@ -89,7 +95,7 @@ class _treacibility{
 		$module = gg_module::get_id($div,array('ID','module_value'));
 		$module = $module[0];
 
-		$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
+		$user = gg_employee::get_all(array('ID','picture','name'),"AND divisi='$div' AND no_induk='$nik'");
 			
 		$check = array_filter($user);
 		if(empty($check)){
@@ -229,13 +235,17 @@ class _treacibility{
 		foreach ($flow as $key => $val) {
 			$idx = $val['operator_id'];
 
+		// Get data picture
+			$_user = gg_employee::get_id($idx,array('picture'));
+			$_user = $user[0]['notes_pict'];
+
 		// Set data Operator	
 			if(!isset($push[$idx])){
 				$push[$idx] = array(
 					'divisi'	=> $val['divisi_oper'],
 					'user_id'	=> $idx,
 					'name'		=> $val['name_oper'],
-					'picture'	=> self::$picture,
+					'picture'	=> self::_check_picture($_user),
 					'_total'	=> 0,
 					'_afkir'	=> 0,
 					'_detail'	=> array()
@@ -456,7 +466,7 @@ class _treacibility{
 
 		return array(
 			'ID'		=> $idx,
-			'picture'	=> self::$picture,
+			'picture'	=> self::_check_picture($user['notes_pict']),
 			'name'		=> $user['name'],
 			'nik'		=> $scan
 		);
@@ -479,7 +489,7 @@ class _treacibility{
 
 		return array(
 			'ID'		=> $user['ID'],
-			'picture'	=> self::$picture,
+			'picture'	=> self::_check_picture($user['notes_pict']),
 			'name'		=> $user['name'],
 			'nik'		=> $scan
 		);
@@ -551,8 +561,8 @@ class _treacibility{
 			sobad_db::_update_single($block,'ggk-module',array('ID' => $block, 'module_note' => $receh));
 		}
 
-		$data['_total'] = $quantity;
-		$data['_afkir'] = $afkir;
+		$data['_total'] = (int) $quantity;
+		$data['_afkir'] = (int) $afkir;
 		$data['input'] = false;
 
 		self::$default = $data;
@@ -581,16 +591,16 @@ class _treacibility{
 		foreach ($detail as $key => $val) {
 			// position Push Cutter
 			if($val['user_id']==$idp){
-				$val['pos_x'] = $key;
-				$val['pos_y'] = 0;
+				$val['pos_x'] = 0;
+				$val['pos_y'] = $key;
 				$pos[] = $val;
 			}
 
 			foreach ($val['_detail'] as $ky => $vl) {
 				// position Gilling
 				if($val['user_id']==$idp){
-					$vl['pos_x'] = $key;
-					$vl['pos_y'] = $ky + 1;
+					$vl['pos_x'] = $ky + 1;
+					$vl['pos_y'] = $key;
 					$pos[] = $vl;
 				}
 			}

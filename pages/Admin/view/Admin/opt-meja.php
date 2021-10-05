@@ -143,7 +143,10 @@ class noTable_admin extends _page{
 	// Form data category -----------------------------------
 	// ----------------------------------------------------------
 	public static function add_form($func='',$load='sobad_portlet'){
-		$vals = array(0,0,'','no_meja',0);
+		$max = gg_module::_max_noBangku();
+		intval($max);
+
+		$vals = array(0,$max + 1,'','no_meja',0);
 		$vals = array_combine(self::_array(),$vals);
 
 		if($func=='add_0'){

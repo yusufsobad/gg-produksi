@@ -16,7 +16,7 @@ class gg_employee extends _class{
 				'picture'	=> array(
 					'key'		=> 'ID',
 					'table'		=> 'ggk-post',
-					'column'	=> array('name')
+					'column'	=> array('notes')
 				),
 				'no_meja'	=> array(
 					'key'		=> 'ID',

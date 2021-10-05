@@ -40,4 +40,17 @@ class gg_module extends _class{
 
 		return array();
 	}
+
+	public static function _max_noBangku(){
+		$args = array("MAX(module_value) As max");
+		$whr = "WHERE module_key='no_meja'";
+		$data = self::_get_data($whr,$args);
+
+		$check = array_filter($data);
+		if(empty($check)){
+			return 0;
+		}
+
+		return $data[0]['max'];
+	}
 }
