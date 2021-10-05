@@ -229,58 +229,53 @@ class _treacibility{
 		foreach ($flow as $key => $val) {
 			$idx = $val['operator_id'];
 
-		// Set data Push Cutter	
-			if($val['divisi_oper']==2){
-				if(!isset($push[$idx])){
-					$push[$idx] = array(
-						'divisi'	=> 2,
-						'user_id'	=> $idx,
-						'name'		=> $val['name_oper'],
-						'picture'	=> self::$picture,
-						'_total'	=> 0,
-						'_afkir'	=> 0,
-						'_detail'	=> array()
-					);
-				}
-
-				$push[$idx]['_total'] += $val['p_total'];
-				$push[$idx]['_afkir'] += $val['p_afkir'];
-			}
-
-		// Set Gilling
-			$idg = $val['ID'];
-			if(!isset($_temp[$idg])){
-				$_temp[$idg] = array(
-					'parent'	=> 0,
-					'divisi'	=> 1,
-					'user_id'	=> 0,
-					'name'		=> '-',
+		// Set data Operator	
+			if(!isset($push[$idx])){
+				$push[$idx] = array(
+					'divisi'	=> $val['divisi_oper'],
+					'user_id'	=> $idx,
+					'name'		=> $val['name_oper'],
 					'picture'	=> self::$picture,
 					'_total'	=> 0,
-					'_afkir'	=> 0
+					'_afkir'	=> 0,
+					'_detail'	=> array()
 				);
+			}
+
+			$push[$idx]['_total'] += $val['p_total'];
+			$push[$idx]['_afkir'] += $val['p_afkir'];
+
+		// Set data flow
+			$idg = $val['ID'];
+			if(!isset($_temp[$idg])){
+				$_temp[$idg] = array();
 			}
 
 			if($val['divisi_oper']==2){
 				$_temp[$idg]['parent'] = $val['operator_id'];
 			}else{
-				$_temp[$idg]['user_id'] = $idx;
-				$_temp[$idg]['name'] = $val['name_oper'];
-
-				$_temp[$idg]['_total'] += $val['p_total'];
-				$_temp[$idg]['_afkir'] += $val['p_afkir'];
+				$_temp[$idg]['child'] = $val['operator_id'];
 			}
 		}
 
-	// Set data flow
+	// Set data flow Construct
+		$idm = -1;
+		$data = array();$_data = array();$_idpr = array();
 		foreach ($_temp as $key => $val) {
-			$idx = $val['parent'];
-			$push[$idx]['_detail'][] = $val;
-		}
+			$idp = $val['parent'];
+			if(!isset($_data[$idp])){
+				$idm += 1;
+				$_data[$idp] = array();
+				$data[$idm] = $push[$idp];
 
-		$data = array();
-		foreach ($push as $key => $val) {
-			$data[] = $val;
+				$_idpr[$idp] = $idm;
+			}
+
+			$idc = $val['child'];
+			if(!in_array($idc,$_data[$idp])){
+				$_data[$idp][] = $idc;
+				$data[$_idpr[$idp]]['_detail'] = $push[$idp];
+			}
 		}
 
 		return $data;
