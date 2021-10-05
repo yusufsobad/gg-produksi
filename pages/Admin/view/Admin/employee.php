@@ -87,7 +87,7 @@ class employee_admin extends _file_manager{
 				'type'	=> $tab
 			);
 
-			$image = empty($val['notes_pict'])?'no-profile.jpg':$val['name_pict'];
+			$image = empty($val['notes_pict'])?'no-profile.jpg':$val['notes_pict'];
 			
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
