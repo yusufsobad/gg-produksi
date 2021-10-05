@@ -295,7 +295,7 @@ class employee_admin extends _file_manager{
 		$no = gg_employee::get_maxNIK();
 		$no = sprintf("%04d",$no+1);
 
-		$div = str_replace('employee_', '', $_POST['type'],'');
+		$div = str_replace('employee_', '', $_POST['type']);
 
 		$vals = array(0,'',$no,1,$div,0);
 		$vals = array_combine(self::_array(), $vals);
