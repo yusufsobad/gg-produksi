@@ -17,6 +17,7 @@ class _production{
 			'process'		=> '-',
 			'operator'		=> '-',
 			'operator_id'	=> 0,
+			'picture'		=> _treacibility::_check_picture()
 		);
 
 		foreach ($args as $key => $val) {
@@ -46,7 +47,7 @@ class _production{
 			$module = gg_module::get_id($div,array('ID','module_value'));
 			$module = $module[0];
 
-			$user = gg_employee::get_all(array('ID','name'),"AND divisi='$div' AND no_induk='$nik'");
+			$user = gg_employee::get_all(array('ID','name','picture'),"AND divisi='$div' AND no_induk='$nik'");
 			
 			$check = array_filter($user);
 			if(empty($check)){
@@ -58,10 +59,28 @@ class _production{
 			$data['user_id'] = $user['ID'];
 			$data['user_name'] = $user['name'];
 			$data['user_no'] = $scan;
+			$data['picture'] = _treacibility::_check_picture($user['notes_pict']);
 
 		}else{
 			die(_error::_alert_db('ID user tidak terdaftar!!!'));
 		}
+
+		return $data;
+	}
+
+	public static function sync_operator($scan='',$args=array()){
+		$y = date('Y');$m = date('m');$d = date('d');
+		self::_default($args);
+
+		$str = base64_decode($scan);
+		$str = explode("&&",$str);
+
+		$block = $str[1];
+		$leader = $str[2];
+
+		// Update pasok2
+		$where = "id_user='$leader' AND id_block='$block' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
+		$q = sobad_db::_update_multiple($where,'ggk-login-user',array('id_pasok2' => $args['user_id']));
 
 		return $data;
 	}

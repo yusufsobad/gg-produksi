@@ -41,7 +41,7 @@ class _treacibility{
 		self::$default = $data;
 	}
 
-	private static function _check_picture($name=''){
+	public static function _check_picture($name=''){
 		$loc = self::$picture;
 		$default = "no-profile.jpg";
 		return empty($name)?$loc.$default:$loc.$name;
@@ -155,7 +155,7 @@ class _treacibility{
 
 		// Check Double Scan
 		$check = gg_production::get_id($default['work_id'],array('ID','scan_detail'),"AND scan_detail='$scan'");
-		$check = array_filter($product);
+		$check = array_filter($check);
 		if(!empty($check)){
 			die(_error::_alert_db('Double Scan ID!!!'));
 		}
@@ -278,6 +278,8 @@ class _treacibility{
 				$_data[$idp] = array();
 				$data[$idm] = $push[$idp];
 
+				$data[$idm]['_total'] = format_nominal($data[$idm]['_total']);
+				$data[$idm]['_afkir'] = format_nominal($data[$idm]['_afkir']);
 				$_idpr[$idp] = $idm;
 			}
 
@@ -311,10 +313,11 @@ class _treacibility{
 			$total += $val['p_total'];
 		}
 
-		self::$default['_totGilling'] = $total;
-		self::$default['_totPushCutter'] = $total;
-		self::$default['_totAfkir'] = $afkir;
-		self::$default['_totRecehan'] = self::_get_recehan($block);
+		$receh = self::_get_recehan($block);
+		self::$default['_totGilling'] = format_nominal($total);
+		self::$default['_totPushCutter'] = format_nominal($total);
+		self::$default['_totAfkir'] = format_nominal($afkir);
+		self::$default['_totRecehan'] = format_nominal($receh);
 	}
 
 	public static function get_loadData($pasok=0,$block=0){
@@ -421,10 +424,10 @@ class _treacibility{
 		// Get Status Produksi ------------------------------------------------------
 		self::get_statusProduction($pasok,$block);
 		$args['total']['data'] = array(
-			'_totGilling'		=> self::$default['_totGilling'],
-			'_totPushCutter'	=> self::$default['_totPushCutter'],
-			'_totRecehan'		=> self::$default['_totRecehan'],
-			'_totAfkir'			=> self::$default['_totAfkir'],
+			'_totGilling'		=> format_nominal(self::$default['_totGilling']),
+			'_totPushCutter'	=> format_nominal(self::$default['_totPushCutter']),
+			'_totRecehan'		=> format_nominal(self::$default['_totRecehan']),
+			'_totAfkir'			=> format_nominal(self::$default['_totAfkir']),
 		);
 		// End Get Status Produksi --------------------------------------------------
 
@@ -561,8 +564,8 @@ class _treacibility{
 			sobad_db::_update_single($block,'ggk-module',array('ID' => $block, 'module_note' => $receh));
 		}
 
-		$data['_total'] = (int) $quantity;
-		$data['_afkir'] = (int) $afkir;
+		$data['_total'] = format_nominal($quantity);
+		$data['_afkir'] = format_nominal($afkir);
 		$data['input'] = false;
 
 		self::$default = $data;
