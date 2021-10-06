@@ -40,7 +40,7 @@ class _production{
 
 		$year = date('Y');$month = date('m');$day = date('d');
 
-		$div = self::_check_divisi($scan);
+		$div = _treacibility::_check_divisi($scan);
 		if($div==9){
 			$nik = (int) substr($scan,2,4);
 
@@ -88,7 +88,7 @@ class _production{
 	public static function scan_code($scan='',$data=array()){
 		self::_default($data);
 
-		$div = self::_check_divisi($scan);
+		$div = _treacibility::_check_divisi($scan);
 		$induk = (int) substr($scan, 2,4);
 		$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
 		$check = array_filter($user);
