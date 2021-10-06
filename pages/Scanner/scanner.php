@@ -97,7 +97,8 @@ class _production{
 		$where = "id_user='$leader' AND id_block='$block' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
 		$q = sobad_db::_update_multiple($where,'ggk-login-user',array('id_pasok2' => $args['user_id']));
 
-		return $data;
+		self::$default['id_pasok2'] = true;
+		return self::$default;
 	}
 
 	public static function scan_code($scan='',$data=array()){
