@@ -18,6 +18,7 @@ class sobad_curl{
 
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt( $cu, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 		curl_setopt( $ch, CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.52 Safari/537.17');
 		# Return response instead of printing.

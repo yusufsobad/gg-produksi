@@ -37,11 +37,10 @@ function sobad_curl($args=array()){
     }
 
     $object = '';
-    if(isset($args['_object'])){
+   	if(isset($args['object'])){
+   		$object = $args['object'];
+   	}else if(isset($args['_object'])){
     	$object = $args['_object'];
-    	if(isset($args['object'])){
-    		$object = $args['object'];
-    	}
     }
     
     if(empty($object)){
