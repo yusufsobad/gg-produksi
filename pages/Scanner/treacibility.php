@@ -276,16 +276,19 @@ class _treacibility{
 			if(!isset($_data[$idp])){
 				$idm += 1;
 				$_data[$idp] = array();
-				$data[$idm] = $push[$idp];
 
-				$data[$idm]['_total'] = format_nominal($data[$idm]['_total']);
-				$data[$idm]['_afkir'] = format_nominal($data[$idm]['_afkir']);
+				$push[$idp]['_total'] = format_nominal($push[$idp]['_total']);
+				$push[$idp]['_afkir'] = format_nominal($push[$idp]['_afkir']);
+				$data[$idm] = $push[$idp];
 				$_idpr[$idp] = $idm;
 			}
 
 			$idc = $val['child'];
 			if(!in_array($idc,$_data[$idp])){
 				$_data[$idp][] = $idc;
+
+				$push[$idc]['_total'] = format_nominal($push[$idc]['_total']);
+				$push[$idc]['_afkir'] = format_nominal($push[$idc]['_afkir']);
 				$data[$_idpr[$idp]]['_detail'][] = $push[$idc];
 			}
 		}
