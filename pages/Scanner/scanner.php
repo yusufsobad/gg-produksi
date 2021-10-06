@@ -12,6 +12,7 @@ class _production{
 			'user_id'		=> 0, 		// ID user login
 			'user_name'		=> '-', 	// name user login
 			'user_no'		=> '-',		// NIK user login
+			'id_pasok2'		=> false,
 			'_input'		=> false,
 			'pasok'			=> 0,
 			'process'		=> '-',
@@ -25,6 +26,19 @@ class _production{
 		}
 
 		self::$default = $data;
+	}
+
+	private static function _check_pasok2($id=0){
+		$y = date('Y');$m = date('m');$d = date('d');
+		$where = "AND id_pasok2='$id' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
+
+		$check = gg_login::get_all(array('ID'),$where);
+		$check = array_filter($check);
+		if(empty($check)){
+			return false;
+		}
+
+		return true;
 	}
 
 	private static function get_noPasok($user=0){
@@ -56,6 +70,7 @@ class _production{
 
 			$user = $user[0];
 
+			$data['id_pasok2'] = self::_check_pasok2($user['ID']);
 			$data['user_id'] = $user['ID'];
 			$data['user_name'] = $user['name'];
 			$data['user_no'] = $scan;

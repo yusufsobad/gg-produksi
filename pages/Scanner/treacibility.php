@@ -501,6 +501,43 @@ class _treacibility{
 		);
 	}
 
+	public static function _check_pasok2($leader=0){
+		$y = date('Y');$m = date('m');$d = date('d');
+		$data = array(
+			'status'	=> false,
+			'data'		=> array()
+		);
+
+	// Check Pasok 2 sudah login atau belum	
+		$whr = "AND id_user='$leader' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
+		$login = gg_login::get_all(array("id_pasok2"),$whr);
+		$check = array_filter($login);
+		if(!empty($check)){
+			$login = $login[0]['id_pasok2'];
+
+			if($login>0){
+				$data['status'] = true;
+
+			// Get data Pasok2	
+				$user = gg_employee::get_id($login,array('ID','name','nickname','picture','divisi','no_induk'));
+				$check = array_filter($user);
+				if(!empty($user)){
+					$user = $user[0];
+					$_data = array(
+						'ID'		=> $user['ID'],
+						'picture'	=> self::_check_picture($user['notes_pict']),
+						'name'		=> $user['nickname'],
+						'nik'		=> $user['module_note_divi'].sprintf("%04d",$user['no_induk'])
+					);
+
+					return $data['data'] = $_data;
+				}
+			}
+		}
+
+		return $data;
+	}
+
 	public static function get_smartContainer($scan='',$user=0){
 		self::_default(array('user_id' => $user));
 		$code = self::_check_codeScan($scan);
