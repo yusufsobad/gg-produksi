@@ -332,8 +332,8 @@ class _treacibility{
 
 				$push[$idc]['_total'] = format_nominal($push[$idc]['_total']);
 				$push[$idc]['_afkir'] = format_nominal($push[$idc]['_afkir']);
-				$push[$idp]['pos_x'] = $idg;
-				$push[$idp]['pos_y'] = $idm;
+				$push[$idc]['pos_x'] = $idg;
+				$push[$idc]['pos_y'] = $idm;
 
 				$data[$_idpr[$idp]]['_detail'][] = $push[$idc];
 			}
