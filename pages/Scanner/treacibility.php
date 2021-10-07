@@ -173,7 +173,9 @@ class _treacibility{
 		$data['status'] = empty($check)?false:true;
 
 		foreach ($_temp as $key => $val) {
-			$data['data'][] = $detail[$key];
+			if(isset($detail[$key])){
+				$data['data'][] = $detail[$key];
+			}
 		}
 
 		return $data;
