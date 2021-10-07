@@ -106,11 +106,11 @@ class _production{
 
 		if(preg_match("/$nbk/i", $scan)){
 			$index = _treacibility::_check_noTable($scan);
-			$user = gg_employee::get_id($index,array('ID','name','divisi'));
+			$user = gg_employee::get_id($index,array('ID','name','nickname','divisi'));
 		}else{
 			$div = _treacibility::_check_divisi($scan);
 			$induk = (int) substr($scan, 2,4);
-			$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
+			$user = gg_employee::get_all(array('ID','name','nickname','divisi'),"AND divisi='$div' AND no_induk='$induk'");
 		}
 
 		$check = array_filter($user);
@@ -123,8 +123,9 @@ class _production{
 		$pasok += 1;
 
 		self::$default['operator_id'] = $user[0]['ID'];
-		self::$default['operator'] = $user[0]['name'];
+		self::$default['operator'] = empty($user[0]['nickname'])?$user[0]['name']:$user[0]['nickname'];
 		self::$default['process'] = $user[0]['module_value_divi'];
+		self::$default['_input'] = true;
 		self::$default['pasok'] = $pasok;
 
 		return self::$default;
