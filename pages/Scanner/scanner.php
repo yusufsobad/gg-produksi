@@ -104,7 +104,7 @@ class _production{
 	public static function scan_operator($scan='',$data=array()){
 		self::_default($data);
 
-		if(!preg_match("/$nbk/i", $scan)){
+		if(preg_match("/$nbk/i", $scan)){
 			$index = _treacibility::_check_noTable($scan);
 			$user = gg_employee::get_all($index,array('ID','name','divisi'));
 		}else{
