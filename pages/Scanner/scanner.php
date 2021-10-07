@@ -106,14 +106,13 @@ class _production{
 
 		if(preg_match("/$nbk/i", $scan)){
 			$index = _treacibility::_check_noTable($scan);
-			$user = gg_employee::get_all($index,array('ID','name','divisi'));
+			$user = gg_employee::get_id($index,array('ID','name','divisi'));
 		}else{
 			$div = _treacibility::_check_divisi($scan);
 			$induk = (int) substr($scan, 2,4);
 			$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
 		}
 
-		
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
