@@ -363,6 +363,7 @@ class _treacibility{
 
 		$kereta = count($product) / $baki;
 		$receh = self::_get_recehan($block);
+
 		self::$default['_totGilling'] = format_nominal($total);
 		self::$default['_totKereta'] = format_nominal($kereta);
 		self::$default['_totAfkir'] = format_nominal($afkir);
@@ -473,10 +474,10 @@ class _treacibility{
 		// Get Status Produksi ------------------------------------------------------
 		self::get_statusProduction($pasok,$block);
 		$args['total']['data'] = array(
-			'_totGilling'		=> format_nominal(self::$default['_totGilling']),
-			'_totKereta'		=> format_nominal(self::$default['_totKereta']),
-			'_totRecehan'		=> format_nominal(self::$default['_totRecehan']),
-			'_totAfkir'			=> format_nominal(self::$default['_totAfkir']),
+			'_totGilling'		=> self::$default['_totGilling'],
+			'_totKereta'		=> self::$default['_totKereta'],
+			'_totRecehan'		=> self::$default['_totRecehan'],
+			'_totAfkir'			=> self::$default['_totAfkir'],
 		);
 		// End Get Status Produksi --------------------------------------------------
 
