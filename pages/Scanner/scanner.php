@@ -161,7 +161,7 @@ class _production{
 		$data['operator'] = '-';
 		$data['pasok'] = 0;
 		$data['process'] = '-';
-		$data['input'] = false;
+		$data['_input'] = false;
 		return $data;
 	}
 }
