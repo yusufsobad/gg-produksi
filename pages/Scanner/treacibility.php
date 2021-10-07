@@ -152,6 +152,11 @@ class _treacibility{
 	public static function _check_afkirOperator($pasok=0,$pasok2=0){
 		$detail = self::_get_dataOperator($pasok);
 
+		$data = array(
+			'status'	=> false,
+			'data'		=> array()
+		);
+
 		$_temp = array();
 		$load = gg_afkir::get_all(array('user_id','afkir'),"AND pasok='$pasok2'");
 		foreach ($load as $key => $val) {
@@ -163,10 +168,12 @@ class _treacibility{
 			$_temp[$idx] += $val['afkir'];
 		}
 
-		$data = array();
+		$check = array_filter($_temp);
+		$data['status'] = empty($check)?false:true;
+
 		foreach ($_temp as $key => $val) {
 			$detail[$key]['_afkir'] = $val;
-			$data[] = $detail[$key];
+			$data['data'][] = $detail[$key];
 		}
 
 		return $data;
