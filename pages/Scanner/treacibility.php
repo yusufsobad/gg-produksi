@@ -358,7 +358,10 @@ class _treacibility{
 			$total += $val['p_total'];
 		}
 
-		$kereta = count($product);
+		$baki = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='KRT'");
+		$baki = $baki[0]['module_reff'];
+
+		$kereta = count($product) / $baki;
 		$receh = self::_get_recehan($block);
 		self::$default['_totGilling'] = format_nominal($total);
 		self::$default['_totKereta'] = format_nominal($kereta);
