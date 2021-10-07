@@ -45,8 +45,8 @@ class _production{
 		$y = date('Y');$m = date('m');$d = date('d');
 		$where = "AND user_id='$user' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
 
-		$pasok = gg_afkir::count($where);
-		return $pasok;
+		$pasok = gg_afkir::get_all(array('ID'),$where);
+		return count($pasok);
 	}
 
 	public static function scan_login($scan=''){
@@ -104,9 +104,16 @@ class _production{
 	public static function scan_operator($scan='',$data=array()){
 		self::_default($data);
 
-		$div = _treacibility::_check_divisi($scan);
-		$induk = (int) substr($scan, 2,4);
-		$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
+		if(!preg_match("/$nbk/i", $scan)){
+			$index = _treacibility::_check_noTable($scan);
+			$user = gg_employee::get_all($index,array('ID','name','divisi'));
+		}else{
+			$div = _treacibility::_check_divisi($scan);
+			$induk = (int) substr($scan, 2,4);
+			$user = gg_employee::get_all(array('ID','name','divisi'),"AND divisi='$div' AND no_induk='$induk'");
+		}
+
+		
 		$check = array_filter($user);
 		if(empty($check)){
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));

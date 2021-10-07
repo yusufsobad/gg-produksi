@@ -149,6 +149,29 @@ class _treacibility{
 		return array('index' => $sc_db['ID'], 'position' => $sc_db['module_reff']);
 	}
 
+	public static function _check_afkirOperator($pasok=0,$pasok2=0){
+		$detail = self::_get_dataOperator($pasok);
+
+		$_temp = array();
+		$load = gg_afkir::get_all(array('user_id','afkir'),"AND pasok='$pasok2'");
+		foreach ($load as $key => $val) {
+			$idx = $val['user_id'];
+			if(!isset($_temp[$idx])){
+				$_temp[$idx] = 0;
+			}
+
+			$_temp[$idx] += $val['afkir'];
+		}
+
+		$data = array();
+		foreach ($_temp as $key => $val) {
+			$detail[$key]['_afkir'] = $val;
+			$data[] = $detail[$key];
+		}
+
+		return $data;
+	}
+
 	private static function _add_detail($scan='',$user_id=0,$pasok=0,$max=1){
 		$default = self::$default;
 		$y = date('Y');$m = date('m');$d = date('d');
@@ -226,7 +249,7 @@ class _treacibility{
 		return array('name' => $loc[0]['module_value']);
 	}
 
-	private static function group_operators($id=0){
+	private static function _get_dataOperator($id=0){
 		$y = date('Y');$m = date('m');$d = date('d');
 		$where = "AND user_id='$id' AND (YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d')";
 		$flow = gg_production::get_all(array('ID','p_total','p_afkir','operator_id'),$where);
@@ -268,8 +291,14 @@ class _treacibility{
 			}
 		}
 
+		return $_temp;
+	}
+
+	private static function group_operators($id=0){
+		$_temp = self::_get_dataOperator($id);
+
 	// Set data flow Construct
-		$idm = -1;
+		$idm = -1;$idg = 0;
 		$data = array();$_data = array();$_idpr = array();
 		foreach ($_temp as $key => $val) {
 			$idp = $val['parent'];
@@ -279,16 +308,23 @@ class _treacibility{
 
 				$push[$idp]['_total'] = format_nominal($push[$idp]['_total']);
 				$push[$idp]['_afkir'] = format_nominal($push[$idp]['_afkir']);
+				$push[$idp]['pos_x'] = 0;
+				$push[$idp]['pos_y'] = $idm;
+
 				$data[$idm] = $push[$idp];
 				$_idpr[$idp] = $idm;
 			}
 
 			$idc = $val['child'];
 			if(!in_array($idc,$_data[$idp])){
+				$idg += 1;
 				$_data[$idp][] = $idc;
 
 				$push[$idc]['_total'] = format_nominal($push[$idc]['_total']);
 				$push[$idc]['_afkir'] = format_nominal($push[$idc]['_afkir']);
+				$push[$idp]['pos_x'] = $idg;
+				$push[$idp]['pos_y'] = $idm;
+
 				$data[$_idpr[$idp]]['_detail'][] = $push[$idc];
 			}
 		}
@@ -619,36 +655,13 @@ class _treacibility{
 	}
 
 	Public static function flow_operator($pasok=0,$work=0){
-		$detail = self::group_operators($pasok);
+		$detail = self::_get_dataOperator($pasok);
 
 		// Get operator
 		$opr = gg_production::get_id($work,array('ID','operator_id'));
 		foreach ($opr as $key => $val) {
-			if($val['divisi_oper']==2){
-				$idp = $val['operator_id'];
-			}else{
-				$idg = $val['operator_id'];
-			}
-		}
-
-		// Check position
-		$pos = array();
-		foreach ($detail as $key => $val) {
-			// position Push Cutter
-			if($val['user_id']==$idp){
-				$val['pos_x'] = 0;
-				$val['pos_y'] = $key;
-				$pos[] = $val;
-			}
-
-			foreach ($val['_detail'] as $ky => $vl) {
-				// position Gilling
-				if($val['user_id']==$idp){
-					$vl['pos_x'] = $ky + 1;
-					$vl['pos_y'] = $key;
-					$pos[] = $vl;
-				}
-			}
+			$idp = $val['operator_id'];
+			$pos[] = $detail[$idp];
 		}
 
 		self::$default['_detail'] = $pos;
