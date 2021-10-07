@@ -277,8 +277,8 @@ class _treacibility{
 				$_where = "AND user_id='$idx' AND (YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d')";
 
 				$load = gg_afkir::get_all(array('afkir'),$_where);
-				foreach ($load as $key => $val) {
-					$afkir += $val['afkir'];
+				foreach ($load as $ky => $vl) {
+					$afkir += $vl['afkir'];
 				}
 
 				$push[$idx] = array(
