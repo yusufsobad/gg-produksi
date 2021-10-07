@@ -308,7 +308,7 @@ class _treacibility{
 		$_temp = $_data['flow'];
 
 	// Set data flow Construct
-		$idm = -1;$idg = 0;
+		$idm = -1;
 		$data = array();$_data = array();$_idpr = array();
 		foreach ($_temp as $key => $val) {
 			$idp = $val['parent'];
@@ -318,8 +318,6 @@ class _treacibility{
 
 				$push[$idp]['_total'] = format_nominal($push[$idp]['_total']);
 				$push[$idp]['_afkir'] = format_nominal($push[$idp]['_afkir']);
-				$push[$idp]['pos_x'] = 0;
-				$push[$idp]['pos_y'] = $idm;
 
 				$data[$idm] = $push[$idp];
 				$_idpr[$idp] = $idm;
@@ -332,8 +330,6 @@ class _treacibility{
 
 				$push[$idc]['_total'] = format_nominal($push[$idc]['_total']);
 				$push[$idc]['_afkir'] = format_nominal($push[$idc]['_afkir']);
-				$push[$idc]['pos_x'] = $idg;
-				$push[$idc]['pos_y'] = $idm;
 
 				$data[$_idpr[$idp]]['_detail'][] = $push[$idc];
 			}
@@ -682,12 +678,16 @@ class _treacibility{
 		foreach ($detail as $key => $val) {
 			// position Push Cutter
 			if($val['user_id']==$idp){
+				$val['pos_x'] = 0;
+				$val['pos_y'] = $key;
 				$pos[] = $val;
 			}
 
 			foreach ($val['_detail'] as $ky => $vl) {
 				// position Gilling
 				if($val['user_id']==$idp){
+					$vl['pos_x'] = $ky + 1;
+					$vl['pos_y'] = $key;
 					$pos[] = $vl;
 				}
 			}
