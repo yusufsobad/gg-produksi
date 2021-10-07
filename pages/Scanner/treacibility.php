@@ -150,7 +150,9 @@ class _treacibility{
 	}
 
 	public static function _check_afkirOperator($pasok=0,$pasok2=0){
-		$detail = self::_get_dataOperator($pasok);
+		$_data = self::_get_dataOperator($pasok);
+		$detail = $_data['user'];
+		$flow = $_data['flow'];
 
 		$data = array(
 			'status'	=> false,
@@ -298,11 +300,13 @@ class _treacibility{
 			}
 		}
 
-		return $_temp;
+		return array('user' => $push,'flow' => $_temp);
 	}
 
 	private static function group_operators($id=0){
-		$_temp = self::_get_dataOperator($id);
+		$_data = self::_get_dataOperator($id);
+		$push = $_data['user'];
+		$_temp = $_data['flow'];
 
 	// Set data flow Construct
 		$idm = -1;$idg = 0;
@@ -662,13 +666,32 @@ class _treacibility{
 	}
 
 	Public static function flow_operator($pasok=0,$work=0){
-		$detail = self::_get_dataOperator($pasok);
+		$detail = self::group_operators($pasok);
 
 		// Get operator
 		$opr = gg_production::get_id($work,array('ID','operator_id'));
 		foreach ($opr as $key => $val) {
-			$idp = $val['operator_id'];
-			$pos[] = $detail[$idp];
+			if($val['divisi_oper']==2){
+				$idp = $val['operator_id'];
+			}else{
+				$idg = $val['operator_id'];
+			}
+		}
+
+		// Check position
+		$pos = array();
+		foreach ($detail as $key => $val) {
+			// position Push Cutter
+			if($val['user_id']==$idp){
+				$pos[] = $val;
+			}
+
+			foreach ($val['_detail'] as $ky => $vl) {
+				// position Gilling
+				if($val['user_id']==$idp){
+					$pos[] = $vl;
+				}
+			}
 		}
 
 		self::$default['_detail'] = $pos;
