@@ -173,7 +173,6 @@ class _treacibility{
 		$data['status'] = empty($check)?false:true;
 
 		foreach ($_temp as $key => $val) {
-			$detail[$key]['_afkir'] = $val;
 			$data['data'][] = $detail[$key];
 		}
 
@@ -272,13 +271,23 @@ class _treacibility{
 
 		// Set data Operator	
 			if(!isset($push[$idx])){
+
+				// Get Afkir Operator
+				$afkir = 0;
+				$_where = "AND user_id='$idx' AND (YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d')";
+
+				$load = gg_afkir::get_all(array('afkir'),$_where);
+				foreach ($load as $key => $val) {
+					$afkir += $val['afkir'];
+				}
+
 				$push[$idx] = array(
 					'divisi'	=> $val['divisi_oper'],
 					'user_id'	=> $idx,
 					'name'		=> $val['nickname_oper'],
 					'picture'	=> self::_check_picture($_user),
 					'_total'	=> 0,
-					'_afkir'	=> 0,
+					'_afkir'	=> $afkir,
 					'_detail'	=> array()
 				);
 			}
