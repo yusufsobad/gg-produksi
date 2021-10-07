@@ -101,7 +101,7 @@ class _production{
 		return self::$default;
 	}
 
-	public static function scan_code($scan='',$data=array()){
+	public static function scan_operator($scan='',$data=array()){
 		self::_default($data);
 
 		$div = _treacibility::_check_divisi($scan);

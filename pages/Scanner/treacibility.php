@@ -28,7 +28,7 @@ class _treacibility{
 			'_afkir'			=> 0,
 			'_default'			=> 0,
 			'_totGilling'		=> 0,
-			'_totPushCutter'	=> 0,
+			'_totKereta'		=> 0,
 			'_totRecehan'		=> 0,
 			'_totAfkir'			=> 0,
 			'_detail'			=> array()
@@ -316,9 +316,10 @@ class _treacibility{
 			$total += $val['p_total'];
 		}
 
+		$kereta = count($product);
 		$receh = self::_get_recehan($block);
 		self::$default['_totGilling'] = format_nominal($total);
-		self::$default['_totPushCutter'] = format_nominal($total);
+		self::$default['_totKereta'] = format_nominal($kereta);
 		self::$default['_totAfkir'] = format_nominal($afkir);
 		self::$default['_totRecehan'] = format_nominal($receh);
 	}
@@ -428,7 +429,7 @@ class _treacibility{
 		self::get_statusProduction($pasok,$block);
 		$args['total']['data'] = array(
 			'_totGilling'		=> format_nominal(self::$default['_totGilling']),
-			'_totPushCutter'	=> format_nominal(self::$default['_totPushCutter']),
+			'_totKereta'		=> format_nominal(self::$default['_totKereta']),
 			'_totRecehan'		=> format_nominal(self::$default['_totRecehan']),
 			'_totAfkir'			=> format_nominal(self::$default['_totAfkir']),
 		);
@@ -530,7 +531,8 @@ class _treacibility{
 						'nik'		=> $user['module_note_divi'].sprintf("%04d",$user['no_induk'])
 					);
 
-					return $data['data'] = $_data;
+					$data['data'] = $_data;
+					return $data;
 				}
 			}
 		}
