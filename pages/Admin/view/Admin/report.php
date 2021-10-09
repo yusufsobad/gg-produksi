@@ -201,9 +201,21 @@ class report_admin{
 				$table3 = self::_get_tableAfkir($afkir);
 
 				$table = '
-					<div class="row"> '.$table1.' </div>
-					<div class="row"> '.$table2.' </div>
-					<div class="row"> '.$table3.' </div>
+					<div style="margin-bottom:20px;">
+						<label style="font-weight:bold;display:block;">Data Afkir Gilling</label>
+						<small>total afkir dari LI dan PC</small><br>
+						'.$table1.' 
+					</div>
+					<div style="margin-bottom:20px;">
+						<label style="font-weight:bold;display:block;">Data Afkir Push Cutter</label>
+						<small>total afkir dari LI dan Gilling</small><br>
+						'.$table2.' 
+					</div>
+					<div style="margin-bottom:20px;">
+						<label style="font-weight:bold;display:block;">Data Afkir Total</label>
+						<small>total afkir dari LI, PC dan Gilling</small><br>
+						'.$table3.' 
+					</div>
 				';
 				break;
 			
@@ -231,26 +243,26 @@ class report_admin{
 				<table class="table table-striped table-bordered table-hover dataTable no-footer ">
 					<thead>
 						<tr role="row">
-							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;">
+							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 								NIK
 							</th>
-							<th rowspan="2" style="width:25%;text-align:center;font-family: calibriBold;font-weight: bold;">
+							<th rowspan="2" style="width:25%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 								Nama
 							</th>
 
 							<?php if($pasok_ke): ?>
-								<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;">
+								<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border-bottom: 1px solid #ddd;">
 									Pasok Ke
 								</th>
-								<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;">
+								<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 									Total
 								</th>
 							<?php endif; ?>
 							
-							<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;">
+							<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border-bottom: 1px solid #ddd;">
 								Afkir
 							</th>
-							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;">
+							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 								Total
 							</th>
 						</tr>
@@ -280,7 +292,7 @@ class report_admin{
 								$user = gg_employee::get_id($key,array('name','divisi','no_induk'));
 								$user = $user[0];
 
-								$nik = employee_admin::_ID_card($user['module_note_divi'],$val['no_induk']);
+								$nik = employee_admin::_ID_card($user['module_note_divi'],$user['no_induk']);
 							?>
 						<tr>
 							<td style="text-align: right">
@@ -471,8 +483,8 @@ class report_admin{
 						$afkir_gl[$i] += $afkir_gil;
 
 						if($divisi==4){
-							$data[$idx][$i]['afkir'] = $afkir;
-							$data[$idx][$i]['total'] = $vl['p_total'];
+							$data[$idg][$i]['afkir'] = $afkir;
+							$data[$idg][$i]['total'] = $vl['p_total'];
 						}else{
 							$data[$idg][$i] = $afkir + $afkir_gil;
 						}
