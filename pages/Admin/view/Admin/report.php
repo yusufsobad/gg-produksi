@@ -219,8 +219,8 @@ class report_admin{
 		// Get jumlah pasok
 		$pasok = 0;
 		foreach ($data as $key => $val) {
-			if($pasok >= count($val)){
-				$pasok = count($val) - 1;
+			if($pasok <= count($val)){
+				$pasok = count($val);
 			}
 		}
 
@@ -228,7 +228,7 @@ class report_admin{
 		ob_start();
 		?>
 			<div class="table_flexible">
-				<table class="">
+				<table class="table table-striped table-bordered table-hover dataTable no-footer ">
 					<thead>
 						<tr role="row">
 							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;">
