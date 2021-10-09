@@ -256,6 +256,15 @@ class report_admin{
 						</tr>
 						<tr>
 							<?php
+								if($pasok_ke){
+									for($j=1;$j<=$pasok;$j++){
+										echo '
+										<th style="width:8%;text-align:center;">
+											'.$i.'
+										</th>';
+									}
+								}
+
 								for($i=1;$i<=$pasok;$i++){
 									echo '
 									<th style="width:8%;text-align:center;">
@@ -284,8 +293,8 @@ class report_admin{
 							<?php
 								if($pasok_ke):
 									$total = 0;
-									for($i=1;$i<=$pasok;$i++){
-										$afk = isset($val[$i])?$val[$i]['total']:0;
+									for($j=1;$j<=$pasok;$j++){
+										$afk = isset($val[$j])?$val[$j]['total']:0;
 
 										echo '
 											<td style="text-align:center;">
@@ -464,7 +473,7 @@ class report_admin{
 							$data[$idx][$i]['afkir'] = $afkir;
 							$data[$idx][$i]['total'] = $vl['p_total'];
 						}else{
-							$data[$idg][$i] = $afkir + $afkir_gl;
+							$data[$idg][$i] = $afkir + $afkir_gil;
 						}
 					}
 				}
