@@ -18,10 +18,12 @@ class employee_admin extends _file_manager{
 			'ID',
 			'name',
 			'no_induk',
+			'grade',
 			'no_meja',
 			'divisi',
 			'picture',
-			'nickname'
+			'nickname',
+			'capacity'
 		);
 
 		return $args;
@@ -62,7 +64,7 @@ class employee_admin extends _file_manager{
 		$args = $object::get_all($args,$where);
 
 		$data['data'] = array('data' => $kata, 'value' => $_search ,'type' => $tab);
-		$data['search'] = array('Semua','nama','no induk','no pasok');
+		$data['search'] = array('Semua','nama','no induk','grade');
 		$data['class'] = '';
 		$data['table'] = array();
 		$data['page'] = array(
@@ -89,6 +91,7 @@ class employee_admin extends _file_manager{
 			);
 
 			$image = empty($val['notes_pict'])?'no-profile.jpg':$val['notes_pict'];
+			$target = !empty($val['capacity'])?$val['capacity']:$val['module_note_grad'];
 			
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
@@ -104,16 +107,16 @@ class employee_admin extends _file_manager{
 					'<img src="asset/img/user/'.$image.'" style="width:100%">',
 					true
 				),
-				'Bagian'		=> array(
+				'Grade'		=> array(
 					'left',
-					'12%',
-					self::_conv_status($val['divisi']),
+					'10%',
+					"Grade ".$val['module_value_grad'],
 					true
 				),
 				'No Induk'		=> array(
 					'right',
 					'10%',
-					$val['no_induk'],
+					self::_ID_card($val['module_note_divi'],$val['no_induk']),
 					true
 				),
 				'Nama'		=> array(
@@ -124,8 +127,14 @@ class employee_admin extends _file_manager{
 				),
 				'Panggilan'		=> array(
 					'left',
-					'17%',
+					'15%',
 					$val['nickname'],
+					true
+				),
+				'Target'		=> array(
+					'right',
+					'12%',
+					format_nominal($target)." batang",
 					true
 				),
 				'Meja'		=> array(
@@ -303,7 +312,7 @@ class employee_admin extends _file_manager{
 
 		$div = str_replace('employee_', '', $_POST['type']);
 
-		$vals = array(0,'',$no,1,$div,0);
+		$vals = array(0,'',$no,0,1,$div,0,0);
 		$vals = array_combine(self::_array(), $vals);
 
 		if($func=='add_0'){
@@ -360,6 +369,15 @@ class employee_admin extends _file_manager{
 		$divisi = gg_module::_gets('divisi',array('ID','module_value'));
 		$divisi = convToOption($divisi,'ID','module_value');
 
+		$grade = array();
+		$grades = gg_module::_gets('grade',array('ID','module_value'));
+		foreach ($grades as $key => $val) {
+			$grade[$val['ID']] = "Grade ".$val['module_value'];
+		}
+
+		reset($grade);
+		$target = self::option_grade(key($grade));
+
 		$tab1 = array(
 			0	=> array(
 				'func'			=> 'opt_hidden',
@@ -373,6 +391,25 @@ class employee_admin extends _file_manager{
 				'type'			=> 'hidden',
 				'key'			=> 'picture',
 				'value'			=> $vals['picture']
+			),
+			array(
+				'func'			=> 'opt_select',
+				'data'			=> $grade,
+				'key'			=> 'grade',
+				'label'			=> 'Grade',
+				'class'			=> 'input-circle',
+				'select'		=> $vals['grade'],
+				'status'		=> 'data-sobad="option_grade" data-load="grade_user" data-attribute="val" '
+			),
+			array(
+				'ID'			=> 'grade_user',
+				'func'			=> 'opt_input',
+				'type'			=> 'text',
+				'key'			=> '_target',
+				'label'			=> 'Target',
+				'class'			=> 'input-circle',
+				'value'			=> $target,
+				'data'			=> 'readonly'
 			),
 			array(
 				'func'			=> 'opt_input',
@@ -418,6 +455,15 @@ class employee_admin extends _file_manager{
 				'label'			=> 'Bagian',
 				'class'			=> 'input-circle',
 				'select'		=> $vals['divisi'],
+			),
+			array(
+				'func'			=> 'opt_input',
+				'type'			=> 'price',
+				'key'			=> 'capacity',
+				'label'			=> 'Under Capacity',
+				'class'			=> 'input-circle',
+				'value'			=> $vals['capacity'],
+				'data'			=> ''
 			),
 		);	
 
@@ -533,6 +579,19 @@ class employee_admin extends _file_manager{
 				}
 			</script>
 		<?php
+	}
+
+	public static function option_grade($id=0){
+		$grade = gg_module::get_id($id,array('module_note'));
+		$check = array_filter($grade);
+
+		if(!empty($check)){
+			$grade = $grade[0]['module_note'];
+		}else{
+			$grade = 0;
+		}
+
+		return format_nominal($grade);
 	}
 
 	public function _form_upload(){

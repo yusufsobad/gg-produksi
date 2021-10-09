@@ -22,6 +22,11 @@ class gg_employee extends _class{
 					'key'		=> 'ID',
 					'table'		=> 'ggk-module',
 					'column'	=> array('module_value','module_reff')
+				),
+				'grade'		=> array(
+					'key'		=> 'ID',
+					'table'		=> 'ggk-module',
+					'column'	=> array('module_value','module_note','module_reff')
 				)
 			)
 		);

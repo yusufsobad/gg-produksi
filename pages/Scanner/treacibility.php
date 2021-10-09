@@ -158,8 +158,11 @@ class _treacibility{
 			'data'		=> array()
 		);
 
+		$y = date('Y');$m = date('m');$d = date('d');
+		$where = "AND scan_id='$pasok2' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
+		
 		$_temp = array();
-		$load = gg_afkir::get_all(array('user_id','afkir'),"AND scan_id='$pasok2'");
+		$load = gg_afkir::get_all(array('user_id','afkir'),$where);
 		foreach ($load as $key => $val) {
 			$idx = $val['user_id'];
 			if(!isset($_temp[$idx])){
@@ -258,8 +261,11 @@ class _treacibility{
 		return array('name' => $loc[0]['module_value']);
 	}
 
-	private static function _get_dataOperator($id=0){
-		$y = date('Y');$m = date('m');$d = date('d');
+	public static function _get_dataOperator($id=0,$date=''){
+		$date = empty($date)?date('Y-m-d'):$date;
+		$date = strtotime($date);
+
+		$y = date('Y',$date);$m = date('m',$date);$d = date('d',$date);
 		$where = "AND user_id='$id' AND (YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d')";
 		$flow = gg_production::get_all(array('ID','p_total','p_afkir','operator_id'),$where);
 

@@ -21,7 +21,8 @@ class gg_module extends _class{
 				'block',
 				'default_sc',
 				'no_meja',
-				'location'
+				'location',
+				'grade'
 			);
 
 			if(in_array($type, $args)){

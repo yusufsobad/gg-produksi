@@ -76,8 +76,10 @@
 				'nickname'	=> '',
 				'picture'	=> 0,
 				'divisi'	=> 0,
+				'grade'	=> 0,
 				'no_induk'	=> 0,
 				'no_meja'	=> 0,
+				'capacity'	=> 0,
 				'status'	=> 0,	
 			);
 			
@@ -139,6 +141,8 @@
 				'username'	=> '',
 				'password'	=> '',
 				'name'	=> '',
+				'picture'	=> 0,
+				'divisi'	=> 0,
 				'status'	=> 0,	
 			);
 			

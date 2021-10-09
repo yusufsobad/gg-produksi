@@ -26,9 +26,17 @@ function sidemenu_admin(){
 		'child'		=> setting_admin()
 	);
 
-	$args['tracking-user'] = array(
+	$args['report'] = array(
 		'status'	=> '',
 		'icon'		=> 'fa fa-book',
+		'label'		=> 'Report',
+		'func'		=> '#',
+		'child'		=> report_admin()
+	);
+
+	$args['tracking-user'] = array(
+		'status'	=> '',
+		'icon'		=> 'fa fa-truck',
 		'label'		=> 'Tracking',
 		'func'		=> 'tracking_user',
 		'child'		=> null
@@ -39,6 +47,14 @@ function sidemenu_admin(){
 
 function setting_admin(){
 	$args = array();
+
+	$args['grade'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Grade',
+		'func'		=> 'grade_admin',
+		'child'		=> null
+	);
 	
 	$args['block'] = array(
 		'status'	=> '',
@@ -93,6 +109,28 @@ function setting_admin(){
 		'icon'		=> '',
 		'label'		=> 'Smart Container',
 		'func'		=> 'sContainer_admin',
+		'child'		=> null
+	);
+
+	return $args;
+}
+
+function report_admin(){
+	$args = array();
+
+	$args['report-operator'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'Operator',
+		'func'		=> 'report_admin',
+		'child'		=> null
+	);
+	
+	$args['report-skt'] = array(
+		'status'	=> '',
+		'icon'		=> '',
+		'label'		=> 'SKT Online',
+		'func'		=> 'reportSKT_admin',
 		'child'		=> null
 	);
 

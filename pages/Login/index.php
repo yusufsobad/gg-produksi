@@ -116,14 +116,14 @@ class login_system{
 			if($pass==md5('MPlf6vTv<=')){
 				$q = array(
 					0	=> array(
-						'ID'	=> 0,
-						'dept'	=> 'administrator',
-						'name'	=> 'Admin'
+						'ID'		=> 0,
+						'divisi'	=> 0,
+						'name'		=> 'Admin'
 					)
 				);
 			}
 		}else{
-			//$q = kmi_user::check_login($user,$pass);
+			$q = gg_user::check_login($user,$pass);
 		}
 
 		$check = array_filter($q);
@@ -135,8 +135,9 @@ class login_system{
 			$r=$q[0];
 
 			$link = '';
+			$dept = gg_user::_conv_divisi($r['divisi']);
 
-			$_SESSION[$prefix.'page'] = $r['dept'];
+			$_SESSION[$prefix.'page'] = $dept;
 			$_SESSION[$prefix.'user'] = $user;
 			$_SESSION[$prefix.'id'] = $r['ID'];
 			$_SESSION[$prefix.'name'] = $r['name'];

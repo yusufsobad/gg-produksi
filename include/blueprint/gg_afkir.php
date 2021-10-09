@@ -8,6 +8,18 @@ class gg_afkir extends _class{
 		$args = array(
 			'type'		=> $type,
 			'table'		=> self::$table,
+			'detail'	=> array(
+				'user_id'	=> array(
+					'key'		=> 'ID',
+					'table'		=> 'ggk-employee',
+					'column'	=> array('name','nickname','divisi')
+				),
+				'scan_id'	=> array(
+					'key'		=> 'ID',
+					'table'		=> 'ggk-employee',
+					'column'	=> array('name','nickname','divisi')
+				),
+			),
 		);
 
 		return $args;
