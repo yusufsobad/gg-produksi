@@ -37,7 +37,7 @@ class report_admin{
 
 	protected static function get_box(){		
 		$box = array(
-			'ID'		=> 'report_admin',
+			'ID'		=> 'report_tracking',
 			'label'		=> 'Report',
 			'tool'		=> '',
 			'action'	=> '',
