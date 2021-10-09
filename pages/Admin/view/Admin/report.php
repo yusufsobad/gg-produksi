@@ -282,7 +282,7 @@ class report_admin{
 
 								$nik = employee_admin::_ID_card($user['module_note_divi'],$val['no_induk']);
 							?>
-							
+						<tr>
 							<td style="text-align: right">
 								<?php print($nik) ?>
 							</td>
@@ -331,6 +331,7 @@ class report_admin{
 							<td style="text-align: right">
 								<?php print(format_nominal($total)) ?>
 							</td>
+						</tr>
 						<?php endforeach; ?>
 					</tbody>
 				</table>
