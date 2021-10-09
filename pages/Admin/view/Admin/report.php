@@ -138,7 +138,7 @@ class report_admin{
 		$block = $data['block'];
 
 		// Set Tanggal
-		$date = empty($date)?date('Y-m-d'):$date;
+		$date = empty($data['_date'])?date('Y-m-d'):$data['_date'];
 		$date = strtotime($date);
 
 		self::$date_report = $date;
