@@ -384,7 +384,7 @@ class report_admin{
 
 		// Set Grouping Operator
 		$data = array();
-		foreach ($detail as $key => $val) {
+		foreach ($push as $key => $val) {
 			$idp = $val['parent'];
 			if(!isset($_data[$idp])){
 				$data[$idp] = $push;
