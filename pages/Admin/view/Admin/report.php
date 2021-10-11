@@ -259,7 +259,7 @@ class report_admin{
 								</th>
 							<?php endif; ?>
 							
-							<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border-bottom: 1px solid #ddd;">
+							<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;">
 								Afkir
 							</th>
 							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
@@ -271,7 +271,7 @@ class report_admin{
 								if($pasok_ke){
 									for($j=1;$j<=$pasok;$j++){
 										echo '
-										<th style="width:8%;text-align:center;">
+										<th style="width:8%;text-align:center;border: 1px solid #ddd;">
 											'.$i.'
 										</th>';
 									}
@@ -279,7 +279,7 @@ class report_admin{
 
 								for($i=1;$i<=$pasok;$i++){
 									echo '
-									<th style="width:8%;text-align:center;">
+									<th style="width:8%;text-align:center;border: 1px solid #ddd;">
 										'.$i.'
 									</th>';
 								}
@@ -384,7 +384,7 @@ class report_admin{
 
 		// Set Grouping Operator
 		$data = array();
-		foreach ($_temp as $key => $val) {
+		foreach ($detail as $key => $val) {
 			$idp = $val['parent'];
 			if(!isset($_data[$idp])){
 				$data[$idp] = $push;
@@ -459,7 +459,7 @@ class report_admin{
 				$pasok_ke = $val['pasok_ke'];
 
 				if($divisi==2 || $divisi==3){
-					$idx = $val['user_id'];
+					$idx = $val['operator_id'];
 					$afkir = 0;
 
 					if(isset($pasok_ke[$i])){
@@ -475,7 +475,7 @@ class report_admin{
 				if($divisi==1 || $divisi==4){
 					$afkir_gl[$i] = 0;
 					foreach ($pasok_ke[$i] as $ky => $vl) {
-						$idg = $vl['user_id'];
+						$idg = $vl['operator_id'];
 
 						$afkir = $vl['p_afkir'];
 						$afkir_gil = isset($gilling[$idg][$i])?$gilling[$idg][$i]['_afkir']:0;

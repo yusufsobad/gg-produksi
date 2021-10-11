@@ -147,7 +147,7 @@ class _production{
 			die(_error::_alert_db("Scan Operator terlebih dahulu !!!"));
 		}
 
-		$pasok = self::get_noPasok($data['ID']);
+		$pasok = self::get_noPasok($data['operator_id']);
 		$pasok += 1;
 
 		sobad_db::_insert_table('ggk-detail-afkir',array(
