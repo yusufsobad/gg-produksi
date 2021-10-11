@@ -366,7 +366,12 @@ class report_admin{
 
 		// Set data Operator	
 			if(!isset($push[$idx])){
-				$push[$idx] = $val;
+				$push[$idx] = array();
+			}
+
+			$pask = $val['pasok_ke'];
+			if(!isset($push[$idx][$pask])){
+				$push[$idx][$pask] = $val;
 			}
 
 		// Set data flow
@@ -387,16 +392,18 @@ class report_admin{
 		foreach ($_temp as $key => $val) {
 			$idp = $val['parent'];
 			if(!isset($data[$idp])){
-				$data[$idp] = $push[$idp];
+				$data[$idp] = $push[$idp][0];
 				$data[$idp]['pasok_ke'] = array();
 			}
 
 			$idc = $val['child'];
-			$pasok = $push[$idc]['pasok_ke'];
-			if(!isset($data[$idp]['pasok_ke'][$pasok])){
-				$data[$idp]['pasok_ke'][$pasok] = array();
+			foreach ($push[$idc] as $ky => $vl) {
+				if(!isset($data[$idp]['pasok_ke'][$ky])){
+					$data[$idp]['pasok_ke'][$ky] = array();
+				}
+
+				$data[$idp]['pasok_ke'][$ky][$idc] = $push[$idc][$ky];
 			}
-			$data[$idp]['pasok_ke'][$pasok][$idc] = $push[$idc];
 		}
 
 		return $data;
