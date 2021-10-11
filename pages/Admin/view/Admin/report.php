@@ -387,14 +387,12 @@ class report_admin{
 		foreach ($_temp as $key => $val) {
 			$idp = $val['parent'];
 			if(!isset($_data[$idp])){
-				$data[$idp] = $push;
+				$data[$idp] = $push[$idp];
 			}
 
 			$idc = $val['child'];
-			if(!in_array($idc,$_data[$idp])){
-				$pasok = $push[$idc]['pasok_ke'];
-				$data[$idp]['pasok_ke'][$pasok][$idc] = $push[$idc];
-			}
+			$pasok = $push[$idc]['pasok_ke'];
+			$data[$idp]['pasok_ke'][$pasok][$idc] = $push[$idc];
 		}
 
 		return $data;
