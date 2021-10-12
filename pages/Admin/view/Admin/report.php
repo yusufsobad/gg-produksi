@@ -196,7 +196,7 @@ class report_admin{
 			'data'		=> $data,
 			'style'		=> array(),
 			'object'	=> self::$object,
-			'html'		=> '_view',
+			'html'		=> '_html',
 			'setting'	=> array(
 				'posisi'	=> 'landscape',
 				'layout'	=> 'A4',
@@ -205,6 +205,16 @@ class report_admin{
 		);
 
 		return sobad_convToPdf($args);
+	}
+
+	public static function _html($data=array()){
+		?>
+			<page backtop="5mm" backbottom="5mm" backleft="5mm" backright="5mm" pagegroup="new">
+			<?php
+				echo self::_view($data);
+			?>
+			</page>
+		<?php
 	}
 
 	public function _view($data=array()){
@@ -343,7 +353,7 @@ class report_admin{
 		ob_start();
 		?>
 			<div class="table_flexible">
-				<table class="table table-striped table-bordered table-hover dataTable no-footer ">
+				<table style="width:100%;" class="table table-striped table-bordered table-hover dataTable no-footer ">
 					<thead>
 						<tr>
 							<th colspan="<?php print($cols) ;?>">
@@ -361,10 +371,10 @@ class report_admin{
 							<th colspan="<?php print($cols) ;?>">&nbsp;</th>
 						</tr>
 						<tr role="row">
-							<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+							<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								NIK
 							</th>
-							<th rowspan="2" style="width:250px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+							<th rowspan="2" style="width:250px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								Nama
 							</th>
 
@@ -372,15 +382,15 @@ class report_admin{
 								<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border-bottom: 1px solid #ddd;">
 									Pasok Ke
 								</th>
-								<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+								<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 									Total
 								</th>
 							<?php endif; ?>
 							
-							<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;">
+							<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border: 1px solid #ddd;">
 								Afkir
 							</th>
-							<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+							<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								Total
 							</th>
 						</tr>
@@ -413,10 +423,10 @@ class report_admin{
 								$nik = employee_admin::_ID_card($user['module_note_divi'],$user['no_induk']);
 							?>
 						<tr>
-							<td style="text-align: right">
+							<td style="text-align: right;border: 1px solid #ddd;">
 								<?php print($nik) ?>
 							</td>
-							<td style="text-align: left">
+							<td style="text-align: left;border: 1px solid #ddd;">
 								<?php print(ucwords($user['name'])) ?>
 							</td>
 
@@ -427,7 +437,7 @@ class report_admin{
 										$afk = isset($val[$j])?$val[$j]['total']:0;
 
 										echo '
-											<td style="text-align:center;">
+											<td style="text-align:center;border: 1px solid #ddd;">
 												'.$afk.'
 											</td>
 										';
@@ -435,7 +445,7 @@ class report_admin{
 										$total += $afk;
 									}
 							?>
-							<td style="text-align: right">
+							<td style="text-align: right;border: 1px solid #ddd;">
 								<?php print(format_nominal($total)) ?>
 							</td>
 							<?php
@@ -450,7 +460,7 @@ class report_admin{
 									}
 
 									echo '
-										<td style="text-align:center;">
+										<td style="text-align:center;border: 1px solid #ddd;">
 											'.$afk.'
 										</td>
 									';
@@ -458,7 +468,7 @@ class report_admin{
 									$total += $afk;
 								}
 							?>
-							<td style="text-align: right">
+							<td style="text-align: right;border: 1px solid #ddd;">
 								<?php print(format_nominal($total)) ?>
 							</td>
 						</tr>
