@@ -40,7 +40,7 @@ class report_admin{
 			'ID'		=> 'report_tracking',
 			'label'		=> 'Report',
 			'tool'		=> '',
-			'action'	=> '',
+			'action'	=> self::print_action(),
 			'func'		=> 'sobad_table',
 			'data'		=> array(
 				'class'		=> '',
@@ -49,6 +49,33 @@ class report_admin{
 		);
 
 		return $box;
+	}
+
+	private static function print_action(){
+		$export = array(
+			'ID'	=> 'excel_0',
+			'func'	=> '_export_excel',
+			'color'	=> 'btn-default',
+			'icon'	=> 'fa fa-file-excel-o',
+			'label'	=> 'Export',
+			'type'	=> '',
+			'spin'	=> true
+		);
+		
+		$xls = print_button($export);
+
+		$print = array(
+			'ID'	=> 'preview_0',
+			'func'	=> '_preview',
+			'color'	=> 'btn-default',
+			'icon'	=> 'fa fa-print',
+			'label'	=> 'Print',
+			'type'	=> ''
+		);	
+
+		$print = print_button($print);
+
+		return $xls." ".$print;
 	}
 
 	public static function _sidemenu(){
@@ -84,12 +111,7 @@ class report_admin{
 			$block[$val['ID']] = 'Block '.$val['module_value'];
 		}
 
-		$type = array(
-			1 => 'Data Pasok dan Afkir LI',
-			2 => 'Data Afkir Push Cutter',
-			3 => 'Data Afkir Glling',
-			4 => 'Total Afkir Operator'
-		);
+		$type = self::_convert_type();
 
 		$data = array(
 			array(
@@ -129,9 +151,61 @@ class report_admin{
 		<?php
 	}
 
+	private static function _convert_type($id=0){
+		$type = array(
+			1 => 'Data Pasok dan Afkir LI',
+			2 => 'Data Afkir Push Cutter',
+			3 => 'Data Afkir Glling',
+			4 => 'Total Afkir Operator'
+		);
+
+		if(empty($id)){
+			return $type;
+		}
+
+		return isset($type[$id])?$type[$id]:'';
+	}
+
 	// ----------------------------------------------------------
 	// Print data report ----------------------------------------
 	// ----------------------------------------------------------
+
+	public function _export_excel($data=array()){
+		$args = sobad_asset::ajax_conv_json($data);
+
+		$date = $args['_date'];
+		$title = self::_convert_type($args['type']);
+
+		ob_start();
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=".$title." ".$_date.".xls");
+
+		$header = ob_get_clean();
+		$view = self::_view($data);
+
+		return $header.$view;
+	}
+
+	public function _preview($data=array()){
+		$args = sobad_asset::ajax_conv_json($data);
+
+		$date = $args['_date'];
+		$title = self::_convert_type($args['type']);
+
+		$args = array(
+			'data'		=> $data,
+			'style'		=> array(),
+			'object'	=> self::$object,
+			'html'		=> '_view',
+			'setting'	=> array(
+				'posisi'	=> 'landscape',
+				'layout'	=> 'A4',
+			),
+			'name save'	=> $title.' '.$date
+		);
+
+		return sobad_convToPdf($args);
+	}
 
 	public function _view($data=array()){
 		$data = sobad_asset::ajax_conv_json($data);
@@ -176,44 +250,68 @@ class report_admin{
 
 		switch ($data['type']) {
 			case 1: // data Pasok dan Afkir LI 
+				$title = array(
+					'title'		=> self::_convert_type(1),
+					'note'		=> ''
+				);
+
 				$afkir = self::_get_afkirTotalOperator($pasok,$pasok2,4);
-				$table = self::_get_tableAfkir($afkir,true);
+				$table = self::_get_tableAfkir($afkir,$title,true);
 				break;
 
 			case 2: // data Afkir Push Cutter
+				$title = array(
+					'title'		=> self::_convert_type(2),
+					'note'		=> ''
+				);
+
 				$afkir = self::_get_afkirOperator($pasok2,2);
-				$table = self::_get_tableAfkir($afkir);
+				$table = self::_get_tableAfkir($afkir,$title);
 				break;
 
 			case 3: // data Afkir Gilling
+				$title = array(
+					'title'		=> self::_convert_type(3),
+					'note'		=> ''
+				);
+
 				$afkir = self::_get_afkirOperator($pasok2,1);
-				$table = self::_get_tableAfkir($afkir);
+				$table = self::_get_tableAfkir($afkir,$title);
 				break;
 
 			case 4: // Total Afkir Operator
+				$title1 = array(
+					'title'		=> "Data Afkir Gilling",
+					'note'		=> "total afkir dari LI dan Gilling"
+				);
+
+				$title2 = array(
+					'title'		=> "Data Afkir Push Cutter",
+					'note'		=> "total afkir dari LI dan PC"
+				);
+
+				$title3 = array(
+					'title'		=> "Data Afkir Total",
+					'note'		=> "total afkir dari LI, PC dan Gilling"
+				);
+
 				$afkir = self::_get_afkirTotalOperator($pasok,$pasok2,1);
-				$table1 = self::_get_tableAfkir($afkir);
+				$table1 = self::_get_tableAfkir($afkir,$title1);
 
 				$afkir = self::_get_afkirTotalOperator($pasok,$pasok2,2);
-				$table2 = self::_get_tableAfkir($afkir);
+				$table2 = self::_get_tableAfkir($afkir,$title2);
 
 				$afkir = self::_get_afkirTotalOperator($pasok,$pasok2,3);
-				$table3 = self::_get_tableAfkir($afkir);
+				$table3 = self::_get_tableAfkir($afkir,$title3);
 
 				$table = '
 					<div style="margin-bottom:20px;">
-						<label style="font-weight:bold;display:block;">Data Afkir Gilling</label>
-						<small>total afkir dari LI dan PC</small><br>
 						'.$table1.' 
 					</div>
 					<div style="margin-bottom:20px;">
-						<label style="font-weight:bold;display:block;">Data Afkir Push Cutter</label>
-						<small>total afkir dari LI dan Gilling</small><br>
 						'.$table2.' 
 					</div>
 					<div style="margin-bottom:20px;">
-						<label style="font-weight:bold;display:block;">Data Afkir Total</label>
-						<small>total afkir dari LI, PC dan Gilling</small><br>
 						'.$table3.' 
 					</div>
 				';
@@ -227,7 +325,7 @@ class report_admin{
 		return $table;
 	}
 
-	private static function _get_tableAfkir($data=array(),$pasok_ke=false){
+	private static function _get_tableAfkir($data=array(),$title=array(),$pasok_ke=false){
 		// Get jumlah pasok
 		$pasok = 0;
 		foreach ($data as $key => $val) {
@@ -236,17 +334,37 @@ class report_admin{
 			}
 		}
 
+		$cols = $pasok + 3;
+		if($pasok_ke){
+			$cols += ($pasok + 1);
+		}
+
 		// Buat Table
 		ob_start();
 		?>
 			<div class="table_flexible">
 				<table class="table table-striped table-bordered table-hover dataTable no-footer ">
 					<thead>
+						<tr>
+							<th colspan="<?php print($cols) ;?>">
+								<label style="font-weight:bold;display:block;">
+									<?php print($title['title']) ;?>
+								</label>
+							</th>
+						</tr>
+						<tr>
+							<th colspan="<?php print($cols) ;?>">
+								<small><?php print($title['note']) ;?></small>
+							</th>
+						</tr>
+						<tr>
+							<th colspan="<?php print($cols) ;?>">&nbsp;</th>
+						</tr>
 						<tr role="row">
-							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+							<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 								NIK
 							</th>
-							<th rowspan="2" style="width:25%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+							<th rowspan="2" style="width:250px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 								Nama
 							</th>
 
@@ -254,7 +372,7 @@ class report_admin{
 								<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border-bottom: 1px solid #ddd;">
 									Pasok Ke
 								</th>
-								<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+								<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 									Total
 								</th>
 							<?php endif; ?>
@@ -262,7 +380,7 @@ class report_admin{
 							<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;">
 								Afkir
 							</th>
-							<th rowspan="2" style="width:10%;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
+							<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;">
 								Total
 							</th>
 						</tr>
@@ -271,15 +389,15 @@ class report_admin{
 								if($pasok_ke){
 									for($j=1;$j<=$pasok;$j++){
 										echo '
-										<th style="width:8%;text-align:center;border: 1px solid #ddd;">
-											'.$i.'
+										<th style="width:70px;text-align:center;border: 1px solid #ddd;">
+											'.$j.'
 										</th>';
 									}
 								}
 
 								for($i=1;$i<=$pasok;$i++){
 									echo '
-									<th style="width:8%;text-align:center;border: 1px solid #ddd;">
+									<th style="width:70px;text-align:center;border: 1px solid #ddd;">
 										'.$i.'
 									</th>';
 								}
