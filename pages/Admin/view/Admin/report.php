@@ -60,8 +60,8 @@ class report_admin{
 			'label'	=> 'Export',
 			'type'	=> '',
 			'spin'	=> true
-		);
-		
+		);		
+
 		$xls = print_button($export);
 
 		$print = array(
@@ -73,7 +73,7 @@ class report_admin{
 			'type'	=> ''
 		);	
 
-		$print = print_button($print);
+		$print = '';//print_button($print);
 
 		return $xls." ".$print;
 	}
@@ -357,14 +357,14 @@ class report_admin{
 					<thead>
 						<tr>
 							<th colspan="<?php print($cols) ;?>">
-								<label style="font-weight:bold;display:block;">
+								<label style="font-weight:bold;display:block;text-align: center;">
 									<?php print($title['title']) ;?>
 								</label>
 							</th>
 						</tr>
 						<tr>
 							<th colspan="<?php print($cols) ;?>">
-								<small><?php print($title['note']) ;?></small>
+								<small style="text-align: center;"><?php print($title['note']) ;?></small>
 							</th>
 						</tr>
 						<tr>
@@ -379,7 +379,7 @@ class report_admin{
 							</th>
 
 							<?php if($pasok_ke): ?>
-								<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border-bottom: 1px solid #ddd;">
+								<th colspan="<?php print($pasok) ;?>" style="text-align:center;font-family: calibriBold;font-weight: bold;border: 1px solid #ddd;">
 									Pasok Ke
 								</th>
 								<th rowspan="2" style="width:100px;text-align:center;font-family: calibriBold;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">

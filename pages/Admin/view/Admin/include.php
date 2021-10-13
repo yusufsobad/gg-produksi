@@ -10,4 +10,5 @@ require 'opt-recahan.php';
 require 'opt-divisi.php';
 require 'opt-smart_container.php';
 require 'report.php';
+require 'report-skt.php';
 require 'tracking.php';
