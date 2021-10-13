@@ -107,6 +107,7 @@ class sobad_asset{
 	}
 
 	public static function ascii_to_hexa($ascii=''){
+		$ascii = strval($ascii);
 		if(empty($ascii)){
 			return '';
 		}
