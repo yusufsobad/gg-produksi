@@ -332,27 +332,27 @@ class reportSKT_admin{
 				<table style="width:100%;" class="table table-striped table-bordered table-hover dataTable no-footer ">
 					<thead>
 						<tr>
-							<th colspan="14" style="width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<th colspan="14" style="text-align:center;font-family: 'Arial Narrow';font-size:9pt;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								EBLEK
 							</th>
 						</tr>
 						<tr>
-							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								PERIODE
 							</th>
-							<th colspan="3" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								: <?php print($data['periode']) ;?>
 							</th>
-							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								FINISHED GOOD
 							</th>
-							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
 								: 12ASP
 							</th>
-							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								1. LEADER BLOCK
 							</th>
-							<th colspan="3" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
 								: <?php print($data['leader']) ;?>
 							</th>
 						</tr>
@@ -417,7 +417,7 @@ class reportSKT_admin{
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td colspan="5" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td colspan="4" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								'.date('d M Y',strtotime('+'.$i.' days',$date1)).'
 							</td>
 						';
@@ -431,7 +431,7 @@ class reportSKT_admin{
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td colspan="5" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td colspan="4" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								7
 							</td>
 						';
@@ -445,7 +445,7 @@ class reportSKT_admin{
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td colspan="5" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td colspan="4" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								&nbsp;
 							</td>
 						';
@@ -453,34 +453,34 @@ class reportSKT_admin{
 				?>
 			</tr>
 			<tr>
-				<td style="width:50px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:30px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NO
 				</td>
-				<td style="width:100px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:70px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NIK
 				</td>
-				<td style="width:50px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:70px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NBK
 				</td>
-				<td style="width:250px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:160px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NAMA
 				</td>
-				<td style="width:50px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:40px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					GRD
 				</td>
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:60px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								PLAN
 							</td>
-							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:60px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								ACTUAL
 							</td>
-							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:60px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								JK
 							</td>
-							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:60px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								JKE
 							</td>
 						';
