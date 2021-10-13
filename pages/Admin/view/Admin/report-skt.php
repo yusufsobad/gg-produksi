@@ -216,7 +216,7 @@ class reportSKT_admin{
 		$block = gg_module::get_id($user['id_block'],array('module_value'));
 		$block = $block[0]['module_value'];
 
-		$args['leader'] = $block;
+		$args['block'] = $block;
 
 		return $args;
 	}
@@ -236,7 +236,7 @@ class reportSKT_admin{
 			$y = date('Y',$date);$m = date('m',$date);$d = date('d',$date);
 			$where = "AND user_id='$pasok' AND YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d'";
 
-			$produksi = gg_production::get_all(array('p_total','operator_id','_inserted'));
+			$produksi = gg_production::get_all(array('p_total','operator_id','_inserted'),$where);
 			foreach ($produksi as $ky => $vl) {
 				$idx = $vl['operator_id'];
 				$div = $vl['divisi_oper'];
@@ -254,8 +254,8 @@ class reportSKT_admin{
 					$grd = $grade['module_value'];
 
 					$args[$div][$idx] = array(
-						'nik'		=> $nik,
-						'nbk'		=> $nbk,
+						'nik'		=> employee_admin::_ID_card($vl['divisi_oper'],$vl['no_induk_oper']),
+						'nbk'		=> $vl['no_meja'],
 						'name'		=> $vl['name_oper'],
 						'grd'		=> $grd,
 						'_detail'	=> array()
@@ -432,7 +432,7 @@ class reportSKT_admin{
 					for($i=0;$i<=$date;$i++){
 						echo '
 							<td colspan="5" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
-								
+								&nbsp;
 							</td>
 						';
 					}
