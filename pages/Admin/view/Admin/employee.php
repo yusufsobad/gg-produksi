@@ -229,7 +229,8 @@ class employee_admin extends _file_manager{
 			'load'	=> 'here_modal2',
 			'icon'	=> 'fa fa-file-excel-o',
 			'label'	=> 'Import',
-			'spin'	=> false
+			'spin'	=> false,
+			'type'	=> self::$type
 		);
 		
 		$import = apply_button($import);
@@ -627,6 +628,9 @@ class employee_admin extends _file_manager{
 	// ----------------------------------------------------------
 
 	protected function _check_import($files=array()){
+		$divisi = gg_module::_gets('divisi',array('ID','module_value'));
+		self::$type = 'employee_'.$divisi[0]['ID'];
+
 		$check = array_filter($files);
 		if(empty($check)){
 			return array(
@@ -639,14 +643,14 @@ class employee_admin extends _file_manager{
 		$files = self::_convert_column($files);
 
 		if(!isset($files['status'])){
-			$files['status'] = 'berhenti';
+			$files['status'] = 1;
 		}
 
 		return self::_conv_import($files);
 	}
 
 	public function _conv_import($files=array()){
-
+		$files['ID'] = 0;
 		if(isset($files['no_induk']) && !empty($files['no_induk'])){
 			$status = false;
 			$no_idk = $files['no_induk'];
@@ -660,7 +664,8 @@ class employee_admin extends _file_manager{
 
 			return array(
 				'status'	=> $status,
-				'data'		=> $files
+				'data'		=> $files,
+				'insert'	=> true
 			);
 		}else{
 			$status = false;
@@ -675,7 +680,8 @@ class employee_admin extends _file_manager{
 
 			return array(
 				'status'	=> $status,
-				'data'		=> $files
+				'data'		=> $files,
+				'insert'	=> true
 			);
 		}
 	}
@@ -732,6 +738,24 @@ class employee_admin extends _file_manager{
 				
 				break;
 
+			case 'no_meja':
+				$args = gg_module::_gets('no_meja',array('ID','module_reff'),"AND module_value='$_data'");
+				
+				$check = array_filter($args);
+				if(empty($check)){
+					$_data = sobad_db::_insert_table('ggk-module',array('module_key' => 'no_meja','module_value' => $_data,'module_reff' => 1 ));
+				}else{
+					if($args[0]['module_reff']==0){
+						sobad_db::_update_single($args[0]['ID'],'ggk-module',array('module_key' => 'no_meja','module_reff' => 1 ));
+
+						$_data = $args[0]['ID'];
+					}else{
+						$_data = 0;
+					}
+				}
+				
+				break;
+
 			case 'grade':
 				$args = gg_module::_gets('grade',array('ID'),"AND module_value='$_data'");
 				
@@ -745,8 +769,8 @@ class employee_admin extends _file_manager{
 				break;
 
 			case 'no_induk':
-				$div = _treacibility::_check_divisi($scan);
-				$_data = (int) substr($scan, 2,6);
+				$div = _treacibility::_check_divisi($_data);
+				$_data = (int) substr($_data, 2,6);
 				
 				$data['divisi'] = formatting::sanitize($div,'number');
 				break;
