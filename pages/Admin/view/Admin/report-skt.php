@@ -253,7 +253,7 @@ class reportSKT_admin{
 
 					$grd = $grade['module_value'];
 
-					$args[$idx] = array(
+					$args[$div][$idx] = array(
 						'nik'		=> $nik,
 						'nbk'		=> $nbk,
 						'name'		=> $vl['name_oper'],
@@ -476,11 +476,13 @@ class reportSKT_admin{
 		<?php
 
 		foreach ($data['data'] as $ky => $dt_val) {
+			$no = 0;
 			foreach ($dt_val as $key => $val) {
+				$no += 1;
 				?>
 					<tr>
 						<td style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
-							<?php print($key+1) ;?>
+							<?php print($no) ;?>
 						</td>
 						<td style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 							<?php print($val['nik']) ;?>
