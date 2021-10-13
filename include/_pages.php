@@ -340,7 +340,7 @@ abstract class _page{
 		        	$check = static::_check_import($files);
 		        	
 		        	foreach ($check['data'] as $key => $val) {
-		        		$data[] = array('name' => $key, 'value' => $val);
+		        		$data[] = array('name' => $key, 'value' => sobad_asset::ascii_to_hexa($val));
 		        	}
 
 		        	if($check['status']){
