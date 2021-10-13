@@ -332,62 +332,67 @@ class reportSKT_admin{
 				<table style="width:100%;" class="table table-striped table-bordered table-hover dataTable no-footer ">
 					<thead>
 						<tr>
-							<th colspan="2" style="width:100px;font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="14" style="width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+								EBLEK
+							</th>
+						</tr>
+						<tr>
+							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								PERIODE
 							</th>
-							<th colspan="3" style="width:100px;font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								: <?php print($data['periode']) ;?>
 							</th>
-							<th colspan="2" style="width:100px;font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								FINISHED GOOD
 							</th>
-							<th colspan="2" style="width:100px;font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
 								: 12ASP
 							</th>
-							<th colspan="2" style="width:100px;font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
 								1. LEADER BLOCK
 							</th>
-							<th colspan="3" style="width:100px;font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;width:100px;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
 								: <?php print($data['leader']) ;?>
 							</th>
 						</tr>
 						<tr>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
 								PROSES
 							</th>
-							<th colspan="3" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
 								: GILLING
 							</th>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
 								LEMBAGA
 							</th>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-right: 1px solid #ddd;">
 								: UNIT 1 (NS)
 							</th>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
-								1. SUPERVISOR
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
+								2. SUPERVISOR
 							</th>
-							<th colspan="3" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-right: 1px solid #ddd;">
 								: <?php print($data['supervisor']) ;?>
 							</th>
 						</tr>
 						<tr>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
 								OUTPUT PRODUK
 							</th>
-							<th colspan="3" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
 								: BATANGAN 12ASP
 							</th>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
 								WILKER
 							</th>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-right: 1px solid #ddd;">
 								: BLOCK <?php print($data['block']) ;?> (NS)
 							</th>
-							<th colspan="2" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;">
-								1. KASI PRODUKSI
+							<th colspan="2" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;">
+								3. KASI PRODUKSI
 							</th>
-							<th colspan="3" style="font-family: calibriBold;font-weight: bold;vertical-align: middle;border-top: 1px solid #ddd;border-right: 1px solid #ddd;">
+							<th colspan="3" style="text-align:left;font-family: 'Arial Narrow';font-size:7pt;font-weight: bold;vertical-align: middle;border-right: 1px solid #ddd;">
 								: <?php print($data['kasi_produksi']) ;?>
 							</th>
 						</tr>
@@ -406,13 +411,13 @@ class reportSKT_admin{
 
 		?>
 			<tr>
-				<td colspan="5" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td colspan="5" style="font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					TANGGAL
 				</td>
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td colspan="5" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td colspan="5" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								'.date('d M Y',strtotime('+'.$i.' days',$date1)).'
 							</td>
 						';
@@ -420,13 +425,13 @@ class reportSKT_admin{
 				?>
 			</tr>
 			<tr>
-				<td colspan="5" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td colspan="5" style="font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					JAM KERJA
 				</td>
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td colspan="5" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td colspan="5" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								7
 							</td>
 						';
@@ -434,13 +439,13 @@ class reportSKT_admin{
 				?>
 			</tr>
 			<tr>
-				<td colspan="5" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td colspan="5" style="font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					PLANNING TPK
 				</td>
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td colspan="5" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td colspan="5" style="font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								&nbsp;
 							</td>
 						';
@@ -448,34 +453,34 @@ class reportSKT_admin{
 				?>
 			</tr>
 			<tr>
-				<td style="width:50px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:50px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NO
 				</td>
-				<td style="width:200px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:100px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NIK
 				</td>
-				<td style="width:50px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:50px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NBK
 				</td>
-				<td style="width:250px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:250px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					NAMA
 				</td>
-				<td style="width:50px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+				<td style="width:50px;font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 					GRD
 				</td>
 				<?php
 					for($i=0;$i<=$date;$i++){
 						echo '
-							<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								PLAN
 							</td>
-							<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								ACTUAL
 							</td>
-							<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								JK
 							</td>
-							<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 								JKE
 							</td>
 						';
@@ -490,19 +495,19 @@ class reportSKT_admin{
 				$no += 1;
 				?>
 					<tr>
-						<td style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+						<td style="font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 							<?php print($no) ;?>
 						</td>
-						<td style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+						<td style="font-family: 'Arial Narrow';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 							<?php print($val['nik']) ;?>
 						</td>
-						<td style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+						<td style="font-family: 'Arial Narrow';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 							<?php print($val['nbk']) ;?>
 						</td>
-						<td style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+						<td style="font-family: 'Arial Narrow';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 							<?php print($val['name']) ;?>
 						</td>
-						<td style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+						<td style="font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 							<?php print($val['grd']) ;?>
 						</td>
 						<?php
@@ -513,16 +518,16 @@ class reportSKT_admin{
 								$time_est = isset($val['_detail'][$i])?$val['_detail'][$i]['time_est']:'&nbsp;';
 
 								echo '
-									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:right;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$plan.'
 									</td>
-									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:right;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$actual.'
 									</td>
-									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$time_est.'
 									</td>
-									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$time_act.'
 									</td>
 								';
@@ -535,7 +540,7 @@ class reportSKT_admin{
 			$_cols = 5 + (($date + 1) * 4);
 			?>
 				<tr>
-					<td colspan="<?php print($_cols) ;?>" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+					<td colspan="<?php print($_cols) ;?>" style="font-family: 'Arial Narrow';font-size:7pt;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 							&nbsp;
 					</td>
 				</tr>
