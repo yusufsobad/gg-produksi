@@ -187,7 +187,7 @@ class reportSKT_admin{
 		$table['head'] = self::_get_head($data_block[0],$data);
 		$table['body'] = self::_get_body($data_block[0],$data);
 
-		ob_clean();
+		ob_start();
 		self::_header_table($table);
 		return ob_get_clean();
 	}
@@ -251,8 +251,12 @@ class reportSKT_admin{
 					$grade = gg_module::get_id($vl['grade_oper'],array('module_value'));
 					$grade = $grade[0]['module_value'];
 
+					// Get Kode Divisi
+					$divisi = gg_module:::get_id($vl['divisi_oper'],array('module_note'));
+					$divisi = $divisi[0]['module_note'];
+
 					$args[$div][$idx] = array(
-						'nik'		=> employee_admin::_ID_card($vl['divisi_oper'],$vl['no_induk_oper']),
+						'nik'		=> employee_admin::_ID_card($divisi,$vl['no_induk_oper']),
 						'nbk'		=> $vl['no_meja_oper'],
 						'name'		=> $vl['name_oper'],
 						'grd'		=> $grade,
@@ -499,10 +503,10 @@ class reportSKT_admin{
 						</td>
 						<?php
 							for($i=0;$i<=$date;$i++){
-								$plan = isset($val['detail'][$i])?$val['detail'][$i]['plan']:'&nbsp;';
-								$actual = isset($val['detail'][$i])?$val['detail'][$i]['actual']:'&nbsp;';
-								$time_act = isset($val['detail'][$i])?$val['detail'][$i]['time_act']:'&nbsp;';
-								$time_est = isset($val['detail'][$i])?$val['detail'][$i]['time_est']:'&nbsp;';
+								$plan = isset($val['_detail'][$i])?$val['_detail'][$i]['plan']:'&nbsp;';
+								$actual = isset($val['_detail'][$i])?$val['_detail'][$i]['actual']:'&nbsp;';
+								$time_act = isset($val['_detail'][$i])?$val['_detail'][$i]['time_act']:'&nbsp;';
+								$time_est = isset($val['_detail'][$i])?$val['_detail'][$i]['time_est']:'&nbsp;';
 
 								echo '
 									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
