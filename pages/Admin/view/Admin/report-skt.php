@@ -252,7 +252,7 @@ class reportSKT_admin{
 					$grade = $grade[0]['module_value'];
 
 					// Get Kode Divisi
-					$divisi = gg_module:::get_id($vl['divisi_oper'],array('module_note'));
+					$divisi = gg_module::get_id($vl['divisi_oper'],array('module_note'));
 					$divisi = $divisi[0]['module_note'];
 
 					$args[$div][$idx] = array(
