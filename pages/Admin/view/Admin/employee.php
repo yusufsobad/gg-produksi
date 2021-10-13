@@ -648,14 +648,13 @@ class employee_admin extends _file_manager{
 	public function _conv_import($files=array()){
 
 		if(isset($files['no_induk']) && !empty($files['no_induk'])){
-			$check = self::_check_noInduk($files['no_induk']);
-			$files['ID'] = $check['id'];
-			$where = $check['where'];
 			$status = false;
+			$no_idk = $files['no_induk'];
+			$user = gg_employee::get_all(array('ID'),"AND no_induk='$no_idk'");
 
-			$user = gg_employee::get_all(array('ID'),$where);
 			$check = array_filter($user);
 			if(!empty($check)){
+				$files['ID'] = $user[0]['ID'];
 				$status = true;
 			}
 
