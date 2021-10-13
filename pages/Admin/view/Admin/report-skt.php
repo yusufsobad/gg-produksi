@@ -249,15 +249,13 @@ class reportSKT_admin{
 
 					// get Data Grade
 					$grade = gg_module::get_id($vl['grade_oper'],array('module_value'));
-					$grade = $grade[0];
-
-					$grd = $grade['module_value'];
+					$grade = $grade[0]['module_value'];
 
 					$args[$div][$idx] = array(
 						'nik'		=> employee_admin::_ID_card($vl['divisi_oper'],$vl['no_induk_oper']),
-						'nbk'		=> $vl['no_meja'],
+						'nbk'		=> $vl['no_meja_oper'],
 						'name'		=> $vl['name_oper'],
-						'grd'		=> $grd,
+						'grd'		=> $grade,
 						'_detail'	=> array()
 					);
 				}
@@ -292,7 +290,10 @@ class reportSKT_admin{
 		return array(
 			'date1'	=> $data['_date'],
 			'date2'	=> $data['_date2'],
-			'data'	=> $args
+			'data'	=> array(
+				1		=> $args[1],
+				2		=> $args[2]
+			)
 		);
 	}
 
@@ -498,18 +499,23 @@ class reportSKT_admin{
 						</td>
 						<?php
 							for($i=0;$i<=$date;$i++){
+								$plan = isset($val['detail'][$i])?$val['detail'][$i]['plan']:'&nbsp;';
+								$actual = isset($val['detail'][$i])?$val['detail'][$i]['actual']:'&nbsp;';
+								$time_act = isset($val['detail'][$i])?$val['detail'][$i]['time_act']:'&nbsp;';
+								$time_est = isset($val['detail'][$i])?$val['detail'][$i]['time_est']:'&nbsp;';
+
 								echo '
 									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
-										'.$val['detail'][$i]['plan'].'
+										'.$plan.'
 									</td>
 									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
-										'.$val['detail'][$i]['actual'].'
+										'.$actual.'
 									</td>
 									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
-										'.$val['detail'][$i]['time_est'].'
+										'.$time_est.'
 									</td>
 									<td style="width:80px;font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
-										'.$val['detail'][$i]['time_act'].'
+										'.$time_act.'
 									</td>
 								';
 							}
@@ -517,6 +523,15 @@ class reportSKT_admin{
 					</tr>
 				<?php
 			}
+
+			$_cols = 5 + (($dat + 1) * 4);
+			?>
+				<tr>
+					<td colspan="<?php print($_cols) ;?>" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+							&nbsp;
+					</td>
+				</tr>
+			<?php
 		}
 	}
 }
