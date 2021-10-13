@@ -90,7 +90,7 @@ class _treacibility{
 	}
 
 	private static function _check_user($div=0,$scan=""){
-		$nik = (int) substr($scan,2,4);
+		$nik = (int) substr($scan,2,6);
 
 		$module = gg_module::get_id($div,array('ID','module_value'));
 		$module = $module[0];

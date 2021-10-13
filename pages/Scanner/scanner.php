@@ -56,7 +56,7 @@ class _production{
 
 		$div = _treacibility::_check_divisi($scan);
 		if($div==9){
-			$nik = (int) substr($scan,2,4);
+			$nik = (int) substr($scan,2,6);
 
 			$module = gg_module::get_id($div,array('ID','module_value'));
 			$module = $module[0];
@@ -109,7 +109,7 @@ class _production{
 			$user = gg_employee::get_id($index,array('ID','name','nickname','divisi'));
 		}else{
 			$div = _treacibility::_check_divisi($scan);
-			$induk = (int) substr($scan, 2,4);
+			$induk = (int) substr($scan, 2,6);
 			$user = gg_employee::get_all(array('ID','name','nickname','divisi'),"AND divisi='$div' AND no_induk='$induk'");
 		}
 

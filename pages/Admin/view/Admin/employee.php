@@ -30,7 +30,7 @@ class employee_admin extends _file_manager{
 	}
 
 	public static function _ID_card($div=0,$ind=0){
-		$ind = sprintf('%04d',$ind);
+		$ind = sprintf('%06d',$ind);
 		return $div.$ind;
 	}
 
@@ -232,7 +232,7 @@ class employee_admin extends _file_manager{
 			'spin'	=> false
 		);
 		
-		$import = '';//apply_button($import);
+		$import = apply_button($import);
 
 		$add = array(
 			'ID'	=> 'add_0',
@@ -620,6 +620,146 @@ class employee_admin extends _file_manager{
 
 		$args['status'] = 1;
 		return $args;
+	}
+
+	// ----------------------------------------------------------
+	// Function Import Data -------------------------------------
+	// ----------------------------------------------------------
+
+	protected function _check_import($files=array()){
+		$check = array_filter($files);
+		if(empty($check)){
+			return array(
+				'status'	=> false,
+				'data'		=> $files,
+				'insert'	=> false
+			);
+		}
+
+		$files = self::_convert_column($files);
+
+		if(!isset($files['status'])){
+			$files['status'] = 'berhenti';
+		}
+
+		return self::_conv_import($files);
+	}
+
+	public function _conv_import($files=array()){
+
+		if(isset($files['no_induk']) && !empty($files['no_induk'])){
+			$check = self::_check_noInduk($files['no_induk']);
+			$files['ID'] = $check['id'];
+			$where = $check['where'];
+			$status = false;
+
+			$user = gg_employee::get_all(array('ID'),$where);
+			$check = array_filter($user);
+			if(!empty($check)){
+				$status = true;
+			}
+
+			return array(
+				'status'	=> $status,
+				'data'		=> $files
+			);
+		}else{
+			$status = false;
+			$name = $files['name'];
+			$user = gg_employee::get_all(array('ID'),"AND name='$name'");
+			
+			$check = array_filter($user);
+			if(!empty($check)){
+				$files['ID'] = $user[0]['ID'];
+				$status = true;
+			}
+
+			return array(
+				'status'	=> $status,
+				'data'		=> $files
+			);
+		}
+	}
+
+	private function _convert_column($files=array()){
+		$data = array();
+
+		$args = array(
+			'no_induk'		=> array(
+				'data'			=> array('nik','no induk','induk karyawan','no induk karyawan'),
+				'type'			=> 'number'
+			),
+			'name'			=> array(
+				'data'			=> array('nama','nama lengkap','nama karyawan'),
+				'type'			=> 'text'
+			),
+			'nickname'		=> array(
+				'data'			=> array('nama pendek','nama panggilan','panggilan','nickname'),
+				'type'			=> 'text'
+			),
+			'no_meja'		=> array(
+				'data'			=> array('nbk','no meja','no bangku'),
+				'type'			=> 'number'
+			),
+			'grade'			=> array(
+				'data'			=> array('grade','grd','tingkatan'),
+				'type'			=> 'number'
+			),
+		);
+
+		foreach ($args as $key => $val) {
+			foreach ($files as $ky => $vl) {
+				$_data = '';
+				if(in_array($ky, $val['data'])){
+					$_data = self::_filter_column($key,$vl,$val['type']);
+					$data = array_merge($data,$_data);
+
+					unset($files[$ky]);
+					break;
+				}
+			}
+		}
+
+		return $data;
+	}
+
+	private function _filter_column($key='',$_data='',$type=''){
+		$data = array();
+		switch ($key) {
+			case 'name':
+			case 'nickname':
+				$_data = strtolower($_data);
+				$_data = ucwords($_data);
+				
+				break;
+
+			case 'grade':
+				$args = gg_module::_gets('grade',array('ID'),"AND module_value='$_data'");
+				
+				$check = array_filter($args);
+				if(empty($check)){
+					$_data = sobad_db::_insert_table('ggk-module',array('module_key' => 'grade','module_value' => strtoupper($_data) ));
+				}else{
+					$_data = $args[0]['ID'];
+				}
+				
+				break;
+
+			case 'no_induk':
+				$div = _treacibility::_check_divisi($scan);
+				$_data = (int) substr($scan, 2,6);
+				
+				$data['divisi'] = formatting::sanitize($div,'number');
+				break;
+			
+			default:
+				// default
+				break;
+		}
+
+		$data[$key] = formatting::sanitize($_data,$type);
+
+		return $data;
 	}
 
 }

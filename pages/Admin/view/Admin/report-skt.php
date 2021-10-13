@@ -256,7 +256,7 @@ class reportSKT_admin{
 
 					$args[$div][$idx] = array(
 						'nik'		=> employee_admin::_ID_card($divisi,$vl['no_induk_oper']),
-						'nbk'		=> $vl['no_meja_oper'],
+						'nbk'		=> 'NBK'.sprintf("%04d",$vl['no_meja_oper']),
 						'name'		=> $vl['name_oper'],
 						'grd'		=> $grade,
 						'_detail'	=> array()
@@ -518,16 +518,16 @@ class reportSKT_admin{
 								$time_est = isset($val['_detail'][$i])?$val['_detail'][$i]['time_est']:'&nbsp;';
 
 								echo '
-									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:right;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="font-family: \'Arial Narrow\';font-size:7pt;text-align:right;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$plan.'
 									</td>
-									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:right;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="font-family: \'Arial Narrow\';font-size:7pt;text-align:right;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$actual.'
 									</td>
-									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="font-family: \'Arial Narrow\';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$time_est.'
 									</td>
-									<td style="width:80px;font-family: \'Arial Narrow\';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
+									<td style="font-family: \'Arial Narrow\';font-size:7pt;text-align:left;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
 										'.$time_act.'
 									</td>
 								';
