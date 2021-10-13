@@ -137,11 +137,10 @@ class reportSKT_admin{
 		$args = sobad_asset::ajax_conv_json($data);
 
 		$date = $args['_date'];
-		$title = self::_convert_type($args['type']);
 
 		ob_start();
 		header("Content-type: application/vnd-ms-excel");
-		header("Content-Disposition: attachment; filename=".$title." ".$_date.".xls");
+		header("Content-Disposition: attachment; filename=Report SKT Online ".$_date.".xls");
 
 		$header = ob_get_clean();
 		$view = self::_view($data);
@@ -285,8 +284,13 @@ class reportSKT_admin{
 				$time_act = _conv_time('06:00:00',$_time,2);
 				$time_act = round($time_act / 60,1);
 
+				$bef_time = $args[$div][$idx]['_detail'][$i]['time_act'];
+				if($time_act>=$bef_time){
+					$bef_time = $time_act;
+				}
+
 				$args[$div][$idx]['_detail'][$i]['actual'] += $vl['p_total'];
-				$args[$div][$idx]['_detail'][$i]['time_act'] += $time_act;
+				$args[$div][$idx]['_detail'][$i]['time_act'] = $bef_time;
 			}
 		}
 
@@ -528,7 +532,7 @@ class reportSKT_admin{
 				<?php
 			}
 
-			$_cols = 5 + (($dat + 1) * 4);
+			$_cols = 5 + (($date + 1) * 4);
 			?>
 				<tr>
 					<td colspan="<?php print($_cols) ;?>" style="font-family: calibriBold;text-align:center;font-weight: bold;vertical-align: middle;border: 1px solid #ddd;">
