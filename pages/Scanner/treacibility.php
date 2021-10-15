@@ -350,7 +350,7 @@ class _treacibility{
 
 		foreach ($flow as $key => $val) {
 			// Set Push Cutter
-			$idp = $val['parent']
+			$idp = $val['parent'];
 			$args['push_cutter'][] = array(
 				'id'	=> $idp,
 				'name'	=> $user[$idp]['name']
