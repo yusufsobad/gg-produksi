@@ -358,7 +358,7 @@ class _treacibility{
 
 			// Set Gilling
 			$idg = $val['child'];
-			$args['push_cutter'][] = array(
+			$args['gilling'][] = array(
 				'id'	=> $idg,
 				'name'	=> $user[$idg]['name']
 			);
