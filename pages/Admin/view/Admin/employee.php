@@ -23,7 +23,8 @@ class employee_admin extends _file_manager{
 			'divisi',
 			'picture',
 			'nickname',
-			'capacity'
+			'capacity',
+			'under_capacity'
 		);
 
 		return $args;
@@ -81,6 +82,21 @@ class employee_admin extends _file_manager{
 		$now = time();
 		foreach($args as $key => $val){
 			$no += 1;
+
+			$color = 'green';$title = 'normal';$func = '_underCapacity';
+			if($val['under_capacity']==1){
+				$color = 'yellow';$title = 'under';$func = '_normalCapacity';
+			}
+
+			$status = array(
+				'ID'	=> 'status_'.$val['ID'],
+				'func'	=> $func,
+				'color'	=> $color,
+				'icon'	=> 'fa fa-book',
+				'label'	=> $title,
+				'type'	=> $tab
+			);
+
 			$edit = array(
 				'ID'	=> 'edit_'.$val['ID'],
 				'func'	=> '_edit',
@@ -91,7 +107,11 @@ class employee_admin extends _file_manager{
 			);
 
 			$image = empty($val['notes_pict'])?'no-profile.jpg':$val['notes_pict'];
-			$target = !empty($val['capacity'])?$val['capacity']:$val['module_note_grad'];
+
+			$target = $val['module_note_grad'];
+			if($val['under_capacity']==1){
+				$target = !empty($val['capacity'])?$val['capacity']:$val['module_note_grad'];
+			}
 			
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
@@ -142,6 +162,12 @@ class employee_admin extends _file_manager{
 					'10%',
 					'NBK'.sprintf('%04d',$val['module_value_no_m']),
 					true
+				),
+				'Status'	=> array(
+					'center',
+					'8%',
+					_click_button($status),
+					false
 				),
 				'Edit'		=> array(
 					'center',
@@ -313,7 +339,7 @@ class employee_admin extends _file_manager{
 
 		$div = str_replace('employee_', '', $_POST['type']);
 
-		$vals = array(0,'',$no,0,1,$div,0,0);
+		$vals = array(0,'',$no,0,1,$div,0,0,0);
 		$vals = array_combine(self::_array(), $vals);
 
 		if($func=='add_0'){
@@ -407,7 +433,7 @@ class employee_admin extends _file_manager{
 				'func'			=> 'opt_input',
 				'type'			=> 'text',
 				'key'			=> '_target',
-				'label'			=> 'Target',
+				'label'			=> 'Target (Default)',
 				'class'			=> 'input-circle',
 				'value'			=> $target,
 				'data'			=> 'readonly'
@@ -461,7 +487,7 @@ class employee_admin extends _file_manager{
 				'func'			=> 'opt_input',
 				'type'			=> 'price',
 				'key'			=> 'capacity',
-				'label'			=> 'Under Capacity',
+				'label'			=> 'Target',
 				'class'			=> 'input-circle',
 				'value'			=> $vals['capacity'],
 				'data'			=> ''
@@ -612,6 +638,26 @@ class employee_admin extends _file_manager{
 	// ----------------------------------------------------------
 	// Function category to database -----------------------------
 	// ----------------------------------------------------------
+
+	public static function _normalCapacity($id=0){
+		return self::_changeCapacity($id,0);
+	}
+
+	public static function _underCapacity($id=0){
+		return self::_changeCapacity($id,1);
+	}
+
+	protected static function _changeCapacity($id=0,$status=0){
+		self::$type = $_POST['type'];
+		$id = str_replace('status_', '', $id);
+
+		$q = sobad_db::_update_single($id,'ggk-employee',array('ID' => $id,'under_capacity' => $status));
+
+		if($q>0){
+			$pg = isset($_POST['page'])?$_POST['page']:1;
+			return self::_get_table($pg);
+		}
+	}
 
 	protected function _callback($args=array(),$_args=array()){
 		// Update module meja

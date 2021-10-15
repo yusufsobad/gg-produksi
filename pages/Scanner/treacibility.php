@@ -20,6 +20,8 @@ class _treacibility{
 		$data = array(
 			'work_id'			=> 0,
 			'user_id'			=> 0,
+			'push_id'			=> 0,
+			'gilling_id'		=> 0,
 			'smart_container'	=> '-',
 			'gilling'			=> '-',
 			'push_cutter'		=> '-',
@@ -63,6 +65,19 @@ class _treacibility{
 		$div = isset($divisi[$aw])?$divisi[$aw]:0;
 
 		return $div;
+	}
+
+	public static function _check_div_induk($scan=''){
+		$aw = substr($scan,2,6);
+		$where = "AND no_induk='$aw' AND status='1'";
+		$user = gg_employee::get_all(array('divisi'),$where);
+		
+		$check = array_filter($user);
+		if(empty($check)){
+			return 0;
+		}
+
+		return $user[0]['divisi'];
 	}
 
 	public static function _check_noTable($scan=''){
@@ -184,6 +199,68 @@ class _treacibility{
 		return $data;
 	}
 
+	private static function _check_double_divisi($user_id=0){
+		$default = self::$default;
+		$check = gg_production::get_id($default['work_id'],array('ID','operator_id'));
+		if(!empty($check[0]['operator_id'])){
+			$divisi = $check[0]['operator_id'];
+
+			// Get data User
+			$user = gg_employee::get_id($user_id,array('divisi'));
+			$proses = $user[0]['module_value_divi'];
+			$user = $user[0]['divisi'];
+
+			if($divisi==$user){
+				die(_error::_alert_db("Double Scan Proses( ".$proses." )!!!"));
+			}
+		}
+
+		return true;
+	}
+
+	private static function _check_group_gilling($user_id=0,$pasok=0){
+		$id_push = self::$default['push_id'];
+		$data = self::_get_dataOperator($pasok);
+
+		$user = $data['user'];
+		$flow = $data['flow'];
+
+		$outGroup = array();
+		foreach ($flow as $key => $val) {
+			if($val['parent']!=$id_push){
+				$outGroup[] = $val['child'];
+			}
+		}
+
+		if(in_array($user_id, $outGroup)){
+			die(_error::_alert_db("Operator tidak termasuk dalam Group Push Cutter ini!!!"));
+		}
+
+		return true;
+	}
+
+	private static function _check_group_pushCutter($user_id=0,$pasok=0){
+		$id_gilling = self::$default['gilling_id'];
+
+		$data = self::_get_dataOperator($pasok);
+
+		$user = $data['user'];
+		$flow = $data['flow'];
+
+		$outGroup = array();
+		foreach ($flow as $key => $val) {
+			if($val['parent']!=$user_id){
+				$outGroup[] = $val['child'];
+			}
+		}
+
+		if(in_array($id_gilling, $outGroup)){
+			die(_error::_alert_db("Push Cutter tidak membawahi Operator ini!!!"));
+		}
+
+		return true;
+	}
+
 	private static function _add_detail($scan='',$user_id=0,$pasok=0,$max=1){
 		$default = self::$default;
 		$y = date('Y');$m = date('m');$d = date('d');
@@ -261,16 +338,69 @@ class _treacibility{
 		return array('name' => $loc[0]['module_value']);
 	}
 
-	public static function _get_dataOperator($id=0,$date=''){
+	public static function get_afkirUser($pasok=0){
+		$data = self::_get_dataOperator($pasok);
+		$flow = $data['flow'];
+		$user = $data['user'];
+
+		$args = array(
+			'gilling' => array(),
+			'push_cutter' => array()
+		);
+
+		foreach ($flow as $key => $val) {
+			// Set Push Cutter
+			$idp = $val['parent']
+			$args['push_cutter'][] = array(
+				'id'	=> $idp,
+				'name'	=> $user[$idp]['name']
+			);
+
+			// Set Gilling
+			$idg = $val['child'];
+			$args['push_cutter'][] = array(
+				'id'	=> $idg,
+				'name'	=> $user[$idg]['name']
+			);
+		}
+
+		return $args;
+	}
+
+	public static function get_underCapacity($pasok=0){
+		$data = self::_get_dataOperator($pasok);
+		$flow = $data['flow'];
+		$user = $data['user'];
+
+		$args = array();
+		foreach ($flow as $key => $val) {
+			$idg = $val['child'];
+
+			if($user[$idg]['under_sts']==1){
+				$args[] = array(
+					'id'		=> $idg,
+					'target'	=> $user[$idg]['capacity']
+				);
+			}
+		}
+
+		return $args;
+	}
+
+	public static function _get_dataOperator($id=0,$date='',$limit=''){
 		$date = empty($date)?date('Y-m-d'):$date;
 		$date = strtotime($date);
 
 		$y = date('Y',$date);$m = date('m',$date);$d = date('d',$date);
-		$where = "AND user_id='$id' AND (YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d')";
+		$where = "AND user_id='$id' AND (YEAR(scan_date)='$y' AND MONTH(scan_date)='$m' AND DAY(scan_date)='$d') ".$limit;
 		$flow = gg_production::get_all(array('ID','p_total','p_afkir','operator_id'),$where);
 
 		$push = array();$_temp = array();
 		foreach ($flow as $key => $val) {
+			if(is_null($val['operator_id']) || empty($val['operator_id'])){
+				continue;
+			}
+
 			$idx = $val['operator_id'];
 
 		// Get data picture
@@ -293,7 +423,10 @@ class _treacibility{
 					'divisi'	=> $val['divisi_oper'],
 					'user_id'	=> $idx,
 					'name'		=> $val['nickname_oper'],
+					'no_induk'	=> $val['no_induk_oper'],
 					'picture'	=> self::_check_picture($_user),
+					'under_sts'	=> $val['under_capacity_oper'],
+					'capacity'	=> $val['capacity_oper'],
 					'_total'	=> 0,
 					'_afkir'	=> $afkir,
 					'_detail'	=> array()
@@ -515,7 +648,7 @@ class _treacibility{
 
 	public static function get_leaderBlock($scan='',$block=0){
 		$y = date('Y');$m = date('m');$d = date('d');
-		$div = self::_check_divisi($scan);
+		$div = self::_check_div_induk($scan);
 
 		if($div==6){
 			$user = self::_check_user(6,$scan);
@@ -544,7 +677,7 @@ class _treacibility{
 
 	public static function get_pasok($scan='',$block=0){
 		$y = date('Y');$m = date('m');$d = date('d');
-		$div = self::_check_divisi($scan);
+		$div = self::_check_div_induk($scan);
 
 		if($div==9){
 			$user = self::_check_user(9,$scan);
@@ -619,7 +752,7 @@ class _treacibility{
 		return self::$default;
 	}
 
-	public static function get_operator($scan='',$args=array()){
+	public static function get_operator($scan='',$id_pasok=0,$args=array()){
 		self::_default($args);
 
 		$idx = self::_check_noTable($scan);
@@ -629,14 +762,30 @@ class _treacibility{
 			die(_error::_alert_db('Operator belum Terdaftar!!!'));
 		}
 
+		// Check Double scan Divisi
+		self::_check_double_divisi($user[0]['ID']);
+
 		$pasok = self::get_noPasok($user[0]['ID']);
 		if($user[0]['divisi']==1){
 			$pasok += 1;
 			self::$default['gilling'] = $user[0]['nickname'];
 			self::$default['no_pasok'] = $pasok;
+			self::$default['gilling_id'] = $user[0]['ID'];
+
+			if(self::$default['push_id']>0){
+				// Check operator Gilling in Push Cutter
+				self::_check_group_gilling($user[0]['ID'],$id_pasok);
+			}
+	
 		}else if($user[0]['divisi']==2){
 			$pasok = 0;
 			self::$default['push_cutter'] = $user[0]['nickname'];
+			self::$default['push_id'] = $user[0]['ID'];
+
+			if(self::$default['gilling_id']>0){
+				// Check operator Gilling in Push Cutter
+				self::_check_group_pushCutter($user[0]['ID'],$id_pasok);
+			}
 		}
 
 		$def = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='SC'");
@@ -679,6 +828,30 @@ class _treacibility{
 		// Get Status Produksi
 		self::get_statusProduction($data['user_id'],$block);
 		return self::$default;
+	}
+
+	public static function send_afkir($pasok=0,$data=array()){
+		foreach ($data as $key => $val) {
+			$args = array(
+				'user_id'		=> $pasok,
+				'operator_id'	=> $val['id']
+			);
+
+			_production::send_data($val['afkir'],$args);
+		}
+
+		return array('data' => "Data Berhasil Disimpan!!!");
+	}
+
+	public static function send_target($data=array()){
+		foreach ($data as $key => $val) {
+			$q = sobad_db::_update_single($val['id'],'ggk-employee',array(
+				'ID' 		=> $val['id'],
+				'capacity' 	=> $val['target']
+			));
+		}
+
+		return array('data' => "Data Berhasil Disimpan!!!");
 	}
 
 	Public static function flow_operator($pasok=0,$work=0){

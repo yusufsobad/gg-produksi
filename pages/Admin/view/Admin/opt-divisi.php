@@ -200,7 +200,7 @@ class divisi_admin extends _page{
 			),
 			array(
 				'func'			=> 'opt_input',
-				'type'			=> 'price',
+				'type'			=> 'text',
 				'key'			=> 'module_note',
 				'label'			=> 'Kode',
 				'class'			=> 'input-circle',

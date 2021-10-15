@@ -80,6 +80,7 @@
 				'no_induk'	=> 0,
 				'no_meja'	=> 0,
 				'capacity'	=> 0,
+				'under_capacity'	=> 0,
 				'status'	=> 0,	
 			);
 			

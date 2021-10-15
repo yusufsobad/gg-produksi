@@ -31,7 +31,7 @@ class gg_production extends _class{
 					'operator_id'	=> array(
 						'key'		=> 'ID',
 						'table'		=> 'ggk-employee',
-						'column'	=> array('name','nickname','divisi','no_induk','no_meja','grade','capacity')
+						'column'	=> array('name','nickname','divisi','no_induk','no_meja','grade','capacity','under_capacity')
 					),
 				)
 			)
