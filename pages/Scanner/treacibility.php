@@ -484,7 +484,6 @@ class _treacibility{
 
 			$idc = $val['child'];
 			if(!in_array($idc,$_data[$idp])){
-				$idg += 1;
 				$_data[$idp][] = $idc;
 
 				$push[$idc]['_total'] = format_nominal($push[$idc]['_total']);
@@ -557,6 +556,7 @@ class _treacibility{
 		$input = gg_production::get_all(array('scan_id','pasok_ke','scan_detail'),$where." AND status='0'");
 		$check = array_filter($input);
 
+		$_inp = array();
 		if(!empty($check)){
 			$def = gg_module::_gets('default_sc',array('module_reff'),"AND module_code='SC'");
 			$def = $def[0]['module_reff'];
