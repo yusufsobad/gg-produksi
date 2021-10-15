@@ -850,10 +850,10 @@ class _treacibility{
 		foreach ($data as $key => $val) {
 			$args = array(
 				'user_id'		=> $pasok,
-				'operator_id'	=> $val['id']
+				'operator_id'	=> $val['key']
 			);
 
-			_production::send_data($val['afkir'],$args);
+			_production::send_data($val['value'],$args);
 		}
 
 		return array('data' => "Data Berhasil Disimpan!!!");
@@ -861,9 +861,9 @@ class _treacibility{
 
 	public static function send_target($data=array()){
 		foreach ($data as $key => $val) {
-			$q = sobad_db::_update_single($val['id'],'ggk-employee',array(
-				'ID' 		=> $val['id'],
-				'capacity' 	=> $val['target']
+			$q = sobad_db::_update_single($val['key'],'ggk-employee',array(
+				'ID' 		=> $val['key'],
+				'capacity' 	=> $val['value']
 			));
 		}
 
