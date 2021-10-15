@@ -348,29 +348,36 @@ class _treacibility{
 			'push_cutter' => array()
 		);
 
+		$check = array();
 		foreach ($flow as $key => $val) {
 
 			// Set Push Cutter
 			$idp = $val['parent'];
-			$divi_p = gg_module::get_id($user[$idp]['divisi'],array('module_note'));
-			$divi_p = $divi_p[0]['module_note'];
+			if(!in_array($idp, $check)){
+				$check[] = $idp;
+				$divi_p = gg_module::get_id($user[$idp]['divisi'],array('module_note'));
+				$divi_p = $divi_p[0]['module_note'];
 
-			$args['push_cutter'][] = array(
-				'id'		=> $idp,
-				'name'		=> $user[$idp]['name'],
-				'no_induk'	=> employee_admin::_ID_card($divi_p,$user[$idp]['no_induk'])
-			);
+				$args['push_cutter'][] = array(
+					'id'		=> $idp,
+					'name'		=> $user[$idp]['name'],
+					'no_induk'	=> employee_admin::_ID_card($divi_p,$user[$idp]['no_induk'])
+				);
+			}
 
 			// Set Gilling
 			$idg = $val['child'];
-			$divi_g = gg_module::get_id($user[$idg]['divisi'],array('module_note'));
-			$divi_g = $divi_g[0]['module_note'];
+			if(!in_array($idg, $check)){
+				$check[] = $idg;
+				$divi_g = gg_module::get_id($user[$idg]['divisi'],array('module_note'));
+				$divi_g = $divi_g[0]['module_note'];
 
-			$args['gilling'][] = array(
-				'id'		=> $idg,
-				'name'		=> $user[$idg]['name'],
-				'no_induk'	=> employee_admin::_ID_card($divi_g,$user[$idg]['no_induk'])
-			);
+				$args['gilling'][] = array(
+					'id'		=> $idg,
+					'name'		=> $user[$idg]['name'],
+					'no_induk'	=> employee_admin::_ID_card($divi_g,$user[$idg]['no_induk'])
+				);
+			}
 		}
 
 		return $args;
