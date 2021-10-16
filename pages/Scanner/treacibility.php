@@ -954,7 +954,7 @@ class _treacibility{
 
 	public static function send_target($data=array()){
 		foreach ($data as $key => $val) {
-			$q = sobad_db::_update_single($val['key'],'ggk-employee',array(
+			$q = sobad_db::_update_single($val['Key'],'ggk-employee',array(
 				'ID' 		=> $val['Key'],
 				'capacity' 	=> $val['Value']
 			));
