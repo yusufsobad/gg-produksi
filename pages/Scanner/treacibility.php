@@ -419,18 +419,80 @@ class _treacibility{
 		$flow = $data['flow'];
 		$user = $data['user'];
 
+		$args = array(
+			'gilling' => array(),
+			'push_cutter' => array()
+		);
+
 		$args = array();
 		foreach ($flow as $key => $val) {
-			$idg = $val['child'];
 
+			// Set Push Cutter
+			$idp = $val['parent'];
+			if($user[$idp]['under_sts']==1){
+				if(!in_array($idp, $check)){
+					$check[] = $idp;
+					$divi_p = gg_module::get_id($user[$idp]['divisi'],array('module_note'));
+					$divi_p = $divi_p[0]['module_note'];
+
+					$args['push_cutter'][] = array(
+						'id'		=> $idp,
+						'name'		=> $user[$idp]['name'],
+						'no_induk'	=> employee_admin::_ID_card($divi_p,$user[$idp]['no_induk']),
+						'target'	=> $user[$idp]['capacity']
+					);
+				}
+			}
+
+			// Set Gilling
+			$idg = $val['child'];
 			if($user[$idg]['under_sts']==1){
-				$args[] = array(
-					'id'		=> $idg,
-					'target'	=> $user[$idg]['capacity']
-				);
+				if(!in_array($idg, $check)){
+					$check[] = $idg;
+					$divi_g = gg_module::get_id($user[$idg]['divisi'],array('module_note'));
+					$divi_g = $divi_g[0]['module_note'];
+
+					$args['gilling'][] = array(
+						'id'		=> $idg,
+						'name'		=> $user[$idg]['name'],
+						'no_induk'	=> employee_admin::_ID_card($divi_g,$user[$idg]['no_induk']),
+						'target'	=> $user[$idg]['capacity']
+					);
+				}
 			}
 		}
 
+		$defGilling = 17; // Settingan disamakan layout di Desktop
+		$defPush = 3; // Settingan disamakan layout di Desktop
+
+		$_gill = array();
+		foreach ($args['gilling'] as $key => $val) {
+			$cnt = ($key + 1) / ($defGilling + 1);
+			$idx = floor($cnt);
+			if(!isset($_gill[$idx])){
+				$_gill[$idx] = array(
+					'data'		=> array()
+				);
+			}
+
+			$_gill[$idx]['data'][] = $val;
+		}
+
+		$_push = array();
+		foreach ($args['push_cutter'] as $key => $val) {
+			$cnt = ($key + 1) / ($defPush + 1);
+			$idx = floor($cnt);
+			if(!isset($_push[$idx])){
+				$_push[$idx] = array(
+					'data'		=> array()
+				);
+			}
+
+			$_push[$idx]['data'][] = $val;
+		}
+
+		$args['gilling'] = $_gill;
+		$args['push_cutter'] = $_push;
 		return $args;
 	}
 
