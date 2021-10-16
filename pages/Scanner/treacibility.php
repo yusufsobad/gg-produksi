@@ -174,7 +174,7 @@ class _treacibility{
 		);
 
 		$y = date('Y');$m = date('m');$d = date('d');
-		$where = "AND scan_id='$pasok2' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
+		$where = "AND (scan_id='$pasok2' OR scan_id='$pasok') AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
 		
 		$_temp = array();
 		$load = gg_afkir::get_all(array('user_id','afkir'),$where);
@@ -958,6 +958,34 @@ class _treacibility{
 				'ID' 		=> $val['Key'],
 				'capacity' 	=> $val['Value']
 			));
+		}
+
+		// Update History Target
+		$date = date('Y-m-d');
+		foreach ($data as $key => $val) {
+			$idx = $val['Key'];
+			$capacity = $val['Value'];
+
+			// Check History
+			$target = gg_target::get_all(array('ID'),"AND user_id='$idx' AND _date='$date'");
+			$check = array_filter($target);
+			if(empty($check)){
+				// Get Grade
+				$user = gg_employee::get_id($idx,array('grade'));
+				$grade = $user[0]['grade'];
+
+				$q = sobad_db::_insert_table('ggk-history-target',array(
+					'user_id'	=> $idx,
+					'target'	=> $capacity,
+					'grade'		=> $grade,
+					'_date'		=> $date
+				));
+			}else{
+				$q = sobad_db::_update_single($target[0]['ID'],'ggk-history-target',array(
+					'user_id'	=> $idx,
+					'target'	=> $target,
+				));
+			}
 		}
 
 		return array('data' => "Data Berhasil Disimpan!!!");

@@ -270,6 +270,14 @@ class reportSKT_admin{
 
 					$plan = empty($vl['capacity_oper'])?$grade['module_note']:$vl['capacity_oper'];
 
+					// Get History Target
+					$_now = date('Y-md',$date);
+					$target = gg_target::get_all(array('target'),"AND user_id='$idx' AND _date='$_now'");
+					$_check = array_filter($target);
+					if(!empty($_check)){
+						$plan = !empty($target[0]['target'])?$target[0]['target']:$plan;
+					}
+
 					$args[$div][$idx]['_detail'][$i] = array(
 						'plan'		=> $plan,
 						'actual'	=> 0,

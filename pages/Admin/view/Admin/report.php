@@ -554,10 +554,10 @@ class report_admin{
 		return empty($check)?0:$load[0]['afkir'];
 	}
 
-	private static function _get_afkirOperator($pasok2=0,$divisi=0){
+	private static function _get_afkirOperator($pasok=0,$pasok2=0,$divisi=0){
 		$date = self::$date_report;
 		$y = date('Y',$date);$m = date('m',$date);$d = date('d',$date);
-		$where = "AND _user_id.divisi='$divisi' AND scan_id='$pasok2' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
+		$where = "AND _user_id.divisi='$divisi' AND (scan_id='$pasok2' OR scan_id='$pasok') AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
 		
 		$_temp = array();
 		$load = gg_afkir::get_all(array('user_id','afkir','pasok'),$where);
@@ -578,12 +578,12 @@ class report_admin{
 	private static function _get_afkirTotalOperator($pasok=0,$pasok2=0,$divisi=0){
 		$detail = self::_get_groupOperator($pasok);
 		if($divisi==1){
-			$gilling = self::_get_afkirOperator($pasok2,1);
+			$gilling = self::_get_afkirOperator($pasok,$pasok2,1);
 		}else if($divisi==2){
-			$push_cutter = self::_get_afkirOperator($pasok2,2);
+			$push_cutter = self::_get_afkirOperator($pasok,$pasok2,2);
 		}else{
-			$gilling = self::_get_afkirOperator($pasok2,1);
-			$push_cutter = self::_get_afkirOperator($pasok2,2);
+			$gilling = self::_get_afkirOperator($pasok,$pasok2,1);
+			$push_cutter = self::_get_afkirOperator($pasok,$pasok2,2);
 		}
 
 		$data = array();
