@@ -385,7 +385,8 @@ class _treacibility{
 
 		$_gill = array();
 		foreach ($args['gilling'] as $key => $val) {
-			$idx = floor($defGilling / ($key + 1));
+			$cnt = ($key + 1) / $defGilling;
+			$idx = floor($cnt);
 			if(!isset($_gill[$idx])){
 				$_gill[$idx] = array(
 					'data'		=> array()
@@ -397,7 +398,8 @@ class _treacibility{
 
 		$_push = array();
 		foreach ($args['push_cutter'] as $key => $val) {
-			$idx = floor($defPush / ($key + 1));
+			$cnt = ($key + 1) / $defPush;
+			$idx = floor($cnt);
 			if(!isset($_push[$idx])){
 				$_push[$idx] = array(
 					'data'		=> array()
