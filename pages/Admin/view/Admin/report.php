@@ -275,7 +275,7 @@ class report_admin{
 					'note'		=> ''
 				);
 
-				$afkir = self::_get_afkirOperator($pasok2,2);
+				$afkir = self::_get_afkirOperator($pasok,$pasok2,2);
 				$table = self::_get_tableAfkir($afkir,$title);
 				break;
 
@@ -285,7 +285,7 @@ class report_admin{
 					'note'		=> ''
 				);
 
-				$afkir = self::_get_afkirOperator($pasok2,1);
+				$afkir = self::_get_afkirOperator($pasok,$pasok2,1);
 				$table = self::_get_tableAfkir($afkir,$title);
 				break;
 
