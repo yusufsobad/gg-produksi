@@ -424,7 +424,6 @@ class _treacibility{
 			'push_cutter' => array()
 		);
 
-		$args = array();
 		foreach ($flow as $key => $val) {
 
 			// Set Push Cutter
