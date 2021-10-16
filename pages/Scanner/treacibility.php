@@ -380,6 +380,35 @@ class _treacibility{
 			}
 		}
 
+		$defGilling = 17; // Settingan disamakan layout di Desktop
+		$defPush = 3; // Settingan disamakan layout di Desktop
+
+		$_gill = array();
+		foreach ($args['gilling'] as $key => $val) {
+			$idx = floor($defGilling / ($key + 1));
+			if(!isset($_gill[$idx])){
+				$_gill[$idx] = array(
+					'data'		=> array()
+				);
+			}
+
+			$_gill[$idx]['data'][] = $val;
+		}
+
+		$_push = array();
+		foreach ($args['push_cutter'] as $key => $val) {
+			$idx = floor($defPush / ($key + 1));
+			if(!isset($_push[$idx])){
+				$_push[$idx] = array(
+					'data'		=> array()
+				);
+			}
+
+			$_push[$idx]['data'][] = $val;
+		}
+
+		$args['gilling'] = $_gill;
+		$args['push_cutter'] = $_push;
 		return $args;
 	}
 
