@@ -35,6 +35,12 @@ class employee_admin extends _file_manager{
 		return $div.$ind;
 	}
 
+	public static function _filter_search($field='',$search=''){
+		if(in_array($field,array('name','no_induk','grade','no_meja','divisi','picture','nickname','capacity','under_capacity'))){
+			return "`ggk-employee`.$field LIKE '%$search%'";
+		}
+	}
+
 	protected static function table(){
 		$data = array();
 		$args = self::_array();

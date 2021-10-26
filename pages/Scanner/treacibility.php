@@ -249,7 +249,7 @@ class _treacibility{
 
 		$outGroup = array();
 		foreach ($flow as $key => $val) {
-			if($val['parent']!=$user_id){
+			if(isset($val['parent']) && $val['parent']!=$user_id){
 				$outGroup[] = $val['child'];
 			}
 		}
