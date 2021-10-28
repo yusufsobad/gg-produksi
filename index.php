@@ -41,7 +41,7 @@ global $body;
 <head>
 	<?php sobad_meta_html() ;?>
     <title><?php print(constant('title')) ;?></title>
-	
+	<link rel="icon" type="image/ico" href="favicon.ico" /> 
 	<?php
 		$asset->_vendor_css();
 		$asset->_css_file();
