@@ -112,7 +112,7 @@ class tracking_user{
 	// Print data report ----------------------------------------
 	// ----------------------------------------------------------
 
-	public function _view($data=array()){
+	public static function _view($data=array()){
 		return 'aaaa';
 	}
 }

@@ -38,7 +38,7 @@ function sidemenu_admin(){
 		'status'	=> '',
 		'icon'		=> 'fa fa-truck',
 		'label'		=> 'Tracking',
-		'func'		=> 'tracking_user',
+		'func'		=> '',//'tracking_user',
 		'child'		=> null
 	);
 	

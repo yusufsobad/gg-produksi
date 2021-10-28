@@ -345,7 +345,7 @@ class employee_admin extends _file_manager{
 
 		$div = str_replace('employee_', '', $_POST['type']);
 
-		$vals = array(0,'',$no,0,1,$div,0,0,0);
+		$vals = array(0,'',$no,0,1,$div,0,0,0,0);
 		$vals = array_combine(self::_array(), $vals);
 
 		if($func=='add_0'){
