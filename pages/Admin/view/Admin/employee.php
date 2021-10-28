@@ -187,7 +187,7 @@ class employee_admin extends _file_manager{
 		return $data;
 	}
 
-	private function head_title(){
+	private static function head_title(){
 		$args = array(
 			'title'	=> 'Karyawan <small>data Karyawan</small>',
 			'link'	=> array(
@@ -203,7 +203,7 @@ class employee_admin extends _file_manager{
 		return $args;
 	}
 
-	protected function get_box(){
+	protected static function get_box(){
 		$data = self::table();
 		
 		$box = array(
@@ -217,7 +217,7 @@ class employee_admin extends _file_manager{
 		return $box;
 	}
 
-	protected function layout(){
+	protected static function layout(){
 		$divisi = gg_module::_gets('divisi',array('ID','module_value'));
 		$check = array_filter($divisi);
 		if(empty($check)){
@@ -281,7 +281,7 @@ class employee_admin extends _file_manager{
 		return $import.$add;
 	}
 
-	public function _conv_status($id=0){
+	public static function _conv_status($id=0){
 		$label = gg_module::get_id($id,array('module_value'));
 		$check = array_filter($label);
 		if(empty($check)){
@@ -295,7 +295,7 @@ class employee_admin extends _file_manager{
 	// Form data category ---------------------------------------
 	// ----------------------------------------------------------
 
-	public function import_form(){
+	public static function import_form(){
 		$data = array(
 			'id'	=> 'importForm',
 			'cols'	=> array(3,8),
@@ -339,7 +339,7 @@ class employee_admin extends _file_manager{
 		return modal_admin($args);
 	}
 
-	public function add_form($func='',$load='sobad_portlet'){
+	public static function add_form($func='',$load='sobad_portlet'){
 		$no = gg_employee::get_maxNIK();
 		$no = sprintf("%04d",$no+1);
 
@@ -365,7 +365,7 @@ class employee_admin extends _file_manager{
 		return self::_data_form($args,$vals);
 	}
 
-	protected function edit_form($vals=array()){
+	protected static function edit_form($vals=array()){
 		$check = array_filter($vals);
 		if(empty($check)){
 			return '';
@@ -384,7 +384,7 @@ class employee_admin extends _file_manager{
 		return self::_data_form($args,$vals);
 	}
 
-	private function _data_form($args=array(),$vals=array()){
+	private static function _data_form($args=array(),$vals=array()){
 		$check = array_filter($args);
 		if(empty($check)){
 			return '';
@@ -627,7 +627,7 @@ class employee_admin extends _file_manager{
 		return format_nominal($grade);
 	}
 
-	public function _form_upload(){
+	public static function _form_upload(){
 
 		$args = array(
 			'title'		=> 'Select Photo Profile',
@@ -665,7 +665,7 @@ class employee_admin extends _file_manager{
 		}
 	}
 
-	protected function _callback($args=array(),$_args=array()){
+	protected static function _callback($args=array(),$_args=array()){
 		// Update module meja
 		if($args['no_meja']>0){
 			sobad_db::_update_single($args['no_meja'],'ggk-module',array('module_reff' => 1));
@@ -679,7 +679,7 @@ class employee_admin extends _file_manager{
 	// Function Import Data -------------------------------------
 	// ----------------------------------------------------------
 
-	protected function _check_import($files=array()){
+	protected static function _check_import($files=array()){
 		$divisi = gg_module::_gets('divisi',array('ID','module_value'));
 		self::$type = 'employee_'.$divisi[0]['ID'];
 
@@ -701,7 +701,7 @@ class employee_admin extends _file_manager{
 		return self::_conv_import($files);
 	}
 
-	public function _conv_import($files=array()){
+	public static function _conv_import($files=array()){
 		$files['ID'] = 0;
 		if(isset($files['no_induk']) && !empty($files['no_induk'])){
 			$status = false;
@@ -738,7 +738,7 @@ class employee_admin extends _file_manager{
 		}
 	}
 
-	private function _convert_column($files=array()){
+	private static function _convert_column($files=array()){
 		$data = array();
 
 		$args = array(
@@ -780,7 +780,7 @@ class employee_admin extends _file_manager{
 		return $data;
 	}
 
-	private function _filter_column($key='',$_data='',$type=''){
+	private static function _filter_column($key='',$_data='',$type=''){
 		$data = array();
 		switch ($key) {
 			case 'name':

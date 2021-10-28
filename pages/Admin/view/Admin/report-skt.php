@@ -133,7 +133,7 @@ class reportSKT_admin{
 	// Print data report ----------------------------------------
 	// ----------------------------------------------------------
 
-	public function _export_excel($data=array()){
+	public static function _export_excel($data=array()){
 		$args = sobad_asset::ajax_conv_json($data);
 
 		$date = $args['_date'];
@@ -148,7 +148,7 @@ class reportSKT_admin{
 		return $header.$view;
 	}
 
-	public function _view($data=array()){
+	public static function _view($data=array()){
 		$data = sobad_asset::ajax_conv_json($data);
 		$block = $data['block'];
 

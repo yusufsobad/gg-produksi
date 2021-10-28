@@ -21,7 +21,7 @@ class report_admin extends _page{
 		return $args;
 	}
 
-	protected function table($date=''){
+	protected static function table($date=''){
 		$data = array();
 		$args = self::_array();
 
@@ -65,7 +65,7 @@ class report_admin extends _page{
 		return $data;
 	}
 
-	private function head_title(){
+	private static function head_title(){
 		$args = array(
 			'title'	=> 'Report <small>data report</small>',
 			'link'	=> array(
@@ -80,7 +80,7 @@ class report_admin extends _page{
 		return $args;
 	}
 
-	protected function get_box(){
+	protected static function get_box(){
 		$data = self::table();
 		
 		$box = array(
@@ -94,7 +94,7 @@ class report_admin extends _page{
 		return $box;
 	}
 
-	protected function layout(){
+	protected static function layout(){
 		$box = self::get_box();
 		
 		$opt = array(
@@ -106,7 +106,7 @@ class report_admin extends _page{
 		return portlet_admin($opt,$box);
 	}
 
-	public function _style(){
+	public static function _style(){
 		?>
 			<style type="text/css">
 				.kanban_default_corner>div {
@@ -116,7 +116,7 @@ class report_admin extends _page{
 		<?php
 	}
 
-	public function _script(){
+	public static function _script(){
 		?>
 			<script type="text/javascript">
 
@@ -153,7 +153,7 @@ class report_admin extends _page{
 		<?php
 	}
 
-	protected function action(){
+	protected static function action(){
 		$date = date('Y-m');
 		ob_start();
 		?>
@@ -178,7 +178,7 @@ class report_admin extends _page{
 		return $date;
 	}
 
-	public function _filter($date=''){
+	public static function _filter($date=''){
 		ob_start();
 
 		$table = self::table($date);
