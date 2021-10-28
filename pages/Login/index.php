@@ -75,6 +75,9 @@ class login_system{
 			    }
 			    );
 			});
+
+			$('body.login').css('width',window.innerWidth);
+			$('body.login').css('height',window.innerHeight);
 			</script>
 		<?php
 	}
@@ -83,16 +86,18 @@ class login_system{
 		require 'layout.php';
 
 		?>
-		<!-- BEGIN LOGO -->
+		<!-- BEGIN LOGO
 		<div class="logo">
-			<!-- <img src="asset/img/logo-big.png" alt=""> -->
+			 <img src="asset/img/logo-big.png" alt="">
 		</div>
-		<!-- END LOGO -->
+		 END LOGO -->
 		<!-- BEGIN LOGIN -->
-		<div class="content">
-		<?php
-			print(login_sasi::login('login_system'));
-		?>
+		<div class="table-layout">
+			<div class="content">
+			<?php
+				print(login_sasi::login('login_system'));
+			?>
+			</div>
 		</div>
 		<!-- END LOGIN -->
 		<!-- BEGIN COPYRIGHT -->

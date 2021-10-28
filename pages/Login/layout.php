@@ -31,11 +31,23 @@ class login_sasi extends create_form{
 	?>
 
 	<style type="text/css">
+		.login {
+		    background-color: #666 !important;
+		    display: table;
+		}
+
 		.login .content {
-		    padding: 60px 400px 10px;
-		    width: 1200px;
+		    padding: 60px 300px 10px;
+		    width: 1000px;
 		    background-color: #fff;
 		    border-radius: 25px !important;
+		}
+
+		.login .table-layout {
+		    display: table-cell;
+		    width: inherit;
+		    height: inherit;
+		    vertical-align: middle;
 		}
 
 		button#btn_login_submit {
@@ -79,6 +91,7 @@ class login_sasi extends create_form{
 		.login .copyright {
 		    position: absolute;
 		    width: 100%;
+		    left: 0px;
 		    bottom: 20px;
 		    color: #333;
 		}
