@@ -59,7 +59,7 @@ define('DEFPATH',dirname(__FILE__));
 define('language',true);
 
 // set nama Perusahaan
-define('company','PT Solo Abadi Indonesia');
+define('company','Solo Abadi System Information');
 
 // set judul Website
 define('title','System Produksi');

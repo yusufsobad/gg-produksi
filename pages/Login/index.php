@@ -68,12 +68,7 @@ class login_system{
 			  Demo.init();
 			       // init background slide images
 			       $.backstretch([
-			        "asset/img/bg/1.jpg",
-			        "asset/img/bg/2.jpg",
-					"asset/img/bg/3.jpg",
-			//		"asset/img/bg/4.jpg",
-			//		"asset/img/bg/5.jpg",
-			//		"asset/img/bg/6.jpg",
+			      "asset/img/bg/Bag-Login.png"
 			        ], {
 			          fade: 1000,
 			          duration: 8000
@@ -85,22 +80,24 @@ class login_system{
 	}
 
 	public function _page(){
+		require 'layout.php';
+
 		?>
 		<!-- BEGIN LOGO -->
 		<div class="logo">
-			<img src="asset/img/logo-big.png" alt=""> 
+			<!-- <img src="asset/img/logo-big.png" alt=""> -->
 		</div>
 		<!-- END LOGO -->
 		<!-- BEGIN LOGIN -->
 		<div class="content">
 		<?php
-			print(user_login::login('login_system'));
+			print(login_sasi::login('login_system'));
 		?>
 		</div>
 		<!-- END LOGIN -->
 		<!-- BEGIN COPYRIGHT -->
 		<div class="copyright">
-			<?php print(date('Y')) ;?> © System <?php print(constant('company')) ;?>
+			<?php print(date('Y')) ;?> © <?php print(constant('company')) ;?>
 		</div>
 		<!-- END COPYRIGHT -->
 		<?php
