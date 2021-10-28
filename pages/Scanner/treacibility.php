@@ -344,11 +344,12 @@ class _treacibility{
 		$user = $data['user'];
 
 		$args = array(
-			'gilling' => array(),
-			'push_cutter' => array()
+			'pasok'			=> 0,
+			'gilling' 		=> array(),
+			'push_cutter' 	=> array()
 		);
 
-		$check = array();
+		$check = array();$pasok = 0;
 		foreach ($flow as $key => $val) {
 
 			// Set Push Cutter
@@ -357,6 +358,11 @@ class _treacibility{
 				$check[] = $idp;
 				$divi_p = gg_module::get_id($user[$idp]['divisi'],array('module_note'));
 				$divi_p = $divi_p[0]['module_note'];
+
+				$_pasok = _production::get_noPasok($idp);
+				if($_pasok>=$pasok){
+					$pasok = $_pasok;
+				}
 
 				$args['push_cutter'][] = array(
 					'id'		=> $idp,
@@ -371,6 +377,11 @@ class _treacibility{
 				$check[] = $idg;
 				$divi_g = gg_module::get_id($user[$idg]['divisi'],array('module_note'));
 				$divi_g = $divi_g[0]['module_note'];
+
+				$_pasok = _production::get_noPasok($idg);
+				if($_pasok>=$pasok){
+					$pasok = $_pasok;
+				}
 
 				$args['gilling'][] = array(
 					'id'		=> $idg,
@@ -409,6 +420,7 @@ class _treacibility{
 			$_push[$idx]['data'][] = $val;
 		}
 
+		$args['pasok'] = $pasok + 1;
 		$args['gilling'] = $_gill;
 		$args['push_cutter'] = $_push;
 		return $args;

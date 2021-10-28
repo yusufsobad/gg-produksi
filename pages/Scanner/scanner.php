@@ -41,7 +41,7 @@ class _production{
 		return true;
 	}
 
-	private static function get_noPasok($user=0){
+	Public static function get_noPasok($user=0){
 		$y = date('Y');$m = date('m');$d = date('d');
 		$where = "AND user_id='$user' AND YEAR(inserted)='$y' AND MONTH(inserted)='$m' AND DAY(inserted)='$d'";
 
