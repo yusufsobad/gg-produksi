@@ -106,7 +106,7 @@ class login_system{
 		<?php
 	}
 
-	public function check_login($args=array()){
+	public static function check_login($args=array()){
 		$data = sobad_asset::ajax_conv_json($args);
 		$user = $data['username'];
 		$pass = md5($data['password']);
@@ -158,7 +158,7 @@ class login_system{
 	// Function Logout Admin ------------------------
 	// ----------------------------------------------
 
-	public function logout(){
+	public static function logout(){
 		$prefix = constant('_prefix');
 
 		unset($_SESSION[$prefix.'page']);
