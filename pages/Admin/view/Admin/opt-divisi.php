@@ -128,7 +128,7 @@ class divisi_admin extends _page{
 		$box = array(
 			'label'		=> 'Data Bagian',
 			'tool'		=> '',
-			'action'	=> parent::action(),
+			'action'	=> '',
 			'func'		=> 'sobad_table',
 			'data'		=> $data
 		);
