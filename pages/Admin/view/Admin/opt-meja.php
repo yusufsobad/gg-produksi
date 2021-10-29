@@ -62,8 +62,12 @@ class noTable_admin extends _page{
 
 			$operator = '-';
 			if($val['module_reff']==1){
-				$operator = gg_employee::get_all(array('name'),"AND no_meja='$id' AND status='1'");
-				$operator = $operator[0]['name'];
+				$employee = gg_employee::get_all(array('name'),"AND no_meja='$id' AND status='1'");
+
+				$check = array_filter($employee);
+				if(!empty($check)){
+					$operator = $employee[0]['name'];
+				}
 			}
 			
 			$data['table'][$key]['tr'] = array('');
