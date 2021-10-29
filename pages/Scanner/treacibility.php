@@ -664,7 +664,7 @@ class _treacibility{
 		);
 
 		// Get input --------------------------------------------------------------
-		$input = gg_production::get_all(array('scan_id','pasok_ke','scan_detail'),$where." AND status='0'");
+		$input = gg_production::get_all(array('ID','scan_id','pasok_ke','scan_detail'),$where." AND status='0'");
 		$check = array_filter($input);
 
 		$_inp = array();
@@ -675,6 +675,7 @@ class _treacibility{
 			$args['input']['status'] = true;
 			
 			$_inp = array(
+				'work_id'			=> 0,
 				'status'			=> 0,
 				'smart_container'	=> '-',
 				'gilling'			=> '-',
@@ -683,6 +684,7 @@ class _treacibility{
 				'_default'			=> 0
 			);
 
+			$_inp['work_id'] = $input[0]['ID'];
 			$_inp['smart_container'] = $input[0]['scan_id'];
 			$_inp['_default'] = $def;
 

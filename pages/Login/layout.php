@@ -37,8 +37,6 @@ class login_sasi extends create_form{
 		}
 
 		.login .content {
-		    padding: 60px 300px 10px;
-		    width: 1000px;
 		    background-color: #fff;
 		    border-radius: 25px !important;
 		}
@@ -72,7 +70,7 @@ class login_sasi extends create_form{
 			color: #333 !important;
 		    font-weight: 600;
 		    margin-bottom: 25px;
-		    font-size: 38px;
+		    font-size: 27px;
 		    line-height: 1;
 		}
 

@@ -81,11 +81,11 @@ a {
 /* --------------- Side Menu -------------------------- */
 
 .page-sidebar .page-sidebar-menu > li.active > a, .page-sidebar .page-sidebar-menu > li.active.open > a{
-	background: #dc0f7a;
+	background: #a0227a;
 }
 
 .page-sidebar .page-sidebar-menu > li.active > a:hover, .page-sidebar .page-sidebar-menu > li.active.open > a:hover{
-	background: #a0227a;
+	background: #dc0f7a;
 }
 
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a, .page-sidebar .page-sidebar-menu > li > a {

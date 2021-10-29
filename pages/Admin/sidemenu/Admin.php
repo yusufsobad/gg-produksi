@@ -121,7 +121,7 @@ function report_admin(){
 	$args['report-operator'] = array(
 		'status'	=> '',
 		'icon'		=> '',
-		'label'		=> 'Operator',
+		'label'		=> 'Produksi',
 		'func'		=> 'report_admin',
 		'child'		=> null
 	);
