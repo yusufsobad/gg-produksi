@@ -228,7 +228,7 @@ class divisi_admin extends _page{
 		foreach ($args as $key => $val) {
 			$no += 1;
 
-			$image = empty($val['name_pict'])?'no-profile.jpg':$val['name_pict'];
+			$image = empty($val['notes_pict'])?'no-profile.jpg':$val['notes_pict']; 
 
 			$data['table'][$key]['tr'] = array('');
 			$data['table'][$key]['td'] = array(
@@ -265,7 +265,7 @@ class divisi_admin extends _page{
 				'No Meja'		=> array(
 					'left',
 					'10%',
-					$val['no_meja'],
+					'NBK'.sprintf('%04d',$val['module_value_no_m']),
 					true
 				)
 			);

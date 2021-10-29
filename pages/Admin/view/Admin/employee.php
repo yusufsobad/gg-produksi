@@ -112,7 +112,7 @@ class employee_admin extends _file_manager{
 				'type'	=> $tab
 			);
 
-			$image = empty($val['notes_pict'])?'no-profile.jpg':$val['notes_pict'];
+			$image = empty($val['notes_pict'])?'no-profile.jpg':$val['notes_pict']; 
 
 			$target = $val['module_note_grad'];
 			if($val['under_capacity']==1){
@@ -666,6 +666,16 @@ class employee_admin extends _file_manager{
 	}
 
 	protected static function _callback($args=array(),$_args=array()){
+		// Reset No Meja
+		if($args['ID']>0){
+			$user = gg_employee::get_id($args['ID'],array('no_meja'));
+			$user = $user[0]['no_meja'];
+
+			if($user>0){
+				sobad_db::_update_single($user,'ggk-module',array('ID' => $user,'module_reff' => 0));
+			}
+		}
+
 		// Update module meja
 		if($args['no_meja']>0){
 			sobad_db::_update_single($args['no_meja'],'ggk-module',array('module_reff' => 1));
