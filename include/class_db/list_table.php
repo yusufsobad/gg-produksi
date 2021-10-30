@@ -35,6 +35,7 @@
 				'ggk-detail'		=> self::ggk_detail(),
 				'ggk-detail-afkir'		=> self::ggk_detail_afkir(),
 				'ggk-employee'		=> self::ggk_employee(),
+				'ggk-history-target'		=> self::ggk_history_target(),
 				'ggk-login-user'		=> self::ggk_login_user(),
 				'ggk-module'		=> self::ggk_module(),
 				'ggk-post'		=> self::ggk_post(),
@@ -82,6 +83,17 @@
 				'capacity'	=> 0,
 				'under_capacity'	=> 0,
 				'status'	=> 0,	
+			);
+			
+			return $list;
+		}
+
+		private static function ggk_history_target(){
+			$list = array(
+				'user_id'	=> 0,
+				'target'	=> 0,
+				'grade'	=> 0,
+				'_date'	=> date('Y-m-d'),	
 			);
 			
 			return $list;
