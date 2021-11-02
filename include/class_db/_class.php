@@ -250,7 +250,8 @@ abstract class _class{
 		$where = self::$_where;
 		$inner = '';$group = $where;
 		$meta = self::list_meta($type);
-		$select = "max(case when `".static::$tbl_meta."`.meta_key = '{{key}}' then `".static::$tbl_meta."`.meta_value end) '{{key}}'";
+		$select = "SUM(IF(`".static::$tbl_meta."`.meta_key = '{{key}}',`".static::$tbl_meta."`.meta_value,'')) AS {{key}}";
+		//$select = "max(case when `".static::$tbl_meta."`.meta_key = '{{key}}' then `".static::$tbl_meta."`.meta_value end) '{{key}}'";
 
 		foreach ($args as $key => $val) {
 			if(in_array($val, $meta)){
@@ -286,12 +287,12 @@ abstract class _class{
 		$q = sobad_db::_select_table($where,static::$table,$args);
 		if($q!==0){
 			while($r=$q->fetch_assoc()){
-				$item = array();
-				foreach($r as $key => $val){
-					$item[$key] = $val;
-				}
+				//$item = array();
+				//foreach($r as $key => $val){
+				//	$item[$key] = $val;
+				//}
 				
-				$data[] = $item;
+				$data[] = $r;//$item;
 			}
 		}
 		
