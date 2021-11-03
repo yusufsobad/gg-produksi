@@ -250,8 +250,8 @@ abstract class _class{
 		$where = self::$_where;
 		$inner = '';$group = $where;
 		$meta = self::list_meta($type);
-		$select = "SUM(IF(`".static::$tbl_meta."`.meta_key = '{{key}}',`".static::$tbl_meta."`.meta_value,'')) AS {{key}}";
-		//$select = "max(case when `".static::$tbl_meta."`.meta_key = '{{key}}' then `".static::$tbl_meta."`.meta_value end) '{{key}}'";
+		//$select = "SUM(IF(`".static::$tbl_meta."`.meta_key = '{{key}}',`".static::$tbl_meta."`.meta_value,'')) AS {{key}}";
+		$select = "max(case when `".static::$tbl_meta."`.meta_key = '{{key}}' then `".static::$tbl_meta."`.meta_value end) '{{key}}'";
 
 		foreach ($args as $key => $val) {
 			if(in_array($val, $meta)){
