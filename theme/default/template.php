@@ -112,45 +112,52 @@ abstract class metronic_template{
 
 		$id = isset($args['id'])?'id="'.$args['id'].'"':'';
 		$obj = _object;
-	
+		
+		$idx = date('d-m-Y H:i:s');
+		$idx = strtotime($idx);
+
+		$idx = strval($idx);
 		?>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title"><?php print($args['title']) ;?></h4>
 				</div>
-				
-				<?php foreach($args['func'] as $key => $func){ ?>
-					<div class="modal-body">
-						<div <?php print($id) ;?> class="row">
-							<?php
-								if(method_exists('metronic_template', $func)){
-									self::{$func}($args['data'][$key]);
-								}else if(method_exists($obj, $func)){
-									$obj::{$func}($args['data'][$key]);
-								}
-							?>
+				<form id="<?php print($idx) ;?>" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<?php foreach($args['func'] as $key => $func){ ?>
+						<div class="modal-body">
+							<div <?php print($id) ;?> class="row">
+								<?php
+									if(method_exists('metronic_template', $func)){
+										self::{$func}($args['data'][$key]);
+									}else if(method_exists($obj, $func)){
+										$obj::{$func}($args['data'][$key]);
+									}
+								?>
+							</div>
 						</div>
+					<?php }?>
+					
+					<div class="modal-footer">
+						<?php
+							$button = $args['button'];
+							if(method_exists('metronic_template', $button)){
+								self::{$button}($args['status'],$idx);
+							}
+						?>
 					</div>
-				<?php }?>
-				
-				<div class="modal-footer">
-					<?php
-						$button = $args['button'];
-						if(method_exists('metronic_template', $button)){
-							self::{$button}($args['status']);
-						}
-					?>
-				</div>
+			</form>
 			</div>
 		<?php
 	}
 
-	private static function _btn_modal_save($args=array()){
+	private static function _btn_modal_save($args=array(),$idx=''){
 		$check = array_filter($args);
 		if(empty($check)){
 			return '';
 		}
+
+		//$idx = sobad_asset::ascii_to_hexa($idx);
 		
 		$status = '';
 		if(isset($args['status'])){
@@ -161,10 +168,43 @@ abstract class metronic_template{
 		if(isset($args['type'])){
 			$type = $args['type'];
 		}
+
+		$index = '';
+		if(isset($args['index'])){
+			$index = $args['index'];
+		}
+
+		$modal = true;
+		if(isset($args['modal'])){
+			$modal = $args['modal'];
+		}
 		
 		?>
-		<button data-sobad="<?php print($args['link']) ;?>" data-load="<?php print($args['load']) ;?>" data-type="<?php print($type) ;?>" type="button" class="btn blue" data-dismiss="modal" onclick="sobad_submit(this)" <?php print($status) ;?>>Save</button>
+		<button id="btn_<?php print($idx) ;?>" data-sobad="<?php print($args['link']) ;?>" data-load="<?php print($args['load']) ;?>" data-type="<?php print($type) ;?>" type="submit" class="btn blue" data-index="#<?php print($idx) ;?>" data-modal="<?php print($modal) ;?>" <?php print($status) ;?>>Save</button>
 		<button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+
+		<script type="text/javascript">
+			//function metronicSubmit_<?php print($idx) ;?>(){
+				$("form#<?php print($idx) ;?>").validate({
+					errorElement: 'span', //default input error message container
+	                errorClass: 'help-block help-block-error', // default input error message class
+	                focusInvalid: false, // do not focus the last invalid input
+	                highlight: function (element) { // hightlight error inputs
+	                    $(element)
+	                        .closest('.form-group').addClass('has-error'); // set error class to the control group   
+	                },
+	                success: function (label, element) {
+	                    $(element)
+	                    	.closest('.form-group').removeClass('has-error'); // set success class 
+	                },
+				  	submitHandler: function(form) {
+				    	sobad_submitLoad('#btn_<?php print($idx) ;?>');
+				  	}
+				 });
+
+				//$("form<?php print($index) ;?>>#metronic-submit").trigger("click");
+			//}
+		</script>
 		<?php
 	}
 

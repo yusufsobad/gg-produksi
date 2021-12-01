@@ -234,7 +234,7 @@ abstract class _page{
 		return self::_get_table(1,$args);
 	}
 
-	public static function _trash($id=0){
+	public static function _trash($id=0, $role=true){
 		$id = str_replace('trash_','',$id);
 		intval($id);
 
@@ -243,13 +243,13 @@ abstract class _page{
 
 		$q = sobad_db::_update_single($id,$table,array('ID' => $id, 'trash' => 1));
 
-		if($q===1){
+		if($q===1 && $role==true){
 			$pg = isset($_POST['page'])?$_POST['page']:1;
 			return self::_get_table($pg);
 		}
 	}
 
-	public static function _recovery($id=0){
+	public static function _recovery($id=0, $role=true){
 		$id = str_replace('recovery_','',$id);
 		intval($id);
 
@@ -258,13 +258,13 @@ abstract class _page{
 
 		$q = sobad_db::_update_single($id,$table,array('ID' => $id, 'trash' => 0));
 
-		if($q===1){
+		if($q===1 && $role==true){
 			$pg = isset($_POST['page'])?$_POST['page']:1;
 			return self::_get_table($pg);
 		}
 	}
 
-	public static function _delete($id=0){
+	public static function _delete($id=0,$role=true){
 		$id = str_replace('del_','',$id);
 		intval($id);
 
@@ -289,13 +289,15 @@ abstract class _page{
 
 		$q = sobad_db::_delete_single($id,$table);
 
-		if($q===1){
+		if($q===1 && $role==true){
 			$pg = isset($_POST['page'])?$_POST['page']:1;
 			return self::_get_table($pg);
+		}else{
+			return $id;
 		}
 	}
 
-	public static function _edit($id=0){
+	public static function _edit($id=0,$role=true){
 		$id = str_replace('edit_','',$id);
 		intval($id);
 		
@@ -312,6 +314,10 @@ abstract class _page{
 		
 		if($q===0){
 			return '';
+		}
+
+		if($role==false){
+			return $q[0];
 		}
 		
 		return static::edit_form($q[0]);
@@ -414,7 +420,7 @@ abstract class _page{
 			$q = self::_update_meta_db($id,$args,$schema);
 		}
 
-		return array('index' => $id, 'data' => $q,'search' => $src);
+		return array('index' => $id, 'data' => $q,'search' => $src,'value' => $args);
 	}	
 
 	public static function _update_db($_args=array(),$menu='default',$obj=''){
@@ -422,6 +428,7 @@ abstract class _page{
 		$q = $args['data'];
 		$src = $args['search'];
 
+		$obj = empty($obj)?static::$object:$obj;
 		if(is_callable(array(new static(), '_updateDetail'))){
 			static::_updateDetail($args,$_args);
 		}
@@ -483,6 +490,7 @@ abstract class _page{
 		$q = $args['data'];
 		$src = $args['search'];
 
+		$obj = empty($obj)?static::$object:$obj;
 		if(is_callable(array(new static(), '_addDetail'))){
 			static::_addDetail($args,$_args);
 		}

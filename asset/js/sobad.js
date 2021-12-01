@@ -7,6 +7,9 @@ var url_sending = "include/sending.php";
 var filter = '';
 var uploads = '';
 
+var modal_toggle = false;
+var index_toggle = '';
+
 	var d = new Date();
 	d.setTime(d.getTime() + (10*60*60*1000)); // 10 jam
 
@@ -182,20 +185,35 @@ var uploads = '';
 		var ajx = $(val).attr("data-sobad");
 		var id = $(val).attr("data-load");
 		var tp = $(val).attr('data-type');
-		var data = $("form").serializeArray();
+		var index = $(val).attr('data-index');
+		var mdl = $(val).attr('data-modal');
 
+		var srcData = $("form.sobad_form").serializeArray();
+		var data = $("form"+index).serializeArray();
+
+		data = data.concat(srcData);
 		if($('#summernote_1').length>0){
+			var note = sobad_get_summernote();
+
 			data[4]['value'] = '';
-			data = data.concat(sobad_get_summernote());
+			data = data.concat(note);
 		}
 		
 		if($('#cke_editor_text').length>0){
+			var editor = sobad_get_ckeditor();
+
 			data[4]['value'] = '';
-			data = data.concat(sobad_get_ckeditor());
+			data = data.concat(editor);
 		}
 
 		if($('input[type=file]').length>0){
-			data = data.concat(sobad_get_fileInput());
+			var fileInput = sobad_get_fileInput();
+			data = data.concat(fileInput);
+		}
+
+		if(mdl=="1"){
+			modal_toggle = true;
+			index_toggle = val;
 		}
 
 		// loading	
@@ -493,6 +511,15 @@ function sobad_callback(id,response,func,msg){
 		case 'success':
 			if(msg){
 				toastr.success(result['msg']);
+			}
+
+			if(modal_toggle){
+				$(index_toggle).parent().parent().parent().parent().parent().modal('hide');
+				var mdl = $(index_toggle).parent().parent().parent().parent().attr('id');
+				$('#'+mdl).html('');
+
+				modal_toggle = false;
+				index_toggle = '';
 			}
 
 			if(typeof func == 'function'){

@@ -46,7 +46,8 @@ class sobad_rajaongkir{
 			'idl'		=> 'IDL Cargo', 
 			'rex'		=> 'Royal Express Indonesia', 
 			'ide'		=> 'ID Express',
-			'sentral'	=> 'Sentral Cargo'
+			'sentral'	=> 'Sentral Cargo',
+			'anteraja'	=> 'Anter Aja'
 		);
 
 		return $list;
@@ -78,7 +79,8 @@ class sobad_rajaongkir{
 			'idl', 
 			'rex', 
 			'ide', 
-			'sentral'
+			'sentral',
+			'anteraja'
 		);
 
 		return $list;

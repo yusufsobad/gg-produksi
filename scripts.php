@@ -184,7 +184,8 @@ if(!class_exists('vendor_script')){
 				'jquery-blockui'		=> $loc.'jquery.blockui.min.js',
 				'jquery-cokie'			=> $loc.'jquery.cokie.min.js',
 				'uniform'				=> $loc.'uniform/jquery.uniform.min.js',
-				'bootstrap-switch'		=> $loc.'bootstrap-switch/js/bootstrap-switch.min.js'
+				'bootstrap-switch'		=> $loc.'bootstrap-switch/js/bootstrap-switch.min.js',
+				'jquery-validation'		=> $loc.'jquery-validation/js/jquery.validate.min.js',
 			);
 			
 			$check = array_filter($idx);
@@ -250,7 +251,6 @@ if(!class_exists('vendor_script')){
 		private function _js_page_login($idx=array()){
 			$loc = $this->lokasi();
 			$js = array(
-				'flot-jquery'			=> $loc.'jquery-validation/js/jquery.validate.min.js',
 				'flot-resize'			=> $loc.'backstretch/jquery.backstretch.min.js',
 				'flot-category'			=> $loc.'select2/select2.min.js'
 			);
