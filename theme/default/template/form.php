@@ -156,6 +156,7 @@ class create_form{
 		if(isset($val['label'])){
 			$inp .= self::opt_label($val['label'],$req);
 		}else{
+			$val['label'] = '';
 			$inp .= '<div class="col-md-'. self::$col_label .'"></div>';
 		}
 		
@@ -231,6 +232,7 @@ class create_form{
 		if(isset($val['label'])){
 			$inp .= self::opt_label($val['label'],$req);
 		}else{
+			$val['label'] = '';
 			$inp .= '<div class="col-md-'. self::$col_label .'"></div>';
 		}
 		
@@ -310,6 +312,7 @@ class create_form{
 		if(isset($val['label'])){
 			$inp .= self::opt_label($val['label'],$req);
 		}else{
+			$val['label'] = '';
 			$inp .= '<div class="col-md-'. self::$col_label .'"></div>';
 		}
 		
@@ -353,6 +356,7 @@ class create_form{
 		if(isset($val['label'])){
 			$inp .= self::opt_label($val['label'],$req);
 		}else{
+			$val['label'] = '';
 			$inp .= '<div class="col-md-'. self::$col_label .'"></div>';
 		}
 
@@ -422,6 +426,7 @@ class create_form{
 		if(isset($val['label'])){
 			$inp .= self::opt_label($val['label'],$req);
 		}else{
+			$val['label'] = '';
 			$inp .= '<div class="col-md-'. self::$col_label .'"></div>';
 		}
 		
@@ -566,6 +571,7 @@ class create_form{
 		if(isset($val['label'])){
 			$inp .= self::opt_label($val['label'],$req);
 		}else{
+			$val['label'] = '';
 			$inp .= '<div class="col-md-'. self::$col_label .'"></div>';
 		}
 		
@@ -622,6 +628,7 @@ class create_form{
 		if(isset($val['label'])){
 			$inp .= self::opt_label($val['label'],$req);
 		}else{
+			$val['label'] = '';
 			$inp .= '<div class="col-md-'. self::$col_label .'"></div>';
 		}
 		
