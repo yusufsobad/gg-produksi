@@ -6,6 +6,18 @@ require dirname(__FILE__).'/../err.php';
 require dirname(__FILE__).'/../conn.php';
 require dirname(__FILE__).'/../class_db/sync_db.php';
 
+function get_uri(){
+	$uri = $_SERVER['REQUEST_URI'];
+	$uri = str_replace('/' . URL . '/', '', $uri);
+
+	if(empty($uri)){
+		return '';
+	}
+
+	$uri = explode('/', $uri);
+	return $uri[0];
+}
+
 function get_home(){
 	return HOSTNAME.'/'.URL;
 }

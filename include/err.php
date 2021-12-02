@@ -1,12 +1,22 @@
 <?php
 
 class _error{
-	public function _page404(){
-		header('Location: include/404.php');
+	public static function _page404(){
+		ob_start();
+		include "include/404.php";
+		$page = ob_get_clean();
+		die($page);
+		
+		//header('Location: include/404.php');
 	}
 	
-	public function _page500(){
-		header('Location: include/500.php');
+	public static function _page500(){
+		ob_start();
+		include "include/505.php";
+		$page = ob_get_clean();
+		die($page);
+
+		//header('Location: include/500.php');
 	}
 	
 	public static function _connect(){

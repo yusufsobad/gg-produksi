@@ -136,7 +136,7 @@ abstract class metronic_template{
 								?>
 							</div>
 						</div>
-					<?php }?>
+					<?php } ?>
 					
 					<div class="modal-footer">
 						<?php
@@ -146,7 +146,7 @@ abstract class metronic_template{
 							}
 						?>
 					</div>
-			</form>
+				</form>
 			</div>
 		<?php
 	}
@@ -202,7 +202,7 @@ abstract class metronic_template{
 				  	}
 				 });
 
-				//$("form<?php print($index) ;?>>#metronic-submit").trigger("click");
+				//$("form<?php //print($index) ;?>>#metronic-submit").trigger("click");
 			//}
 		</script>
 		<?php

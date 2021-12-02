@@ -43,7 +43,7 @@ class sobad_page extends _error{
 
 	public function __construct($page=''){
 		if(empty($page)){
-			$this->_page404();
+			parent::_page404();
 		}
 
 		self::$page = $page;
@@ -78,7 +78,7 @@ class sobad_page extends _error{
 			$object->_reg();
 		}else{
 			session_destroy();
-			$this->_page404();
+			parent::_page404();
 		}
 	}
 
