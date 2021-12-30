@@ -25,8 +25,11 @@ if(!isset($_POST['ajax'])){
 	// get file component
 	new _component();
 
-	// include pages
+	// load route
 	$asset = sobad_asset::_pages("../pages/");
+
+	// include pages
+	load_first_page($key);
 
 	// get Themes
 	sobad_themes();

@@ -45,7 +45,7 @@ var index_toggle = '';
 		$(".sobad_logout").click(function(){
 			sobad_load_togle('#myModal');
 			setTimeout(function(){
-				data = "ajax=sobad_logout&object=login_system&data=1";
+				data = "ajax=sobad__get&object=logout_system&data=1";
 				sobad_ajax('Logout Berhasil',data,sobad_direct,true,'','');
 			},1000);
 		});
@@ -105,7 +105,7 @@ var index_toggle = '';
 
 	function sobad_option_search(data,id){
 		$(id).html(data);
-		$('.bs-select').selectpicker('refresh');
+		$(id + '.bs-select').selectpicker('refresh');
 	}
 	
 	// function button

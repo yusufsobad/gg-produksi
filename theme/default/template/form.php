@@ -49,7 +49,7 @@ class create_form{
 		return self::$func($args);
 	}
 	
-	public static function get_form($args){
+	public static function get_form($args,$status=false){
 		$check = array_filter($args);
 		if(empty($check)){
 			$args = array(
@@ -74,8 +74,11 @@ class create_form{
 	
 		?>
 			<div class="col-lg-12">
-				<!--<form id="<?php print($id) ;?>" role="form" method="post" class="form-horizontal" enctype="multipart/form-data"> -->
+				<?php if($status): ?>
+					<form id="<?php print($id) ;?>" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
 					<?php 
+				endif;
+
 						self::option_form($args);
 						if(!isset($_SESSION[_prefix.'input_form'])){
 							$_SESSION[_prefix.'input_form'] = array();
@@ -88,8 +91,12 @@ class create_form{
 						$_SESSION[_prefix.'input_form'] = array_merge($_SESSION[_prefix.'input_form'],self::$_types);
 						$_SESSION[_prefix.'require_form'] = array_merge($_SESSION[_prefix.'require_form'],self::$_require);
 					;?>
-					<!--<button id="metronic-submit" type="submit" class="btn" style="display: none;"></button>
-				</form>-->
+					<!--<button id="metronic-submit" type="submit" class="btn" style="display: none;"></button>-->
+
+			<?php if($status): ?>
+				</form>
+			<?php endif; ?>
+
 			</div>
 			<script>
 				$('.money').on('keydown',function(){
@@ -100,8 +107,8 @@ class create_form{
 					mask_decimal('.decimal');
 				});
 
-				$('.number').on('keydown',function(){
-					mask_quantity('.number');
+				$('.quantity').on('keydown',function(){
+					mask_quantity('.quantity');
 				});
 
 				sobad_picker();
@@ -193,7 +200,7 @@ class create_form{
 
 			case 'number':
 				$val['type'] = 'text';
-				$val['class'] .= ' number';
+				$val['class'] .= ' quantity';
 				break;
 
 			case 'clock':

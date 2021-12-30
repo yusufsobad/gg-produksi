@@ -24,6 +24,18 @@ function format_nominal($nominal){
 	return number_format($nominal,$val[0],$val[1],$val[2]);
 }
 
+function format_decimal($nominal){
+	$current = get_locale();
+	$args = array(
+		'id_ID'	=> array(1,',','.'),
+		'en_US'	=> array(1,'.',','),
+	);
+	
+	$val = $args[$current];
+	
+	return number_format($nominal,$val[0],$val[1],$val[2]);
+}
+
 function format_quantity($nominal){
 	$current = get_locale();
 	$args = array(

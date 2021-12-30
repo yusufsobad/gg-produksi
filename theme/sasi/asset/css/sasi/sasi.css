@@ -1,0 +1,354 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter.woff');
+}
+
+body {
+    font-family: 'Inter';
+}
+
+h1 {
+    font-size: 36px !important;
+    font-family: 'Inter';
+}
+
+h2 {
+    font-size: 24px !important;
+    font-family: 'Inter';
+}
+
+h3 {
+    font-size: 16px !important;
+    font-family: 'Inter';
+}
+
+h4 {
+    font-size: 14px !important;
+    font-family: 'Inter';
+}
+
+h5 {
+    font-size: 12px !important;
+    font-family: 'Inter';
+}
+
+h6 {
+    font-size: 9px !important;
+    font-family: 'Inter';
+}
+
+p {
+    font-size: 10px !important;
+    font-family: 'Inter';
+}
+
+.font-weight-100 {
+    font-weight: 100 !important;
+}
+
+.font-weight-200 {
+    font-weight: 200 !important;
+}
+
+.font-weight-300 {
+    font-weight: 300 !important;
+}
+
+.font-weight-400 {
+    font-weight: 400 !important;
+}
+
+.font-weight-500 {
+    font-weight: 500 !important;
+}
+
+.font-weight-600 {
+    font-weight: 600 !important;
+}
+
+.font-weight-700 {
+    font-weight: 700 !important;
+}
+
+.font-weight-800 {
+    font-weight: 800 !important;
+}
+
+.font-weight-900 {
+    font-weight: 900 !important;
+}
+
+
+.sasi-btn-round {
+    border-radius: 10px;
+}
+
+.primary {
+    background-color: #fff;
+}
+
+.secondary {
+    background-color: #F9FAFB !important;
+}
+
+.light {
+    background-color: #ffff !important;
+
+}
+
+.light-grey {
+    background-color: #F2F3F5 !important;
+
+}
+
+.red {
+    background-color: #DD0F7A;
+    color: #fff;
+}
+
+.blue {
+    background-color: #009EF7 !important;
+    color: #fff;
+}
+
+.orange {
+    background-color: #FF8459 !important;
+    color: #fff;
+}
+
+.green {
+    background-color: #8eff59 !important;
+    color: #fff;
+}
+
+.violet {
+    background-color: #8023B4 !important;
+    color: #fff !important;
+}
+
+.color-primary {
+    color: #fff;
+}
+
+.color-scondary {
+    color: #F9FAFB;
+}
+
+.color-light {
+    color: #ffff !important;
+
+}
+
+.color-red {
+    color: #DD0F7A;
+
+}
+
+.color-blue {
+    color: #009EF7 !important;
+
+}
+
+.color-orange {
+    color: #FF8459 !important;
+
+}
+
+.color-green {
+    color: #8eff59 !important;
+
+}
+
+.color-violet {
+    color: #8023B4;
+
+}
+
+.color-dark-grey {
+    color: #787878;
+}
+
+.radius-xs {
+    border-radius: 4px;
+}
+
+.radius-sm {
+    border-radius: 9px !important;
+}
+
+.radius-md {
+    border-radius: 15px;
+}
+
+.radius-lg {
+    border-radius: 20px !important;
+}
+
+
+.radius-left-sm {
+    border-top-left-radius: 9px !important;
+    border-bottom-left-radius: 9px !important;
+}
+
+.radius-left-md {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px
+}
+
+.radius-left-lg {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px
+}
+
+.radius-right-sm {
+    border-top-right-radius: 9px !important;
+    border-bottom-right-radius: 9px !important;
+}
+
+.radius-right-md {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px
+}
+
+.radius-right-lg {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px
+}
+
+.radius-top-sm {
+    border-top-right-radius: 9px !important;
+    border-top-left-radius: 9px !important;
+}
+
+.radius-top-md {
+    border-top-right-radius: 15px !important;
+    border-top-left-radius: 15px !important;
+}
+
+.radius-top-lg {
+    border-top-right-radius: 20px !important;
+    border-top-left-radius: 20px !important;
+}
+
+.radius-bottom-sm {
+    border-bottom-right-radius: 9px;
+    border-bottom-left-radius: 9px
+}
+
+.radius-bottom-md {
+    border-bottom-right-radius: 15px !important;
+    border-bottom-left-radius: 15px !important;
+}
+
+.radius-bottom-lg {
+    border-bottom-right-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+}
+
+.border-none {
+    border-radius: unset;
+    border-top: unset;
+    border-bottom: unset;
+    border-right: unset;
+    border-left: unset;
+}
+
+.border-violet {
+    border-color: #8023B4;
+}
+
+
+
+.sasi-absolute {
+    position: absolute;
+}
+
+.sasi-relative {
+    position: relative;
+}
+
+.table-modal {
+    overflow-x: auto;
+}
+
+table.mytable {
+    border-collapse: collapse;
+    background: #F8F8F9;
+    color: #033;
+    border-radius: 9px;
+}
+
+.mytable thead th {
+
+    text-align: left;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border: none
+}
+
+.table td,
+.table th {
+    border-top: none;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody {
+    background-color: #fff;
+}
+
+
+
+.sasi-card-body {
+    height: 135px;
+    border-radius: 9px !important;
+}
+
+.scroll-vertical {
+    overflow-y: auto;
+    height: 25vh;
+}
+
+.sasi-icon-account {
+    font-size: 57px;
+    color: #8023B4;
+}
+
+/*=========== Custom ScrollBar ============*/
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #8023B4;
+    border-radius: 20px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #8023B4;
+}
+
+@media (max-width: 768px) {
+    .dropdown-topbar {
+        position: absolute;
+        right: 0;
+        margin-right: 70px;
+        top: 0;
+        margin-top: 2.5px;
+    }
+
+    .mobile-none {
+        display: none;
+    }
+
+}

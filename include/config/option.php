@@ -4,7 +4,7 @@
 class option_library{
 	protected function get_libs(){
 		//pendaftaran Library
-		$args = _library;
+		$args = unserialize(_library);
 		
 		return $args;
 	}

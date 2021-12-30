@@ -8,7 +8,7 @@ new hostname();
 
 require_once 'include/class_db/sync_db.php';
 
-$schema = SCHEMA;
+$schema = unserialize(SCHEMA);
 
 $status = sobad_db::_create_file_list($schema);
 if($status==false){

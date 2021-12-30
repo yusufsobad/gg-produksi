@@ -59,6 +59,8 @@ abstract class _file_manager extends _page{
 			'func_remove'	=> '_remove_file_list'
 		);
 
+		$load = isset($_POST['type'])?$_POST['type']:'';
+
 		foreach ($args as $key => $val) {
 			$_list['list'][$key] = array(
 				'id'		=> $val['ID'],
@@ -66,7 +68,7 @@ abstract class _file_manager extends _page{
 				'url'		=> $val['notes'],
 				'type'		=> $val['var'],
 				'func'		=> 'set_file_list(this)',
-				'load'		=> $_POST['type']
+				'load'		=> $load
 			);
 		}
 
@@ -89,7 +91,7 @@ abstract class _file_manager extends _page{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 
@@ -110,7 +112,7 @@ abstract class _file_manager extends _page{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 
@@ -141,7 +143,7 @@ abstract class _file_manager extends _page{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 
@@ -202,6 +204,7 @@ abstract class _file_manager extends _page{
 
 		$args['func'] = array('_inline_menu');
 		$args['data'] = array($data);
+		$args['form'] = false;
 		
 		return modal_admin($args);
 	}
@@ -224,7 +227,7 @@ abstract class _file_manager extends _page{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 }

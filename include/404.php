@@ -25,7 +25,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="../theme/default/asset/css/pages/error.css" rel="stylesheet" type="text/css">
+<link href="asset/error/css/error.css" rel="stylesheet" type="text/css">
 <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->
@@ -41,7 +41,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <body class="page-404-3">
 <div class="page-inner">
-	<img src="../asset/img/earth.jpg" class="img-responsive" alt="">
+	<img src="asset/img/earth.jpg" class="img-responsive" alt="">
 </div>
 <div class="container error-404">
 	<h1>404</h1>
@@ -50,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		 Actually, the page you are looking for does not exist.
 	</p>
 	<p>
-		<a href="index.html">
+		<a href="{{URL}}">
 		Return home </a>
 		<br>
 	</p>

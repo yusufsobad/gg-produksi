@@ -5,6 +5,7 @@ class _error{
 		ob_start();
 		include "include/404.php";
 		$page = ob_get_clean();
+		$page = str_replace('{{URL}}', 'login', $page);
 		die($page);
 		
 		//header('Location: include/404.php');

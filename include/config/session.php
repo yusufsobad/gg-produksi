@@ -32,11 +32,16 @@ function get_picture_user(){
 }
 
 function get_name_user(){
-	$prefix = constant('_prefix');
-	$user = isset($_SESSION[$prefix.'name'])?$_SESSION[$prefix.'name']:'';
+	$user = isset($_SESSION[_prefix.'name'])?$_SESSION[_prefix.'name']:'';
 	$user = empty($user)?isset($_COOKIE['name'])?$_COOKIE['name']:$user:$user;
 
 	return $user;
+}
+
+function get_divisi_user(){
+	$dept = isset($_SESSION[_prefix.'divisi'])?$_SESSION[_prefix.'divisi']:'-';
+
+	return $dept;
 }
 
 class _config_define{

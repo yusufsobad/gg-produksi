@@ -1,0 +1,183 @@
+.sasi-footer {
+    background-color: #FAFAFB;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #777777;
+    background-color: #F5F8FA;
+    background-clip: padding-box;
+    border: 0px;
+    border-radius: 9px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.navbar {
+    background-image: url(../img/sasi-topbar-backgroun.png);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #8023B4;
+}
+
+a {
+    color: #8023B4;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.btn.focus,
+.btn:focus {
+    outline: 0;
+    box-shadow: unset;
+}
+
+.sasi-dropdown.dropdown-menu.show {
+    margin: 0.125rem -140px 0px;
+}
+
+.input-group-append {
+    margin-left: 0px;
+}
+
+.sasi-card-hover a {
+    color: #DD0F7A !important;
+    text-decoration: none !important;
+    background-color: transparent;
+}
+
+.sasi-card-hover a :hover {
+    color: #8023B4 !important;
+    text-decoration: none !important;
+    background-color: transparent;
+}
+
+
+
+.sasi-thead-light {
+    background-color: #F8F8F9 !important;
+
+}
+
+.sasi-col {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+.sasi-label {
+    background-color: #D51442;
+    border-radius: 5px;
+}
+
+
+.sasi-label-content {
+    color: #ffff;
+    font-size: 14px;
+
+}
+
+.sasi-mini-card {
+    border-color: #fff;
+    border-radius: 10px !important;
+    height: 75%;
+
+}
+
+.sasi-card:hover .overlay {
+    opacity: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #fff;
+    border-radius: 9px;
+}
+
+.sasi-card-hover {
+    color: #DD0F7A;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 9px;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: linear-gradient(115.43deg, rgba(243, 243, 243, 0.51) 5.93%, rgba(243, 243, 243, 0) 98.56%);
+    backdrop-filter: blur(2px);
+}
+
+.sasi-card .a:hover {
+    background-color: #8023B4;
+}
+
+.sasi-card-body {
+    padding: 0px !important;
+}
+
+.sasi-jumbotron {
+    background-color: #FAFAFB;
+}
+
+a:hover {
+    background-color: #a956da93 !important;
+    color: #fff
+}
+
+.navbar {
+    background-color: #8023B4 !important;
+    padding-top: 0px !important;
+    background-repeat: no-repeat;
+}
+
+
+
+a.nav-link {
+    padding: 25px;
+}
+
+.navbar-nav .active {
+    border-bottom: 4px solid #eb3434
+}
+
+.logo {
+    margin-bottom: 10px !important
+}
+
+.navbar {
+    padding-top: .5rem;
+    padding-bottom: 0px !important
+}
+
+@media only screen and (max-width: 768px) {
+    .sasi-col {
+        flex: unset;
+        max-width: unset;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .sasi-col {
+        flex: unset;
+        max-width: unset;
+    }
+}

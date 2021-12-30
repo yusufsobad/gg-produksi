@@ -102,16 +102,16 @@ class sobad_db extends conn{
 		return self::_max_table($table);
 	}
 	
-	public static function _max_table($table){
+	public static function _max_table($table, $column='ID', $where=''){
 		$conn = parent::connect();
 		$alert = parent::_alert_db("Gagal menghitung table!!!");
 		if(empty($table)){die("");}
 
-		$query = sprintf("SELECT MAX(ID) AS ID from `%s`",$table);
+		$query = sprintf("SELECT MAX(%s) AS max from `%s` %s",$column,$table,$where);
 		$q=$conn->query($query) or die($alert);
 		if($q->num_rows>0){
 			$r=$q->fetch_assoc();
-			return $r['ID'];
+			return $r['max'];
 		}
 	}
 	

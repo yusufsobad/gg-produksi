@@ -51,27 +51,37 @@ class sobad_page extends _error{
 
 	public function _get(){
 		global $reg_page;
-	
+		
+		$_pages = $reg_page;
 		$page = self::$page;
-		foreach($reg_page as $key => $val){
+
+		$call_page = $page;
+		foreach($_pages as $key => $val){
 			if($val['home']==true){
-				$reg_page['Home'] = array(
+				$call_page = $key;
+				$_pages['Home'] = array(
 					'page'	=> $val['page'],
 					'theme'	=> isset($val['theme'])?$val['theme']:'default',
-					'home'	=> true
+					'home'	=> true,
+					'view'	=> isset($val['view'])?$val['view']:'folder.file'
 				);
 			}
 		}
 
-		$func = isset($reg_page[$page])?$reg_page[$page]['page']:'';
+		$func = isset($_pages[$page])?$_pages[$page]['page']:'';
 		if(isset($reg_page[$page]['theme'])){
-			reg_hook('reg_theme',$reg_page[$page]['theme']);
+			reg_hook('reg_theme',$_pages[$page]['theme']);
 		}
 
-		if(class_exists($func) && is_callable(array($func,'_reg'))){
+		sobad_asset::_loadPage($_pages[$page]);
+		if(class_exists($func) && is_callable(array($func,'_reg'))){			
 			self::$page = $func;
 
-			$GLOBALS['reg_page'] = $reg_page;
+			if(!isset($_SESSION[_prefix.'page'])){
+				$_SESSION[_prefix.'page'] = $call_page;
+			}
+
+			$GLOBALS['reg_page'] = $_pages;
 			sobad_themes();
 
 			$object = new $func();

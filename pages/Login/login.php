@@ -1,6 +1,7 @@
 <?php
 (!defined('DEFPATH'))?exit:'';
 
+<<<<<<< HEAD:pages/Login/index.php
 $args = array();
 $args['login'] = array(
 	'page'	=> 'login_system',
@@ -9,6 +10,8 @@ $args['login'] = array(
 );
 reg_hook('reg_page',$args);
 
+=======
+>>>>>>> 8f72827d3f5a390b22fb3435e4d0641af763aa7e:pages/Login/login.php
 class login_system{
 
 	public function _reg(){
@@ -83,6 +86,7 @@ class login_system{
 	}
 
 	public function _page(){
+<<<<<<< HEAD:pages/Login/index.php
 		require 'layout.php';
 
 		?>
@@ -106,6 +110,9 @@ class login_system{
 		</div>
 		<!-- END COPYRIGHT -->
 		<?php
+=======
+		sobad_asset::_loadView('Login.login');
+>>>>>>> 8f72827d3f5a390b22fb3435e4d0641af763aa7e:pages/Login/login.php
 	}
 
 	public static function check_login($args=array()){
@@ -155,6 +162,7 @@ class login_system{
 			_error::_user_login();
 		}
 	}
+<<<<<<< HEAD:pages/Login/index.php
 
 	// ----------------------------------------------
 	// Function Logout Admin ------------------------
@@ -173,4 +181,6 @@ class login_system{
 		return '/'.URL.'/login';
 	}	
 
+=======
+>>>>>>> 8f72827d3f5a390b22fb3435e4d0641af763aa7e:pages/Login/login.php
 }

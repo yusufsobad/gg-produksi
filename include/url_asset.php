@@ -92,6 +92,21 @@ class sobad_asset{
 	}
 
 	public static function _pages($dir = "pages/"){
+		$GLOBALS['reg_locFile'] = $dir;
+		require_once 'routes/routes.php';
+
+		self::_indexPages($dir);
+	}
+
+	public static function _allPages($dir=''){
+		global $reg_page;
+
+		foreach ($reg_page as $key => $val) {
+			self::_loadPage($reg);
+		}
+	}
+
+	protected static function _indexPages($dir=''){
 		$pages = self::_name_file($dir);
 		if(count($pages)>0){
 			for($i=0;$i<count($pages);$i++){
@@ -101,8 +116,117 @@ class sobad_asset{
 					}
 				}
 			}
+		}
+	}
+
+	public static function _loadPage($reg = array()){
+		global $reg_locFile;
+
+		$loc = $reg_locFile;
+		$dir = isset($reg['view'])?$reg['view']:'folder.file';
+
+		$loc = $reg_locFile;
+		$dir = str_replace('.', '/', $dir);
+
+		$_dirs = explode('/', $dir);
+		$_cdir = count($_dirs);
+		$_cdir -= 1;
+
+		$file = $_dirs[$_cdir].'.php';
+
+		unset($_dirs[$_cdir]);
+		$dir = implode('/', $_dirs);
+
+		$dir = $loc.$dir;
+		if(is_dir($dir)){
+			if(file_exists($dir."/".$file)){
+				require_once $dir."/".$file;
+			}
 		}else{
-			die("halaman gagal dimuat!!!");
+			//die($file.'::Halaman gagal dimuat!!!');
+		}
+	}
+
+	public static function _loadFile($dir = "pages"){
+		global $reg_locFile;
+
+		$loc = $reg_locFile;
+		$dir = str_replace('.', '/', $dir);
+		
+		$_dirs = explode('/', $dir);
+		$_cdir = count($_dirs);
+		$_cdir -= 1;
+
+		$file = $_dirs[$_cdir].'.php';
+
+		unset($_dirs[$_cdir]);
+		$dir = implode('/', $_dirs);
+
+		$dir = $loc.$dir;
+		if(is_dir($dir)){
+			if(file_exists($dir."/".$file)){
+				require_once $dir."/".$file;
+			}
+		}else{
+			die($file.'::File gagal dimuat!!!');
+		}
+	}
+
+	public static function _loadView($dir = "page_views", $data='',$lvtype=''){
+		$loc = is_dir("page_views/")?"page_views/":"../page_views/";
+		$dir = str_replace('.', '/', $dir);
+
+		$_dirs = explode('/', $dir);
+		$_cdir = count($_dirs);
+		$_cdir -= 1;
+
+		$nm_file = $_dirs[$_cdir];
+		$file = empty($lvtype)?$nm_file:$nm_file.'.'.$lvtype;
+		$file .= '.php';
+
+		unset($_dirs[$_cdir]);
+		$dir = implode('/', $_dirs);
+
+		$dir = $loc.$dir;
+		if(is_dir($dir)){
+			if(file_exists($dir."/".$file)){
+				if(gettype($data)=='array'){
+					$check = array_filter($data);
+					if(!empty($check)){
+						extract($data);
+					}
+				}
+				
+				if($lvtype=='html'){
+					ob_start();
+					require_once $dir."/".$file;
+					return ob_get_clean();
+				}
+
+				require_once $dir."/".$file;
+
+				if($lvtype=='config'){
+					return $config;
+				}
+
+				if($lvtype=='table'){
+					return table_admin($config);
+				}
+
+				if($lvtype=='modal'){
+					return modal_admin($config);
+				}
+
+				if($lvtype=='portlet'){
+					return portlet_admin($config, $box);
+				}
+
+				if($lvtype=='tabs'){
+					return tabs_admin($config, $box);
+				}
+			}
+		}else{
+			die($file.'::File not Exist!!!');
 		}
 	}
 
@@ -163,7 +287,7 @@ class sobad_asset{
 			$_filter = $_SESSION[_prefix.'require_form'];
 			
 			if($_filter[$key]['status']==true && empty($value)){
-				die(_error::_alert_db("This field ".$filter[$key]['name']." is Required !!!"));
+				die(_error::_alert_db("This field ".$_filter[$key]['name']." is Required !!!"));
 			}
 		}
 	}
@@ -286,6 +410,23 @@ class sobad_asset{
 			'name'		=> $_basename,
 			'target'	=> $target_file
 		);
-	}
+	}	
+}
 
+class logout_system{
+	// ----------------------------------------------
+	// Function Logout Admin ------------------------
+	// ----------------------------------------------
+
+	public function _get(){
+
+		unset($_SESSION[_prefix.'page']);
+		unset($_SESSION[_prefix.'user']);
+		unset($_SESSION[_prefix.'name']);
+
+		setcookie('id','');
+		setcookie('name','');		
+
+		return '/'.URL;
+	}	
 }

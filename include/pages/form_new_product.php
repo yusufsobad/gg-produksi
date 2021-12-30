@@ -82,7 +82,7 @@ abstract class _new_product extends form_product{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 
@@ -100,7 +100,7 @@ abstract class _new_product extends form_product{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 
@@ -127,7 +127,7 @@ abstract class _new_product extends form_product{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 
@@ -378,7 +378,7 @@ abstract class _new_product extends form_product{
 		);
 
 		ob_start();
-		metronic_layout::sobad_file_manager($data);
+		theme_layout('sobad_file_manager',$data);
 		return ob_get_clean();
 	}
 
@@ -436,7 +436,7 @@ abstract class _new_product extends form_product{
 					<img src="asset/img/upload/<?php print($image[0]) ;?>" style="width:100%" id="img-new-product">
 				</div>
 				<div class="col-md-9">
-					<?php metronic_layout::sobad_form($args) ;?>
+					<?php theme_layout('sobad_form',$args) ;?>
 				</div>
 			</div>
 			<hr>

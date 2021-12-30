@@ -25,7 +25,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="../theme/default/asset/css/pages/error.css" rel="stylesheet" type="text/css">
+<link href="asset/error/css/error.css" rel="stylesheet" type="text/css">
 <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <body class="page-500-full-page">

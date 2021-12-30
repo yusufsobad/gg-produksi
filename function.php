@@ -10,7 +10,7 @@ if(!class_exists('_component')){
 			require_once 'include/convTo.php';
 
 			// get include
-			require_once 'include/currency.php';
+			require_once 'include/format.php';
 			require_once 'include/language.php';
 			require_once 'include/url_asset.php';
 			require_once 'include/reg_array.php';

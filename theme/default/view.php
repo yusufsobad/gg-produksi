@@ -2,6 +2,8 @@
 
 (!defined('THEMEPATH'))?exit:'';
 
+define('_theme_name','metronic_layout');
+
 require dirname(__FILE__).'/scripts.php';
 require dirname(__FILE__).'/view_header.php';
 require dirname(__FILE__).'/quick_sidebar.php';
@@ -94,6 +96,11 @@ class metronic_layout extends metronic_template{
 				if(!empty($check)){
 					$func = $request['func'];
 					$data = $request['label'];
+
+					if(isset($request['loc'])){
+						$loc = empty($request['loc'])?$func:$request['loc'].'.'.$func;
+						sobad_asset::_loadFile($loc);
+					}
 			
 					if(class_exists($func)){
 						if(is_callable(array($func,'_sidemenu'))){	
@@ -208,11 +215,9 @@ class metronic_layout extends metronic_template{
 
 				if(array_key_exists($key, self::$sidemenu)){
 					if(self::$sidemenu[$key]){
-						$req['func'] = $val['func'];
-						$req['label'] = $val['label'];
 						$status = 'start open active';
 
-						self::$page = $req;
+						self::$page = $val;
 					}
 				}else{
 					$status = '';

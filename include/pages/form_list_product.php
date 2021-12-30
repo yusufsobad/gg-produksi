@@ -56,7 +56,7 @@ abstract class _list_product extends _new_product{
 					<div class="portlet-body">
 						<form id="quotation_product" class="form-horizontal">
 						<?php 
-							metronic_layout::sobad_table($data) ;
+							theme_layout('sobad_table',$data) ;
 							self::_get_ongkir();
 						?>
 						</form>
@@ -398,7 +398,7 @@ abstract class _list_product extends _new_product{
 		if($q!==0){
 			$args = self::_detail_product($id);
 			ob_start();
-			metronic_layout::sobad_table($args['data']);
+			theme_layout('sobad_table',$args['data']);
 			self::_get_ongkir($args['fee']);
 			return ob_get_clean();
 		}

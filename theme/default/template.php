@@ -2,20 +2,15 @@
 
 (!defined('THEMEPATH'))?exit:'';
 
-require dirname(__FILE__).'/template/chart.php';
 require dirname(__FILE__).'/template/coming_soon.php';
-require dirname(__FILE__).'/template/file_manager.php';
-require dirname(__FILE__).'/template/dashboard.php';
-require dirname(__FILE__).'/template/form.php';
 require dirname(__FILE__).'/template/login.php';
-require dirname(__FILE__).'/template/table.php';
 
 abstract class metronic_template{
 
 	// ---------------------------------------------
 	// Create Panel --------------------------------
 	// ---------------------------------------------
-	protected static function _panel($args=array()){
+	public static function _panel($args=array()){
 		$check = array_filter($args);
 		if(empty($check)){
 			return '';
@@ -110,6 +105,8 @@ abstract class metronic_template{
 			return '';
 		}
 
+		$form = isset($args['form'])?$args['form']:true;
+
 		$id = isset($args['id'])?'id="'.$args['id'].'"':'';
 		$obj = _object;
 		
@@ -123,8 +120,12 @@ abstract class metronic_template{
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 					<h4 class="modal-title"><?php print($args['title']) ;?></h4>
 				</div>
-				<form id="<?php print($idx) ;?>" role="form" method="post" class="form-horizontal" enctype="multipart/form-data">
-					<button id="metronic-submit" type="submit" class="btn" style="display: none;"></button>
+
+			<?php if($form): ?>
+				<form id="frm_<?php print($idx) ;?>" role="form" method="post" class="form-horizontal" enctype="multipart/form-data" novalidate="novalidate">
+			<?php endif; ?>		
+
+					<button type="button" class="btn metronic-submit" style="display: none;"></button>
 					<?php foreach($args['func'] as $key => $func): ?>
 						<div class="modal-body">
 							<div <?php print($id) ;?> class="row">
@@ -138,7 +139,10 @@ abstract class metronic_template{
 							</div>
 						</div>
 					<?php endforeach; ?>
+
+			<?php if($form): ?>
 				</form>
+			<?php endif; ?>
 
 				<div class="modal-footer">
 					<?php
@@ -181,12 +185,12 @@ abstract class metronic_template{
 		}
 		
 		?>
-		<button id="btn_<?php print($idx) ;?>" data-sobad="<?php print($args['link']) ;?>" data-load="<?php print($args['load']) ;?>" data-type="<?php print($type) ;?>" type="submit" class="btn blue" data-index="#<?php print($idx) ;?>" data-modal="<?php print($modal) ;?>" onclick="metronicSubmit_<?php print($idx) ;?>()" <?php print($status) ;?>>Save</button>
+		<button id="btn_<?php print($idx) ;?>" data-sobad="<?php print($args['link']) ;?>" data-load="<?php print($args['load']) ;?>" data-type="<?php print($type) ;?>" type="submit" class="btn blue" data-index="#frm_<?php print($idx) ;?>" data-modal="<?php print($modal) ;?>" onclick="metronicSubmit_<?php print($idx) ;?>()" <?php print($status) ;?>>Save</button>
 		<button type="button" class="btn default" data-dismiss="modal">Cancel</button>
 
 		<script type="text/javascript">
 			function metronicSubmit_<?php print($idx) ;?>(){
-				$("form#<?php print($idx) ;?>").validate({
+				$("form#frm_<?php print($idx) ;?>").validate({
 					errorElement: 'span', //default input error message container
 	                errorClass: 'help-block help-block-error', // default input error message class
 	                focusInvalid: false, // do not focus the last invalid input
@@ -202,8 +206,13 @@ abstract class metronic_template{
 				    	sobad_submitLoad('#btn_<?php print($idx) ;?>');
 				  	}
 				 });
+				
+				$("form#frm_<?php print($idx) ;?>>button.metronic-submit").trigger("click");
 
-				$("form#<?php print($idx) ;?>>#metronic-submit").trigger("click");
+				setTimeout(function(){
+					$("form#frm_<?php print($idx) ;?>>button.metronic-submit").removeAttr("type").attr("type", "submit");
+					$("form#frm_<?php print($idx) ;?>>button.metronic-submit").trigger("click");
+				}, 200);
 			}
 		</script>
 		<?php
@@ -501,6 +510,8 @@ abstract class metronic_template{
 	// Create option dashboard ---------------------
 	// ---------------------------------------------
 	public static function sobad_dashboard($args = array()){
+		require dirname(__FILE__).'/template/dashboard.php';
+
 		$dash = admin_dashboard::_dashboard($args);
 	}
 
@@ -508,6 +519,8 @@ abstract class metronic_template{
 	// Create Table --------------------------------
 	// ---------------------------------------------
 	public static function sobad_table($args = array()){
+		require dirname(__FILE__).'/template/table.php';
+		
 		$table = create_table::_table($args);
 	}
 
@@ -515,20 +528,32 @@ abstract class metronic_template{
 	// Create option File manager ------------------
 	// ---------------------------------------------
 	public static function sobad_file_manager($args = array()){
+		require dirname(__FILE__).'/template/file_manager.php';
+
 		$manager = create_file_manager::_layout($args);
 	}
 
 	// ---------------------------------------------
 	// Create Form ---------------------------------
 	// ---------------------------------------------
+	public static function report_form($args = array()){
+		require dirname(__FILE__).'/template/form.php';
+
+		$form = create_form::get_form($args,true);
+	}
+
 	public static function sobad_form($args = array()){
-		$form = create_form::get_form($args);
+		require dirname(__FILE__).'/template/form.php';
+
+		$form = create_form::get_form($args,false);
 	}
 
 	// ---------------------------------------------
 	// Create Chart ---------------------------------
 	// ---------------------------------------------
 	public static function sobad_chart($args = array()){
+		require dirname(__FILE__).'/template/chart.php';
+
 		$chart = create_chart::_layout($args);
 	}
 }
